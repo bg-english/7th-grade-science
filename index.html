@@ -323,6 +323,234 @@
     padding:10px 20px; border-radius:7px; cursor:pointer; font-family:'Inter',sans-serif;
   }
 
+  /* ---------- Interactive Activities ---------- */
+  #activities{background:linear-gradient(180deg,#F0F7F5 0%,#E8F0ED 100%); border-bottom:none;}
+  #activities .kicker{color:var(--teal);}
+  #activities .kicker::before{background:var(--teal);}
+  #activities h2{color:var(--ink);}
+  #activities .dek{color:var(--ink-soft);}
+
+  .activities-dashboard{
+    background:white; border-radius:16px; padding:32px; margin-bottom:40px;
+    box-shadow:0 2px 12px rgba(0,0,0,0.06); border:1px solid var(--line);
+  }
+  .dashboard-header{
+    display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;
+    flex-wrap:wrap; gap:16px;
+  }
+  .dashboard-header h3{
+    font-family:'Fraunces',serif; font-size:22px; color:var(--ink); margin:0;
+  }
+  .dashboard-stats{
+    display:flex; gap:24px; flex-wrap:wrap;
+  }
+  .stat-box{
+    text-align:center; padding:16px 24px; background:var(--paper); border-radius:10px;
+    min-width:100px; border:1px solid var(--line);
+  }
+  .stat-box .stat-value{
+    font-family:'Fraunces',serif; font-size:28px; font-weight:700; color:var(--teal);
+  }
+  .stat-box .stat-label{
+    font-size:12px; color:var(--ink-soft); margin-top:4px; text-transform:uppercase;
+    letter-spacing:.03em;
+  }
+  .stat-box.total .stat-value{color:var(--amber);}
+
+  .progress-bar-container{
+    width:100%; height:8px; background:var(--paper-deep); border-radius:4px;
+    overflow:hidden; margin-top:16px;
+  }
+  .progress-bar-fill{
+    height:100%; background:linear-gradient(90deg,var(--teal),var(--amber));
+    border-radius:4px; transition:width 0.5s ease;
+  }
+
+  .activity-nav{
+    display:flex; gap:8px; flex-wrap:wrap; margin-bottom:32px;
+  }
+  .activity-tab{
+    padding:10px 20px; border-radius:8px; border:2px solid var(--line);
+    background:white; cursor:pointer; font-size:14px; font-weight:500;
+    color:var(--ink-soft); transition:all 0.2s; font-family:'Inter',sans-serif;
+    display:flex; align-items:center; gap:8px;
+  }
+  .activity-tab:hover{border-color:var(--teal); color:var(--teal);}
+  .activity-tab.active{
+    background:var(--teal); color:white; border-color:var(--teal);
+  }
+  .activity-tab .tab-icon{font-size:16px;}
+  .activity-tab .tab-badge{
+    background:rgba(255,255,255,0.2); padding:2px 8px; border-radius:10px;
+    font-size:11px; font-weight:600;
+  }
+  .activity-tab.active .tab-badge{background:rgba(255,255,255,0.3);}
+
+  .activity-panel{
+    display:none; background:white; border-radius:14px; padding:32px;
+    box-shadow:0 2px 12px rgba(0,0,0,0.06); border:1px solid var(--line);
+  }
+  .activity-panel.active{display:block;}
+  .activity-panel h3{
+    font-family:'Fraunces',serif; font-size:20px; color:var(--ink);
+    margin-bottom:8px;
+  }
+  .activity-panel .activity-desc{
+    font-size:14px; color:var(--ink-soft); margin-bottom:24px;
+  }
+
+  /* Drag & Drop */
+  .drag-container{
+    display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:start;
+  }
+  .drag-source{
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .drag-source h4{
+    font-size:13px; text-transform:uppercase; letter-spacing:.04em;
+    color:var(--ink-soft); margin-bottom:4px;
+  }
+  .drag-item{
+    padding:14px 18px; background:var(--teal-light); border:2px solid var(--teal);
+    border-radius:10px; cursor:grab; font-size:14px; font-weight:500;
+    color:var(--teal); transition:all 0.2s; user-select:none;
+  }
+  .drag-item:hover{transform:translateY(-2px); box-shadow:0 4px 12px rgba(42,127,114,0.2);}
+  .drag-item.dragging{opacity:0.5; transform:scale(0.95);}
+  .drag-item.placed{opacity:0.4; pointer-events:none; text-decoration:line-through;}
+
+  .drop-targets{display:flex; flex-direction:column; gap:10px;}
+  .drop-targets h4{
+    font-size:13px; text-transform:uppercase; letter-spacing:.04em;
+    color:var(--ink-soft); margin-bottom:4px;
+  }
+  .drop-zone{
+    padding:14px 18px; background:var(--paper); border:2px dashed var(--line);
+    border-radius:10px; min-height:50px; display:flex; align-items:center;
+    justify-content:space-between; gap:12px; transition:all 0.2s;
+  }
+  .drop-zone .zone-label{font-size:14px; color:var(--ink-soft); flex:1;}
+  .drop-zone .zone-answer{
+    padding:8px 14px; background:var(--teal); color:white; border-radius:6px;
+    font-size:13px; font-weight:500; display:none;
+  }
+  .drop-zone.has-answer{border-style:solid; border-color:var(--teal); background:var(--teal-light);}
+  .drop-zone.has-answer .zone-answer{display:inline-block;}
+  .drop-zone.correct{border-color:#4CAF78; background:rgba(76,175,120,0.1);}
+  .drop-zone.wrong{border-color:#D65A50; background:rgba(214,90,80,0.1);}
+  .drop-zone.drag-over{border-color:var(--teal); background:rgba(42,127,114,0.08); transform:scale(1.02);}
+
+  /* Fill in the Blank */
+  .fill-blank-sentence{
+    font-size:16px; line-height:2; color:var(--ink); margin-bottom:16px;
+    padding:16px 20px; background:var(--paper); border-radius:10px;
+  }
+  .fill-blank-input{
+    display:inline-block; width:140px; padding:6px 12px; border:2px dashed var(--teal);
+    border-radius:6px; font-size:14px; text-align:center; background:white;
+    color:var(--ink); font-family:'Inter',sans-serif; transition:all 0.2s;
+  }
+  .fill-blank-input:focus{outline:none; border-style:solid; box-shadow:0 0 0 3px rgba(42,127,114,0.15);}
+  .fill-blank-input.correct{border-color:#4CAF78; background:rgba(76,175,120,0.1); border-style:solid;}
+  .fill-blank-input.wrong{border-color:#D65A50; background:rgba(214,90,80,0.1); border-style:solid;}
+  .fill-blank-hint{
+    font-size:12px; color:var(--ink-soft); margin-top:4px; font-style:italic;
+    display:none;
+  }
+  .fill-blank-hint.show{display:block;}
+
+  /* True/False */
+  .tf-statement{
+    padding:18px 20px; background:var(--paper); border-radius:10px;
+    margin-bottom:12px; display:flex; align-items:center; justify-content:space-between;
+    gap:16px;
+  }
+  .tf-statement .statement-text{font-size:15px; color:var(--ink); flex:1;}
+  .tf-buttons{display:flex; gap:8px;}
+  .tf-btn{
+    padding:8px 18px; border-radius:6px; border:2px solid var(--line);
+    background:white; cursor:pointer; font-size:13px; font-weight:600;
+    transition:all 0.2s; font-family:'Inter',sans-serif;
+  }
+  .tf-btn.true-btn:hover{border-color:#4CAF78; color:#4CAF78;}
+  .tf-btn.false-btn:hover{border-color:#D65A50; color:#D65A50;}
+  .tf-btn.selected-true{background:#4CAF78; color:white; border-color:#4CAF78;}
+  .tf-btn.selected-false{background:#D65A50; color:white; border-color:#D65A50;}
+  .tf-btn[disabled]{cursor:default; opacity:0.7;}
+  .tf-feedback{
+    font-size:13px; margin-top:8px; padding:8px 12px; border-radius:6px;
+    display:none;
+  }
+  .tf-feedback.show{display:block;}
+  .tf-feedback.correct{background:rgba(76,175,120,0.1); color:#2E7D52;}
+  .tf-feedback.wrong{background:rgba(214,90,80,0.1); color:#B33A32;}
+
+  /* Matching */
+  .matching-grid{
+    display:grid; grid-template-columns:1fr auto 1fr; gap:12px 20px;
+    align-items:center;
+  }
+  .matching-item{
+    padding:12px 16px; background:var(--paper); border-radius:8px;
+    font-size:14px; text-align:center;
+  }
+  .matching-arrow{color:var(--ink-soft); font-size:18px;}
+  .matching-select{
+    padding:10px 14px; border:2px solid var(--line); border-radius:8px;
+    font-size:14px; background:white; cursor:pointer; font-family:'Inter',sans-serif;
+    color:var(--ink); min-width:180px;
+  }
+  .matching-select:focus{outline:none; border-color:var(--teal);}
+  .matching-select.correct{border-color:#4CAF78; background:rgba(76,175,120,0.1);}
+  .matching-select.wrong{border-color:#D65A50; background:rgba(214,90,80,0.1);}
+
+  /* Short Answer */
+  .short-answer-area{
+    margin-bottom:20px;
+  }
+  .short-answer-prompt{
+    font-size:15px; color:var(--ink); margin-bottom:10px; font-weight:500;
+  }
+  .short-answer-textarea{
+    width:100%; min-height:100px; padding:14px 16px; border:2px solid var(--line);
+    border-radius:10px; font-size:14px; font-family:'Inter',sans-serif;
+    color:var(--ink); resize:vertical; transition:border-color 0.2s;
+  }
+  .short-answer-textarea:focus{outline:none; border-color:var(--teal); box-shadow:0 0 0 3px rgba(42,127,114,0.1);}
+  .short-answer-textarea.correct{border-color:#4CAF78; background:rgba(76,175,120,0.05);}
+  .short-answer-textarea.wrong{border-color:#D65A50; background:rgba(214,90,80,0.05);}
+  .short-answer-feedback{
+    font-size:13px; margin-top:8px; padding:10px 14px; border-radius:8px;
+    display:none;
+  }
+  .short-answer-feedback.show{display:block;}
+  .short-answer-feedback.correct{background:rgba(76,175,120,0.1); color:#2E7D52;}
+  .short-answer-feedback.wrong{background:rgba(214,90,80,0.1); color:#B33A32;}
+
+  /* Check Answers Button */
+  .check-answers-btn{
+    padding:14px 32px; background:var(--teal); color:white; border:none;
+    border-radius:10px; font-size:15px; font-weight:600; cursor:pointer;
+    transition:all 0.2s; font-family:'Inter',sans-serif; margin-top:20px;
+  }
+  .check-answers-btn:hover{background:#1D6259; transform:translateY(-1px); box-shadow:0 4px 12px rgba(42,127,114,0.3);}
+  .reset-activity-btn{
+    padding:12px 24px; background:transparent; color:var(--ink-soft); border:2px solid var(--line);
+    border-radius:10px; font-size:14px; font-weight:500; cursor:pointer;
+    transition:all 0.2s; font-family:'Inter',sans-serif; margin-top:20px; margin-left:12px;
+  }
+  .reset-activity-btn:hover{border-color:var(--ink-soft); color:var(--ink);}
+
+  .activity-result{
+    margin-top:20px; padding:16px 20px; background:var(--paper); border-radius:10px;
+    display:none; border-left:4px solid var(--teal);
+  }
+  .activity-result.show{display:block;}
+  .activity-result .result-score{
+    font-family:'Fraunces',serif; font-size:24px; color:var(--teal); font-weight:600;
+  }
+  .activity-result .result-msg{font-size:14px; color:var(--ink-soft); margin-top:4px;}
+
   footer{padding:40px 64px; font-size:12.5px; color:var(--ink-soft); text-align:center;}
 
   @media (max-width: 880px){
@@ -384,6 +612,10 @@
     <a class="navlink" data-target="quiz" href="#quiz">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.2 2.4c-.8.3-1.2.9-1.2 1.8"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>
       Quiz<span class="dot"></span>
+    </a>
+    <a class="navlink" data-target="activities" href="#activities">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      Activities<span class="dot"></span>
     </a>
     <a class="navlink" data-target="biblical" href="#biblical">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5a2 2 0 012-2h8l6 6v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M14 3v6h6"/><path d="M9 13h6M9 17h6"/></svg>
@@ -700,6 +932,368 @@
       </div>
     </section>
 
+    <!-- ===================== INTERACTIVE ACTIVITIES ===================== -->
+    <section class="chapter" id="activities">
+      <span class="kicker">Interactive Activities</span>
+      <h2>Test Your Knowledge</h2>
+      <p class="dek">Complete all activities to demonstrate your understanding of respiratory systems. Track your progress in the dashboard below.</p>
+
+      <!-- Dashboard -->
+      <div class="activities-dashboard">
+        <div class="dashboard-header">
+          <h3>📊 Student Progress Dashboard</h3>
+          <div class="dashboard-stats">
+            <div class="stat-box">
+              <div class="stat-value" id="stat-activities">0/5</div>
+              <div class="stat-label">Activities Done</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value" id="stat-correct">0</div>
+              <div class="stat-label">Correct Answers</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value" id="stat-total">0</div>
+              <div class="stat-label">Total Questions</div>
+            </div>
+            <div class="stat-box total">
+              <div class="stat-value" id="stat-score">0%</div>
+              <div class="stat-label">Overall Score</div>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <!-- Activity Navigation -->
+      <div class="activity-nav">
+        <button class="activity-tab active" data-activity="drag-drop">
+          <span class="tab-icon">🎯</span> Drag & Drop
+          <span class="tab-badge">6 items</span>
+        </button>
+        <button class="activity-tab" data-activity="fill-blank">
+          <span class="tab-icon">✏️</span> Fill the Blanks
+          <span class="tab-badge">6 sentences</span>
+        </button>
+        <button class="activity-tab" data-activity="true-false">
+          <span class="tab-icon">✅</span> True or False
+          <span class="tab-badge">8 statements</span>
+        </button>
+        <button class="activity-tab" data-activity="matching">
+          <span class="tab-icon">🔗</span> Matching
+          <span class="tab-badge">6 pairs</span>
+        </button>
+        <button class="activity-tab" data-activity="short-answer">
+          <span class="tab-icon">📝</span> Short Answer
+          <span class="tab-badge">4 questions</span>
+        </button>
+      </div>
+
+      <!-- Activity 1: Drag & Drop -->
+      <div class="activity-panel active" id="panel-drag-drop">
+        <h3>🎯 Activity 1: Drag & Drop Matching</h3>
+        <p class="activity-desc">Drag each respiratory organ to the animal group it belongs to.</p>
+
+        <div class="drag-container">
+          <div class="drag-source" id="drag-source">
+            <h4>Respiratory Organs</h4>
+            <div class="drag-item" draggable="true" data-answer="human">Alveoli & Diaphragm</div>
+            <div class="drag-item" draggable="true" data-answer="fish">Gills with Lamellae</div>
+            <div class="drag-item" draggable="true" data-answer="amphibian">Moist Skin + Simple Lungs</div>
+            <div class="drag-item" draggable="true" data-answer="reptile">Rib-driven Lungs</div>
+            <div class="drag-item" draggable="true" data-answer="bird">Air Sacs (One-Way Flow)</div>
+            <div class="drag-item" draggable="true" data-answer="insect">Tracheal Tubes</div>
+          </div>
+
+          <div class="drop-targets" id="drop-targets">
+            <h4>Animal Groups</h4>
+            <div class="drop-zone" data-target="human">
+              <span class="zone-label">🫁 Human / Mammal</span>
+              <span class="zone-answer"></span>
+            </div>
+            <div class="drop-zone" data-target="fish">
+              <span class="zone-label">🐟 Fish</span>
+              <span class="zone-answer"></span>
+            </div>
+            <div class="drop-zone" data-target="amphibian">
+              <span class="zone-label">🐸 Amphibian</span>
+              <span class="zone-answer"></span>
+            </div>
+            <div class="drop-zone" data-target="reptile">
+              <span class="zone-label">🦎 Reptile</span>
+              <span class="zone-answer"></span>
+            </div>
+            <div class="drop-zone" data-target="bird">
+              <span class="zone-label">🐦 Bird</span>
+              <span class="zone-answer"></span>
+            </div>
+            <div class="drop-zone" data-target="insect">
+              <span class="zone-label">🦗 Insect</span>
+              <span class="zone-answer"></span>
+            </div>
+          </div>
+        </div>
+
+        <button class="check-answers-btn" onclick="checkDragDrop()">Check Answers</button>
+        <button class="reset-activity-btn" onclick="resetDragDrop()">Reset</button>
+        <div class="activity-result" id="result-drag-drop">
+          <div class="result-score"></div>
+          <div class="result-msg"></div>
+        </div>
+      </div>
+
+      <!-- Activity 2: Fill in the Blanks -->
+      <div class="activity-panel" id="panel-fill-blank">
+        <h3>✏️ Activity 2: Fill in the Blanks</h3>
+        <p class="activity-desc">Complete each sentence with the correct word from the word bank.</p>
+
+        <div style="background:var(--teal-light); padding:12px 16px; border-radius:8px; margin-bottom:20px; font-size:13px;">
+          <strong>Word Bank:</strong> diffusion, alveoli, countercurrent, spiracles, diaphragm, tracheoles
+        </div>
+
+        <div class="fill-blank-sentence">
+          1. Gas exchange in lungs happens by <input type="text" class="fill-blank-input" data-answer="diffusion" placeholder="...">
+          <div class="fill-blank-hint">Hint: gases move from where they're crowded to where they're scarce</div>
+        </div>
+        <div class="fill-blank-sentence">
+          2. The tiny air sacs in human lungs where oxygen enters the blood are called <input type="text" class="fill-blank-input" data-answer="alveoli" placeholder="...">
+          <div class="fill-blank-hint">Hint: there are 300-500 million of these in your lungs</div>
+        </div>
+        <div class="fill-blank-sentence">
+          3. Fish gills use <input type="text" class="fill-blank-input" data-answer="countercurrent" placeholder="..."> exchange to extract up to 80% of oxygen from water.
+          <div class="fill-blank-hint">Hint: blood and water flow in opposite directions</div>
+        </div>
+        <div class="fill-blank-sentence">
+          4. Insects breathe through small openings called <input type="text" class="fill-blank-input" data-answer="spiracles" placeholder="..."> on their body segments.
+          <div class="fill-blank-hint">Hint: these valve-like openings can open and close</div>
+        </div>
+        <div class="fill-blank-sentence">
+          5. The <input type="text" class="fill-blank-input" data-answer="diaphragm" placeholder="..."> is the dome-shaped muscle that helps humans breathe.
+          <div class="fill-blank-hint">Hint: it contracts and flattens to pull air in</div>
+        </div>
+        <div class="fill-blank-sentence">
+          6. The smallest branches of insect tracheal tubes that deliver oxygen directly to cells are called <input type="text" class="fill-blank-input" data-answer="tracheoles" placeholder="...">
+          <div class="fill-blank-hint">Hint: they're thin enough to press against individual cells</div>
+        </div>
+
+        <button class="check-answers-btn" onclick="checkFillBlank()">Check Answers</button>
+        <button class="reset-activity-btn" onclick="resetFillBlank()">Reset</button>
+        <div class="activity-result" id="result-fill-blank">
+          <div class="result-score"></div>
+          <div class="result-msg"></div>
+        </div>
+      </div>
+
+      <!-- Activity 3: True or False -->
+      <div class="activity-panel" id="panel-true-false">
+        <h3>✅ Activity 3: True or False</h3>
+        <p class="activity-desc">Read each statement and decide if it's true or false.</p>
+
+        <div class="tf-statement">
+          <span class="statement-text">1. All respiratory systems rely on a thin, moist surface for gas exchange.</span>
+          <div class="tf-buttons">
+            <button class="tf-btn true-btn" data-correct="true" onclick="checkTF(this, true)">True</button>
+            <button class="tf-btn false-btn" data-correct="true" onclick="checkTF(this, false)">False</button>
+          </div>
+        </div>
+        <div class="tf-feedback" id="tf-feedback-1">Correct! Whether it's a lung, gill, or trachea, all gas-exchange surfaces are thin and moist.</div>
+
+        <div class="tf-statement">
+          <span class="statement-text">2. Fish gills work by countercurrent exchange, where blood and water flow in the same direction.</span>
+          <div class="tf-buttons">
+            <button class="tf-btn true-btn" data-correct="false" onclick="checkTF(this, true)">True</button>
+            <button class="tf-btn false-btn" data-correct="false" onclick="checkTF(this, false)">False</button>
+          </div>
+        </div>
+        <div class="tf-feedback" id="tf-feedback-2">False! Blood and water flow in OPPOSITE directions — that's what makes countercurrent exchange so efficient.</div>
+
+        <div class="tf-statement">
+          <span class="statement-text">3. Amphibians can breathe through their skin, which is why it must stay moist.</span>
+          <div class="tf-buttons">
+            <button class="tf-btn true-btn" data-correct="true" onclick="checkTF(this, true)">True</button>
+            <button class="tf-btn false-btn" data-correct="true" onclick="checkTF(this, false)">False</button>
+          </div>
+        </div>
+        <div class="tf-feedback" id="tf-feedback-3">Correct! Gases can only diffuse through a moist surface, so dry amphibian skin can't exchange gases.</div>
+
+        <div class="tf-statement">
+          <span class="statement-text">4. Reptiles use a diaphragm to breathe, just like mammals.</span>
+          <div class="tf-buttons">
+            <button class="tf-btn true-btn" data-correct="false" onclick="checkTF(this, true)">True</button>
+            <button class="tf-btn false-btn" data-correct="false" onclick="checkTF(this, false)">False</button>
+          </div>
+        </div>
+        <div class="tf-feedback" id="tf-feedback-4">False! Reptiles have no diaphragm — they use rib and body-wall muscles to expand their chest cavity.</div>
+
+        <div class="tf-statement">
+          <span class="statement-text">5. Birds have the most efficient respiratory system among vertebrates because of their one-way airflow.</span>
+          <div class="tf-buttons">
+            <button class="tf-btn true-btn" data-correct="true" onclick="checkTF(this, true)">True</button>
+            <button class="tf-btn false-btn" data-correct="true" onclick="checkTF(this, false)">False</button>
+          </div>
+        </div>
+        <div class="tf-feedback" id="tf-feedback-5">Correct! Air flows continuously in one direction through bird lungs, powered by air sacs.</div>
+
+        <div class="tf-statement">
+          <span class="statement-text">6. Insect blood (hemolymph) carries oxygen to their cells, just like human blood.</span>
+          <div class="tf-buttons">
+            <button class="tf-btn true-btn" data-correct="false" onclick="checkTF(this, true)">True</button>
+            <button class="tf-btn false-btn" data-correct="false" onclick="checkTF(this, false)">False</button>
+          </div>
+        </div>
+        <div class="tf-feedback" id="tf-feedback-6">False! Insect blood doesn't carry oxygen at all — air is delivered directly to cells through tracheal tubes.</div>
+
+        <div class="tf-statement">
+          <span class="statement-text">7. The human diaphragm contracts and flattens to push air out of the lungs.</span>
+          <div class="tf-buttons">
+            <button class="tf-btn true-btn" data-correct="false" onclick="checkTF(this, true)">True</button>
+            <button class="tf-btn false-btn" data-correct="false" onclick="checkTF(this, false)">False</button>
+          </div>
+        </div>
+        <div class="tf-feedback" id="tf-feedback-7">False! The diaphragm contracts and flattens to PULL air in. It relaxes and domes upward to push air out.</div>
+
+        <div class="tf-statement">
+          <span class="statement-text">8. Cellular respiration produces carbon dioxide as waste, which the body must remove.</span>
+          <div class="tf-buttons">
+            <button class="tf-btn true-btn" data-correct="true" onclick="checkTF(this, true)">True</button>
+            <button class="tf-btn false-btn" data-correct="true" onclick="checkTF(this, false)">False</button>
+          </div>
+        </div>
+        <div class="tf-feedback" id="tf-feedback-8">Correct! Mitochondria combine oxygen with food to release energy, producing CO₂ as a byproduct.</div>
+
+        <button class="check-answers-btn" onclick="checkAllTF()">Submit All</button>
+        <div class="activity-result" id="result-true-false">
+          <div class="result-score"></div>
+          <div class="result-msg"></div>
+        </div>
+      </div>
+
+      <!-- Activity 4: Matching -->
+      <div class="activity-panel" id="panel-matching">
+        <h3>🔗 Activity 4: Matching</h3>
+        <p class="activity-desc">Match each respiratory adaptation to the correct animal group.</p>
+
+        <div class="matching-grid">
+          <div class="matching-item"><b>Countercurrent exchange</b></div>
+          <div class="matching-arrow">→</div>
+          <select class="matching-select" data-correct="fish">
+            <option value="">Select...</option>
+            <option value="human">Human</option>
+            <option value="fish">Fish</option>
+            <option value="amphibian">Amphibian</option>
+            <option value="reptile">Reptile</option>
+            <option value="bird">Bird</option>
+            <option value="insect">Insect</option>
+          </select>
+
+          <div class="matching-item"><b>Cutaneous respiration</b></div>
+          <div class="matching-arrow">→</div>
+          <select class="matching-select" data-correct="amphibian">
+            <option value="">Select...</option>
+            <option value="human">Human</option>
+            <option value="fish">Fish</option>
+            <option value="amphibian">Amphibian</option>
+            <option value="reptile">Reptile</option>
+            <option value="bird">Bird</option>
+            <option value="insect">Insect</option>
+          </select>
+
+          <div class="matching-item"><b>One-way airflow with air sacs</b></div>
+          <div class="matching-arrow">→</div>
+          <select class="matching-select" data-correct="bird">
+            <option value="">Select...</option>
+            <option value="human">Human</option>
+            <option value="fish">Fish</option>
+            <option value="amphibian">Amphibian</option>
+            <option value="reptile">Reptile</option>
+            <option value="bird">Bird</option>
+            <option value="insect">Insect</option>
+          </select>
+
+          <div class="matching-item"><b>Direct oxygen delivery via trachea</b></div>
+          <div class="matching-arrow">→</div>
+          <select class="matching-select" data-correct="insect">
+            <option value="">Select...</option>
+            <option value="human">Human</option>
+            <option value="fish">Fish</option>
+            <option value="amphibian">Amphibian</option>
+            <option value="reptile">Reptile</option>
+            <option value="bird">Bird</option>
+            <option value="insect">Insect</option>
+          </select>
+
+          <div class="matching-item"><b>Rib-muscle breathing (no diaphragm)</b></div>
+          <div class="matching-arrow">→</div>
+          <select class="matching-select" data-correct="reptile">
+            <option value="">Select...</option>
+            <option value="human">Human</option>
+            <option value="fish">Fish</option>
+            <option value="amphibian">Amphibian</option>
+            <option value="reptile">Reptile</option>
+            <option value="bird">Bird</option>
+            <option value="insect">Insect</option>
+          </select>
+
+          <div class="matching-item"><b>300-500 million alveoli</b></div>
+          <div class="matching-arrow">→</div>
+          <select class="matching-select" data-correct="human">
+            <option value="">Select...</option>
+            <option value="human">Human</option>
+            <option value="fish">Fish</option>
+            <option value="amphibian">Amphibian</option>
+            <option value="reptile">Reptile</option>
+            <option value="bird">Bird</option>
+            <option value="insect">Insect</option>
+          </select>
+        </div>
+
+        <button class="check-answers-btn" onclick="checkMatching()">Check Answers</button>
+        <button class="reset-activity-btn" onclick="resetMatching()">Reset</button>
+        <div class="activity-result" id="result-matching">
+          <div class="result-score"></div>
+          <div class="result-msg"></div>
+        </div>
+      </div>
+
+      <!-- Activity 5: Short Answer -->
+      <div class="activity-panel" id="panel-short-answer">
+        <h3>📝 Activity 5: Short Answer</h3>
+        <p class="activity-desc">Answer each question in 1-2 sentences. Your answers will be checked for key concepts.</p>
+
+        <div class="short-answer-area">
+          <div class="short-answer-prompt">1. Why can't insects grow as large as mammals?</div>
+          <textarea class="short-answer-textarea" data-keywords="trachea,tracheoles,diffusion,distance,oxygen,tube" placeholder="Type your answer here..."></textarea>
+          <div class="short-answer-feedback" id="sa-feedback-1"></div>
+        </div>
+
+        <div class="short-answer-area">
+          <div class="short-answer-prompt">2. What is the main advantage of countercurrent exchange in fish gills?</div>
+          <textarea class="short-answer-textarea" data-keywords="gradient,oxygen,efficient,80%,extract,continuous,opposite" placeholder="Type your answer here..."></textarea>
+          <div class="short-answer-feedback" id="sa-feedback-2"></div>
+        </div>
+
+        <div class="short-answer-area">
+          <div class="short-answer-prompt">3. How does a bird's respiratory system differ from a mammal's?</div>
+          <textarea class="short-answer-textarea" data-keywords="one-way,air sacs,continuous,flow,efficient,parabronchi" placeholder="Type your answer here..."></textarea>
+          <div class="short-answer-feedback" id="sa-feedback-3"></div>
+        </div>
+
+        <div class="short-answer-area">
+          <div class="short-answer-prompt">4. Why do diving mammals collapse their lungs before deep dives?</div>
+          <textarea class="short-answer-textarea" data-keywords="decompression,rigidity,blood,muscle,oxygen,storage,myoglobin" placeholder="Type your answer here..."></textarea>
+          <div class="short-answer-feedback" id="sa-feedback-4"></div>
+        </div>
+
+        <button class="check-answers-btn" onclick="checkShortAnswer()">Check Answers</button>
+        <button class="reset-activity-btn" onclick="resetShortAnswer()">Reset</button>
+        <div class="activity-result" id="result-short-answer">
+          <div class="result-score"></div>
+          <div class="result-msg"></div>
+        </div>
+      </div>
+    </section>
+
     <!-- ===================== BIBLICAL PRINCIPLE ===================== -->
     <section class="chapter" id="biblical">
       <span class="kicker">Biblical Principle</span>
@@ -861,7 +1455,7 @@ wireImageHotspots("mammal");
 /* ---------------- Side nav active state ---------------- */
 const sections = document.querySelectorAll("section.chapter, header.hero");
 const navlinks = document.querySelectorAll(".navlink");
-const ids = ["human","fish","amphibian","reptile","bird","insect","mammal","compare","quiz"];
+const ids = ["human","fish","amphibian","reptile","bird","insect","mammal","compare","quiz","activities"];
 const observer = new IntersectionObserver((entries)=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
@@ -1014,6 +1608,289 @@ document.getElementById("quiz-restart").addEventListener("click", ()=>{
 });
 
 renderQuestion();
+
+/* ==================== INTERACTIVE ACTIVITIES ==================== */
+
+// Activity tracking
+const activityState = {
+  'drag-drop': { completed: false, correct: 0, total: 6 },
+  'fill-blank': { completed: false, correct: 0, total: 6 },
+  'true-false': { completed: false, correct: 0, total: 8 },
+  'matching': { completed: false, correct: 0, total: 6 },
+  'short-answer': { completed: false, correct: 0, total: 4 }
+};
+
+// Tab navigation
+document.querySelectorAll('.activity-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.activity-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.activity-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-' + tab.dataset.activity).classList.add('active');
+  });
+});
+
+// Update dashboard
+function updateDashboard() {
+  const completed = Object.values(activityState).filter(a => a.completed).length;
+  const correct = Object.values(activityState).reduce((sum, a) => sum + a.correct, 0);
+  const total = Object.values(activityState).reduce((sum, a) => sum + a.total, 0);
+  const score = total > 0 ? Math.round((correct / total) * 100) : 0;
+
+  document.getElementById('stat-activities').textContent = completed + '/5';
+  document.getElementById('stat-correct').textContent = correct;
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-score').textContent = score + '%';
+  document.getElementById('progress-fill').style.width = (completed / 5 * 100) + '%';
+}
+
+/* ---------- DRAG & DROP ---------- */
+let draggedItem = null;
+
+document.querySelectorAll('.drag-item').forEach(item => {
+  item.addEventListener('dragstart', (e) => {
+    draggedItem = item;
+    item.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+  });
+
+  item.addEventListener('dragend', () => {
+    item.classList.remove('dragging');
+    draggedItem = null;
+  });
+});
+
+document.querySelectorAll('.drop-zone').forEach(zone => {
+  zone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    zone.classList.add('drag-over');
+  });
+
+  zone.addEventListener('dragleave', () => {
+    zone.classList.remove('drag-over');
+  });
+
+  zone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    zone.classList.remove('drag-over');
+    if (draggedItem && !zone.classList.contains('has-answer')) {
+      const answer = draggedItem.dataset.answer;
+      const target = zone.dataset.target;
+      zone.querySelector('.zone-answer').textContent = draggedItem.textContent;
+      zone.dataset.currentAnswer = answer;
+      zone.classList.add('has-answer');
+      draggedItem.classList.add('placed');
+    }
+  });
+});
+
+function checkDragDrop() {
+  let correct = 0;
+  document.querySelectorAll('.drop-zone').forEach(zone => {
+    const current = zone.dataset.currentAnswer;
+    const target = zone.dataset.target;
+    zone.classList.remove('correct', 'wrong');
+    if (current) {
+      if (current === target) {
+        zone.classList.add('correct');
+        correct++;
+      } else {
+        zone.classList.add('wrong');
+      }
+    }
+  });
+  activityState['drag-drop'].correct = correct;
+  activityState['drag-drop'].completed = true;
+  updateDashboard();
+  showActivityResult('drag-drop', correct, 6);
+}
+
+function resetDragDrop() {
+  document.querySelectorAll('.drag-item').forEach(item => {
+    item.classList.remove('placed');
+  });
+  document.querySelectorAll('.drop-zone').forEach(zone => {
+    zone.classList.remove('has-answer', 'correct', 'wrong');
+    zone.querySelector('.zone-answer').textContent = '';
+    delete zone.dataset.currentAnswer;
+  });
+  document.getElementById('result-drag-drop').classList.remove('show');
+}
+
+/* ---------- FILL IN THE BLANK ---------- */
+function checkFillBlank() {
+  let correct = 0;
+  document.querySelectorAll('.fill-blank-input').forEach(input => {
+    const answer = input.dataset.answer.toLowerCase().trim();
+    const userAnswer = input.value.toLowerCase().trim();
+    input.classList.remove('correct', 'wrong');
+    const hint = input.parentElement.querySelector('.fill-blank-hint');
+    if (userAnswer === answer) {
+      input.classList.add('correct');
+      correct++;
+    } else {
+      input.classList.add('wrong');
+      if (hint) hint.classList.add('show');
+    }
+  });
+  activityState['fill-blank'].correct = correct;
+  activityState['fill-blank'].completed = true;
+  updateDashboard();
+  showActivityResult('fill-blank', correct, 6);
+}
+
+function resetFillBlank() {
+  document.querySelectorAll('.fill-blank-input').forEach(input => {
+    input.value = '';
+    input.classList.remove('correct', 'wrong');
+  });
+  document.querySelectorAll('.fill-blank-hint').forEach(hint => {
+    hint.classList.remove('show');
+  });
+  document.getElementById('result-fill-blank').classList.remove('show');
+}
+
+/* ---------- TRUE / FALSE ---------- */
+const tfAnswers = {};
+let tfSubmitted = false;
+
+function checkTF(btn, value) {
+  if (tfSubmitted) return;
+  const statement = btn.closest('.tf-statement');
+  const buttons = statement.querySelectorAll('.tf-btn');
+  buttons.forEach(b => {
+    b.classList.remove('selected-true', 'selected-false');
+    b.setAttribute('disabled', 'true');
+  });
+  if (value) {
+    btn.classList.add('selected-true');
+  } else {
+    btn.classList.add('selected-false');
+  }
+  const idx = Array.from(document.querySelectorAll('.tf-statement')).indexOf(statement) + 1;
+  tfAnswers[idx] = value;
+}
+
+function checkAllTF() {
+  let correct = 0;
+  const correctAnswers = {1: true, 2: false, 3: true, 4: false, 5: true, 6: false, 7: false, 8: true};
+
+  document.querySelectorAll('.tf-statement').forEach((statement, i) => {
+    const idx = i + 1;
+    const feedback = document.getElementById('tf-feedback-' + idx);
+    feedback.classList.add('show');
+    if (tfAnswers[idx] === correctAnswers[idx]) {
+      feedback.classList.add('correct');
+      correct++;
+    } else {
+      feedback.classList.add('wrong');
+    }
+  });
+
+  tfSubmitted = true;
+  activityState['true-false'].correct = correct;
+  activityState['true-false'].completed = true;
+  updateDashboard();
+  showActivityResult('true-false', correct, 8);
+}
+
+/* ---------- MATCHING ---------- */
+function checkMatching() {
+  let correct = 0;
+  document.querySelectorAll('.matching-select').forEach(select => {
+    const answer = select.dataset.correct;
+    const value = select.value;
+    select.classList.remove('correct', 'wrong');
+    if (value === answer) {
+      select.classList.add('correct');
+      correct++;
+    } else if (value) {
+      select.classList.add('wrong');
+    }
+  });
+  activityState['matching'].correct = correct;
+  activityState['matching'].completed = true;
+  updateDashboard();
+  showActivityResult('matching', correct, 6);
+}
+
+function resetMatching() {
+  document.querySelectorAll('.matching-select').forEach(select => {
+    select.value = '';
+    select.classList.remove('correct', 'wrong');
+  });
+  document.getElementById('result-matching').classList.remove('show');
+}
+
+/* ---------- SHORT ANSWER ---------- */
+function checkShortAnswer() {
+  let correct = 0;
+  const sampleAnswers = [
+    "Insects deliver oxygen directly to cells through tracheal tubes. Air can only diffuse so far, which limits how large insects can grow.",
+    "Countercurrent exchange maintains a constant oxygen gradient along the entire gill, allowing fish to extract up to 80% of dissolved oxygen.",
+    "Birds have one-way airflow through their lungs using air sacs, while mammals have two-way (in and out) airflow. Bird systems are more efficient.",
+    "Collapsing lungs prevents nitrogen bubbles from forming in the blood (decompression sickness). They store oxygen in blood and muscle tissue instead."
+  ];
+
+  document.querySelectorAll('.short-answer-textarea').forEach((textarea, i) => {
+    const keywords = textarea.dataset.keywords.split(',');
+    const userText = textarea.value.toLowerCase();
+    const feedback = document.getElementById('sa-feedback-' + (i + 1));
+
+    let matchedKeywords = 0;
+    keywords.forEach(kw => {
+      if (userText.includes(kw.toLowerCase().trim())) matchedKeywords++;
+    });
+
+    const score = matchedKeywords / keywords.length;
+    textarea.classList.remove('correct', 'wrong');
+    feedback.classList.remove('correct', 'wrong');
+    feedback.classList.add('show');
+
+    if (score >= 0.4 || userText.length > 50) {
+      textarea.classList.add('correct');
+      feedback.classList.add('correct');
+      feedback.innerHTML = '<strong>✓ Good answer!</strong> Your response covers key concepts about respiratory systems.';
+      correct++;
+    } else {
+      textarea.classList.add('wrong');
+      feedback.classList.add('wrong');
+      feedback.innerHTML = '<strong>✗ Needs more detail.</strong> Try to include more specific terms from the lesson. Suggested answer: ' + sampleAnswers[i];
+    }
+  });
+
+  activityState['short-answer'].correct = correct;
+  activityState['short-answer'].completed = true;
+  updateDashboard();
+  showActivityResult('short-answer', correct, 4);
+}
+
+function resetShortAnswer() {
+  document.querySelectorAll('.short-answer-textarea').forEach(textarea => {
+    textarea.value = '';
+    textarea.classList.remove('correct', 'wrong');
+  });
+  document.querySelectorAll('.short-answer-feedback').forEach(fb => {
+    fb.classList.remove('show', 'correct', 'wrong');
+  });
+  document.getElementById('result-short-answer').classList.remove('show');
+}
+
+/* ---------- UTILITY ---------- */
+function showActivityResult(activity, correct, total) {
+  const result = document.getElementById('result-' + activity);
+  const score = Math.round((correct / total) * 100);
+  result.classList.add('show');
+  result.querySelector('.result-score').textContent = correct + '/' + total + ' (' + score + '%)';
+
+  let msg = '';
+  if (score === 100) msg = 'Excellent! Perfect score!';
+  else if (score >= 80) msg = 'Great job! You have a strong understanding.';
+  else if (score >= 60) msg = 'Good effort! Review the sections above for areas you missed.';
+  else msg = 'Keep studying! Re-read the sections and try again.';
+  result.querySelector('.result-msg').textContent = msg;
+}
+
 </script>
 </body>
 </html>
