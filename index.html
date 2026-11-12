@@ -768,10 +768,232 @@
     .matching-arrow{display:none;}
   }
   @media print{
-    nav.sidenav, .clil-toolbar, .activity-nav, .check-answers-btn, .reset-activity-btn, .tts-btn, .mini-tts-btn{display:none !important;}
+    nav.sidenav, .clil-toolbar, .activity-nav, .check-answers-btn, .reset-activity-btn, .tts-btn, .mini-tts-btn, #games{display:none !important;}
     .shell{display:block;}
     section.chapter{padding:24px 0; page-break-inside:avoid;}
     .activity-panel{display:block !important; margin-bottom:20px; box-shadow:none;}
+  }
+
+  /* ==================== SCIENCE & ENGLISH GAME ARCADE (#games) ==================== */
+  #games{
+    background:linear-gradient(180deg, #FDFBF6 0%, #F1ECE1 100%);
+    --accent:#C1652F; --accent-light:#F5E1D2;
+    border-bottom:1px solid var(--line);
+  }
+  .arcade-topbar{
+    background:var(--ink); color:var(--paper); border-radius:14px;
+    padding:22px 28px; margin-bottom:28px;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:18px;
+    box-shadow:0 8px 24px rgba(27,43,41,0.12);
+  }
+  .arcade-xp-box{display:flex; align-items:center; gap:14px;}
+  .xp-orb{
+    width:52px; height:52px; border-radius:12px; background:linear-gradient(135deg, var(--amber), #C1652F);
+    display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:700; color:#1B2B29;
+  }
+  .xp-num{font-family:'Fraunces',serif; font-size:26px; color:var(--amber); font-weight:700; line-height:1.1;}
+  .xp-sub{font-size:12px; color:#B9C4C1; text-transform:uppercase; letter-spacing:.04em;}
+  .arcade-badges{display:flex; gap:8px; flex-wrap:wrap;}
+  .arcade-badge{
+    padding:6px 12px; border-radius:20px; font-size:12px; font-weight:600;
+    background:rgba(255,255,255,0.07); color:#8FA39E; border:1px solid rgba(255,255,255,0.12);
+    display:inline-flex; align-items:center; gap:5px; transition:all .25s;
+  }
+  .arcade-badge.unlocked{
+    background:rgba(232,163,61,0.2); color:var(--amber); border-color:var(--amber);
+    box-shadow:0 0 12px rgba(232,163,61,0.25);
+  }
+
+  .arcade-nav{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px;}
+  .arcade-tab{
+    padding:11px 18px; border-radius:10px; border:2px solid var(--line);
+    background:white; color:var(--ink-soft); font-family:'Inter',sans-serif;
+    font-size:13.5px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:7px;
+    transition:all .18s;
+  }
+  .arcade-tab:hover{border-color:var(--teal); color:var(--teal); transform:translateY(-1px);}
+  .arcade-tab.active{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+
+  .arcade-workspace{
+    display:grid; grid-template-columns:1.25fr 0.75fr; gap:24px; align-items:start;
+  }
+  .game-stage{
+    display:none; background:white; border:1px solid var(--line); border-radius:16px;
+    padding:26px; box-shadow:0 4px 16px rgba(0,0,0,0.04);
+  }
+  .game-stage.active{display:block;}
+  .game-stage-header{
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;
+    gap:12px; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--line);
+  }
+  .game-stage-header h3{font-size:21px; margin:0;}
+  .game-meta-pills{display:flex; gap:8px; align-items:center; flex-wrap:wrap;}
+  .meta-pill{
+    background:var(--paper); border:1px solid var(--line); padding:4px 11px;
+    border-radius:16px; font-size:12px; font-weight:600; color:var(--ink);
+  }
+
+  /* Discovery & Illustration Panel (Right Column of Arcade) */
+  .discovery-panel{
+    background:white; border:2px solid var(--teal); border-radius:16px;
+    padding:22px; position:sticky; top:68px;
+    box-shadow:0 6px 20px rgba(42,127,114,0.08);
+  }
+  .discovery-kicker{
+    font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.05em;
+    color:var(--teal); margin-bottom:6px; display:flex; align-items:center; justify-content:space-between;
+  }
+  .discovery-title{font-family:'Fraunces',serif; font-size:20px; color:var(--ink); margin-bottom:10px;}
+  .discovery-svg-box{
+    background:var(--paper); border:1px solid var(--line); border-radius:12px;
+    padding:12px; margin-bottom:12px; text-align:center; min-height:155px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .discovery-svg-box svg{width:100%; max-width:290px; height:auto;}
+  .discovery-explain{font-size:13.5px; color:var(--ink); line-height:1.55; margin-bottom:10px;}
+  .discovery-english-box{
+    background:var(--teal-light); border-left:3px solid var(--teal);
+    padding:9px 12px; border-radius:6px; font-size:12.5px; color:var(--ink);
+  }
+
+  /* GAME 1: 3D Memory Match */
+  .memory-grid{
+    display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; margin-top:14px;
+  }
+  .mem-card{
+    height:112px; perspective:800px; cursor:pointer; user-select:none;
+  }
+  .mem-card-inner{
+    position:relative; width:100%; height:100%; text-align:center;
+    transition:transform 0.45s cubic-bezier(0.22,1,0.36,1); transform-style:preserve-3d;
+  }
+  .mem-card.flipped .mem-card-inner, .mem-card.matched .mem-card-inner{
+    transform:rotateY(180deg);
+  }
+  .mem-face{
+    position:absolute; inset:0; backface-visibility:hidden; border-radius:10px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:8px; border:2px solid var(--line);
+  }
+  .mem-front{
+    background:linear-gradient(135deg, #1B2B29, #2A4743); color:var(--paper);
+  }
+  .mem-front .q-mark{font-family:'Fraunces',serif; font-size:24px; color:var(--amber);}
+  .mem-front .q-sub{font-size:10px; text-transform:uppercase; letter-spacing:.04em; opacity:.75;}
+  .mem-back{
+    background:var(--paper); color:var(--ink); transform:rotateY(180deg);
+    font-size:12.5px; font-weight:600; line-height:1.3; border-color:var(--teal);
+  }
+  .mem-card.matched .mem-back{
+    background:#E2F3EA; border-color:#4CAF78; color:#165236;
+  }
+  .mem-icon{font-size:22px; margin-bottom:4px;}
+
+  /* GAME 2: Word Search */
+  .ws-layout{display:grid; grid-template-columns:auto 1fr; gap:20px; align-items:start;}
+  .ws-grid{
+    display:grid; grid-template-columns:repeat(12, 32px); gap:3px;
+    background:var(--paper-deep); padding:10px; border-radius:10px; border:1px solid var(--line);
+    user-select:none; width:fit-content;
+  }
+  .ws-cell{
+    width:32px; height:32px; background:white; border:1px solid var(--line);
+    border-radius:5px; display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:13.5px; color:var(--ink); cursor:pointer;
+    transition:background .12s, transform .1s;
+  }
+  .ws-cell:hover{background:var(--teal-light);}
+  .ws-cell.ws-start{background:var(--amber); color:#1B2B29; border-color:#B87818; transform:scale(1.06);}
+  .ws-cell.ws-found{background:#4CAF78; color:white; border-color:#388E3C;}
+  .ws-cell.ws-hint{outline:2px dashed var(--amber); background:var(--amber-light);}
+  .ws-clues{display:flex; flex-direction:column; gap:7px; max-height:420px; overflow-y:auto;}
+  .ws-clue-item{
+    padding:8px 11px; border-radius:8px; background:var(--paper); border:1px solid var(--line);
+    font-size:12.5px; cursor:pointer; transition:all .15s;
+  }
+  .ws-clue-item:hover{border-color:var(--teal);}
+  .ws-clue-item.done{background:#E2F3EA; border-color:#4CAF78; text-decoration:line-through; opacity:.8;}
+  .ws-word-badge{font-weight:700; color:var(--teal); font-family:monospace; font-size:13px;}
+
+  /* GAME 3: Interactive Crossword */
+  .cw-grid-wrap{overflow-x:auto; margin-bottom:16px;}
+  .cw-grid{
+    display:grid; grid-template-columns:repeat(17, 28px); gap:2px;
+    background:#263836; padding:10px; border-radius:10px; width:fit-content; margin:0 auto;
+  }
+  .cw-cell{
+    width:28px; height:28px; position:relative; border-radius:3px;
+  }
+  .cw-cell.cw-block{background:#182423;}
+  .cw-cell.cw-letter{background:white;}
+  .cw-cell .cw-num{
+    position:absolute; top:1px; left:2px; font-size:8.5px; font-weight:700;
+    color:var(--ink-soft); pointer-events:none; line-height:1;
+  }
+  .cw-input{
+    width:100%; height:100%; border:none; background:transparent;
+    text-align:center; font-size:13px; font-weight:700; text-transform:uppercase;
+    color:var(--ink); padding:4px 0 0 0; font-family:'Inter',sans-serif;
+  }
+  .cw-input:focus{outline:2px solid var(--amber); background:var(--amber-light);}
+  .cw-cell.cw-correct{background:#E2F3EA;}
+  .cw-cell.cw-correct .cw-input{color:#165236;}
+  .cw-cell.cw-wrong{background:#FDECEA;}
+  .cw-clues-split{display:grid; grid-template-columns:1fr 1fr; gap:16px; font-size:12.5px;}
+  .cw-clue-line{
+    padding:6px 8px; border-radius:6px; cursor:pointer; margin-bottom:4px;
+    border-left:3px solid transparent;
+  }
+  .cw-clue-line:hover, .cw-clue-line.active{background:var(--teal-light); border-left-color:var(--teal);}
+
+  /* GAME 4: Pathway & Syntax Builder */
+  .builder-pool, .builder-slots{
+    display:flex; flex-wrap:wrap; gap:8px; padding:14px; border-radius:10px; min-height:58px;
+  }
+  .builder-pool{background:var(--paper); border:1px solid var(--line); margin-bottom:14px;}
+  .builder-slots{background:var(--teal-light); border:2px dashed var(--teal); margin-bottom:14px;}
+  .builder-token{
+    padding:8px 14px; border-radius:8px; background:white; border:1.5px solid var(--teal);
+    font-size:13.5px; font-weight:600; color:var(--ink); cursor:pointer;
+    display:inline-flex; align-items:center; gap:6px; transition:all .15s;
+  }
+  .builder-token:hover{background:var(--teal); color:white; transform:translateY(-1px);}
+  .builder-slots .builder-token{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+
+  /* GAME 5: 7-Systems Adaptation Blitz */
+  .blitz-card{
+    background:linear-gradient(135deg, #1B2B29, #283E3B); color:var(--paper);
+    border-radius:14px; padding:24px; text-align:center; margin-bottom:18px;
+  }
+  .blitz-case{font-family:'Fraunces',serif; font-size:21px; margin:10px 0;}
+  .blitz-clue{font-size:13.5px; color:#C4D1CE;}
+  .blitz-buttons{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(135px, 1fr)); gap:10px;
+  }
+  .blitz-btn{
+    padding:12px 10px; border-radius:10px; border:2px solid var(--line);
+    background:var(--paper); font-weight:600; font-size:13px; cursor:pointer;
+    transition:all .15s; font-family:'Inter',sans-serif; color:var(--ink);
+  }
+  .blitz-btn:hover{border-color:var(--teal); background:var(--teal-light); transform:translateY(-2px);}
+
+  /* GAME 6: Quiz Show */
+  .qshow-ladder{
+    display:flex; gap:5px; flex-wrap:wrap; margin-bottom:16px;
+  }
+  .qshow-rung{
+    flex:1; min-width:52px; text-align:center; padding:5px 4px; border-radius:6px;
+    font-size:11px; font-weight:700; background:var(--paper); border:1px solid var(--line); color:var(--ink-soft);
+  }
+  .qshow-rung.current{background:var(--amber); color:#1B2B29; border-color:var(--amber);}
+  .qshow-rung.passed{background:#4CAF78; color:white; border-color:#4CAF78;}
+  .lifeline-bar{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;}
+
+  @media (max-width: 980px){
+    .arcade-workspace{grid-template-columns:1fr;}
+    .discovery-panel{position:static;}
+    .ws-layout{grid-template-columns:1fr;}
+    .memory-grid{grid-template-columns:repeat(3, 1fr);}
   }
 </style>
 </head>
@@ -823,6 +1045,10 @@
     <a class="navlink" data-target="activities" href="#activities">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
       Activities<span class="dot"></span>
+    </a>
+    <a class="navlink" data-target="games" href="#games">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="M6 12h4M8 10v4"/><circle cx="15" cy="11" r="1" fill="currentColor"/><circle cx="18" cy="13" r="1" fill="currentColor"/></svg>
+      Games<span class="dot"></span>
     </a>
     <a class="navlink" data-target="biblical" href="#biblical">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5a2 2 0 012-2h8l6 6v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M14 3v6h6"/><path d="M9 13h6M9 17h6"/></svg>
@@ -1748,6 +1974,202 @@
       </div>
     </section>
 
+    <!-- ===================== SCIENCE & ENGLISH GAME ARCADE (#games) ===================== -->
+    <section class="chapter" id="games">
+      <span class="kicker">Interactive CLIL Game Arcade · Play, Illustrate &amp; Explain</span>
+      <h2>Breath of Life Game Lab</h2>
+      <p class="dek">Every game below is designed to <b>develop, illustrate, and explain</b> the biology of respiratory systems and Academic English. Every pair you match, word you find, or puzzle you solve unlocks an <b>Illustrated Scientific Card with native audio</b> on the right!</p>
+
+      <!-- Arcade XP & Badges Bar -->
+      <div class="arcade-topbar">
+        <div class="arcade-xp-box">
+          <div class="xp-orb">🎮</div>
+          <div>
+            <div class="xp-num"><span id="arcade-xp-val">0</span> XP</div>
+            <div class="xp-sub">Science &amp; English Mastery Points</div>
+          </div>
+        </div>
+        <div class="arcade-badges">
+          <span class="arcade-badge" id="badge-memory">🃏 Memory Master</span>
+          <span class="arcade-badge" id="badge-wordsearch">🔍 Word Hunter</span>
+          <span class="arcade-badge" id="badge-crossword">🧩 Crossword Scholar</span>
+          <span class="arcade-badge" id="badge-pathway">🧪 Pathway Architect</span>
+          <span class="arcade-badge" id="badge-blitz">⚡ Taxonomy Sprinter</span>
+          <span class="arcade-badge" id="badge-qshow">👑 Psalm 150:6 Champion</span>
+        </div>
+      </div>
+
+      <!-- 6 Game Selector Tabs -->
+      <div class="arcade-nav">
+        <button class="arcade-tab active" data-game="memory" onclick="switchArcadeGame('memory', this)">🃏 1. Memory Match</button>
+        <button class="arcade-tab" data-game="wordsearch" onclick="switchArcadeGame('wordsearch', this)">🔍 2. Word Search</button>
+        <button class="arcade-tab" data-game="crossword" onclick="switchArcadeGame('crossword', this)">🧩 3. Crossword</button>
+        <button class="arcade-tab" data-game="pathway" onclick="switchArcadeGame('pathway', this)">🧪 4. Pathway &amp; Syntax</button>
+        <button class="arcade-tab" data-game="blitz" onclick="switchArcadeGame('blitz', this)">⚡ 5. Adaptation Blitz</button>
+        <button class="arcade-tab" data-game="qshow" onclick="switchArcadeGame('qshow', this)">🏆 6. Quiz Show</button>
+      </div>
+
+      <div class="arcade-workspace">
+        <!-- LEFT COLUMN: ACTIVE GAME STAGE -->
+        <div>
+
+          <!-- GAME 1: ANATOMICAL MEMORY MATCH -->
+          <div class="game-stage active" id="game-stage-memory">
+            <div class="game-stage-header">
+              <h3>🃏 Game 1: Anatomical &amp; CLIL Memory Match</h3>
+              <div class="game-meta-pills">
+                <span class="meta-pill">Moves: <b id="mem-moves">0</b></span>
+                <span class="meta-pill">Pairs: <b id="mem-pairs">0/6</b></span>
+              </div>
+            </div>
+            <p style="font-size:13.5px; margin-bottom:12px;">Choose a difficulty mode below. Flip two cards to match each <b>Respiratory System</b> with its <b>Organ, Function, or Biblical Principle</b>. Every match unlocks an illustrated diagram and audio explanation!</p>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
+              <button class="clil-btn active" id="mem-lvl-1" onclick="initMemoryGame(1)">🌱 Level 1: Organ &amp; Visual (A2)</button>
+              <button class="clil-btn" id="mem-lvl-2" onclick="initMemoryGame(2)">🌿 Level 2: Structure &amp; Function (B1)</button>
+              <button class="clil-btn" id="mem-lvl-3" onclick="initMemoryGame(3)">👑 Level 3: Systems &amp; Psalm 150:6 (B1+)</button>
+            </div>
+            <div class="memory-grid" id="memory-grid"></div>
+          </div>
+
+          <!-- GAME 2: SECRET SCIENTIST WORD SEARCH -->
+          <div class="game-stage" id="game-stage-wordsearch">
+            <div class="game-stage-header">
+              <h3>🔍 Game 2: Secret Scientist Word Search</h3>
+              <div class="game-meta-pills">
+                <span class="meta-pill">Found: <b id="ws-found-count">0/10</b></span>
+                <button class="clil-btn" onclick="giveWordSearchHint()">💡 Hint (First Letter)</button>
+                <button class="clil-btn" onclick="initWordSearch()">🔄 New Grid</button>
+              </div>
+            </div>
+            <p style="font-size:13.5px; margin-bottom:12px;">Read the scientific clues on the right, deduce the English term, and <b>click the first letter then the last letter</b> of the word in the grid (horizontal, vertical, or diagonal). Finding a word illustrates and explains it!</p>
+            <div class="ws-layout">
+              <div class="ws-grid" id="ws-grid"></div>
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                  <strong style="font-size:12.5px; text-transform:uppercase; color:var(--ink-soft);">10 Scientific Clues</strong>
+                  <button class="mini-tts-btn" onclick="toggleWsShowWords()" id="ws-toggle-words-btn">👁️ Show/Hide Words</button>
+                </div>
+                <div class="ws-clues" id="ws-clues"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- GAME 3: THE RESPIRATORY CROSSWORD -->
+          <div class="game-stage" id="game-stage-crossword">
+            <div class="game-stage-header">
+              <h3>🧩 Game 3: The Respiratory System Crossword</h3>
+              <div class="game-meta-pills">
+                <span class="meta-pill">Solved: <b id="cw-solved-count">0/10</b></span>
+                <button class="clil-btn" onclick="revealCrosswordHint()">💡 Reveal 1 Letter</button>
+                <button class="clil-btn" onclick="checkCrossword()">✅ Check Crossword</button>
+                <button class="clil-btn" onclick="initCrossword()">🔄 Reset</button>
+              </div>
+            </div>
+            <p style="font-size:13.5px; margin-bottom:12px;">Click any clue or square to type the scientific English word. Completing a word unlocks its anatomical illustration and pronunciation!</p>
+            <div class="cw-grid-wrap">
+              <div class="cw-grid" id="cw-grid"></div>
+            </div>
+            <div class="cw-clues-split">
+              <div>
+                <h4 style="margin:0 0 8px; color:var(--teal);">➡️ ACROSS</h4>
+                <div id="cw-across-list"></div>
+              </div>
+              <div>
+                <h4 style="margin:0 0 8px; color:var(--teal);">⬇️ DOWN</h4>
+                <div id="cw-down-list"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- GAME 4: PATHWAY & SYNTAX BUILDER -->
+          <div class="game-stage" id="game-stage-pathway">
+            <div class="game-stage-header">
+              <h3>🧪 Game 4: Breathing Pathway &amp; English Syntax Builder</h3>
+              <div class="game-meta-pills">
+                <span class="meta-pill">Mission: <b id="builder-mission-num">1 / 6</b></span>
+              </div>
+            </div>
+            <p style="font-size:13.5px; margin-bottom:12px;" id="builder-prompt">Click the scrambled blocks in the correct order to build the biological pathway or academic English sentence.</p>
+            <div style="font-size:12px; font-weight:700; text-transform:uppercase; color:var(--teal); margin-bottom:6px;">Your Ordered Sequence (Click a block to remove it):</div>
+            <div class="builder-slots" id="builder-slots"></div>
+            <div style="font-size:12px; font-weight:700; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;">Available Blocks (Click to add):</div>
+            <div class="builder-pool" id="builder-pool"></div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="check-answers-btn" style="margin-top:0;" onclick="checkBuilderMission()">Check Sequence</button>
+              <button class="reset-activity-btn" style="margin-top:0; margin-left:0;" onclick="loadBuilderMission(currentBuilderIdx)">Reset Blocks</button>
+              <button class="clil-btn" onclick="nextBuilderMission()">Next Mission →</button>
+            </div>
+            <div class="activity-result" id="result-builder">
+              <div class="result-score"></div>
+              <div class="result-msg"></div>
+            </div>
+          </div>
+
+          <!-- GAME 5: 7-SYSTEMS ADAPTATION BLITZ -->
+          <div class="game-stage" id="game-stage-blitz">
+            <div class="game-stage-header">
+              <h3>⚡ Game 5: 7-Systems Adaptation Blitz</h3>
+              <div class="game-meta-pills">
+                <span class="meta-pill">Case: <b id="blitz-progress">1 / 10</b></span>
+                <span class="meta-pill">Streak: 🔥 <b id="blitz-streak">0</b></span>
+                <span class="meta-pill">Score: <b id="blitz-score">0</b></span>
+              </div>
+            </div>
+            <div class="blitz-card">
+              <div style="font-size:12px; text-transform:uppercase; letter-spacing:.05em; color:var(--amber);" id="blitz-kicker">Biological Adaptation Case</div>
+              <div class="blitz-case" id="blitz-case-text">Loading case...</div>
+              <div class="blitz-clue" id="blitz-clue-text">Identify which animal group or respiratory system uses this design!</div>
+            </div>
+            <div class="blitz-buttons" id="blitz-buttons"></div>
+            <div class="activity-result" id="result-blitz">
+              <div class="result-score"></div>
+              <div class="result-msg"></div>
+            </div>
+          </div>
+
+          <!-- GAME 6: BREATH OF LIFE QUIZ SHOW -->
+          <div class="game-stage" id="game-stage-qshow">
+            <div class="game-stage-header">
+              <h3>🏆 Game 6: Breath of Life &amp; Psalm 150:6 Championship</h3>
+              <div class="game-meta-pills">
+                <span class="meta-pill">Prize Level: <b id="qshow-prize">100 XP</b></span>
+              </div>
+            </div>
+            <div class="qshow-ladder" id="qshow-ladder"></div>
+            <div class="lifeline-bar">
+              <button class="clil-btn" id="ll-5050" onclick="useLifeline5050()">🌓 50 / 50</button>
+              <button class="clil-btn" id="ll-hint" onclick="useLifelineHint()">🔬 Scientist's Clue</button>
+              <button class="clil-btn" onclick="speakQShowCurrent()">🔊 Listen to Question</button>
+              <button class="clil-btn" onclick="initQuizShow()" style="margin-left:auto;">🔄 Restart Show</button>
+            </div>
+            <div class="quiz-box" style="max-width:100%; padding:24px;">
+              <div class="quiz-question" id="qshow-question" style="font-size:19px;"></div>
+              <div class="quiz-options" id="qshow-options"></div>
+              <div class="quiz-explain" id="qshow-explain"></div>
+              <button class="quiz-next" id="qshow-next" onclick="nextQuizShowQuestion()">Next Level →</button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: ILLUSTRATED CONCEPT DISCOVERY CARD -->
+        <aside class="discovery-panel" id="discovery-panel">
+          <div class="discovery-kicker">
+            <span id="disc-tag">🔬 ILLUSTRATED CONCEPT CARD</span>
+            <button class="mini-tts-btn" id="disc-tts-btn" onclick="speakDiscoveryCard()">🔊 Listen</button>
+          </div>
+          <div class="discovery-title" id="disc-title">Play to Unlock &amp; Illustrate!</div>
+          <div class="discovery-svg-box" id="disc-svg-box"></div>
+          <div class="discovery-explain" id="disc-explain">
+            Every time you match a pair, find a hidden word, or solve a clue, this panel illustrates how that respiratory organ works and reads the scientific explanation aloud in English.
+          </div>
+          <div class="discovery-english-box" id="disc-english">
+            <b>🇬🇧 Academic English Tip:</b> Notice how scientists use <i>diffusion</i>, <i>countercurrent</i>, and <i>one-way airflow</i> to explain how oxygen reaches every cell.
+          </div>
+        </aside>
+      </div>
+    </section>
+
     <!-- ===================== BIBLICAL PRINCIPLE ===================== -->
     <section class="chapter" id="biblical">
       <span class="kicker">Biblical Principle</span>
@@ -2276,7 +2698,7 @@ function wireImageHotspots(sectionId){
 
 /* ---------------- Side nav active state (Fixed to include #language-lab & #biblical) ---------------- */
 const navlinks = document.querySelectorAll(".navlink");
-const ids = ["human","fish","amphibian","reptile","bird","insect","mammal","compare","language-lab","quiz","activities","biblical"];
+const ids = ["human","fish","amphibian","reptile","bird","insect","mammal","compare","language-lab","quiz","activities","games","biblical"];
 const observer = new IntersectionObserver((entries)=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
@@ -2958,13 +3380,1004 @@ function showActivityResult(activity, correct, total) {
 }
 
 const STORAGE_KEY = 'bg_7th_science_clil_v2';
+let arcadeXP = 0;
+const arcadeBadges = {
+  memory: false,
+  wordsearch: false,
+  crossword: false,
+  pathway: false,
+  blitz: false,
+  qshow: false
+};
 
+function addArcadeXP(points) {
+  arcadeXP += points;
+  const el = document.getElementById('arcade-xp-val');
+  if (el) el.textContent = arcadeXP;
+  saveProgress();
+}
+
+function unlockBadge(key) {
+  arcadeBadges[key] = true;
+  const badgeEl = document.getElementById('badge-' + key);
+  if (badgeEl) badgeEl.classList.add('unlocked');
+  saveProgress();
+}
+
+function renderBadges() {
+  Object.keys(arcadeBadges).forEach(k => {
+    const el = document.getElementById('badge-' + k);
+    if (el) el.classList.toggle('unlocked', !!arcadeBadges[k]);
+  });
+  const xpEl = document.getElementById('arcade-xp-val');
+  if (xpEl) xpEl.textContent = arcadeXP;
+}
+
+/* ==================== SCIENCE & ENGLISH GAME ARCADE ENGINE ==================== */
+
+const CONCEPT_CARDS = {
+  alveoli: {
+    tag: "🫁 HUMAN & MAMMAL RESPIRATION",
+    title: "Alveoli (/ælˈviːəlaɪ/) — Microscopic Air Sacs",
+    svg: `<svg viewBox="0 0 280 140" width="100%" height="140">
+      <rect width="280" height="140" rx="10" fill="#F2FBF9"/>
+      <path d="M40,20 L110,55" stroke="#0F6E56" stroke-width="8" stroke-linecap="round"/>
+      <circle cx="130" cy="50" r="22" fill="#FFE8E5" stroke="#D94E4E" stroke-width="3"/>
+      <circle cx="155" cy="70" r="24" fill="#FFE8E5" stroke="#D94E4E" stroke-width="3"/>
+      <circle cx="120" cy="85" r="20" fill="#FFE8E5" stroke="#D94E4E" stroke-width="3"/>
+      <path d="M95,112 C135,125 175,110 195,45" fill="none" stroke="#2563EB" stroke-width="4" stroke-dasharray="5,3"/>
+      <text x="190" y="40" font-size="11" fill="#0F6E56" font-weight="bold">O₂ diffuses in →</text>
+      <text x="185" y="105" font-size="11" fill="#D94E4E" font-weight="bold">← CO₂ diffuses out</text>
+      <text x="15" y="128" font-size="10.5" fill="#475569">One-cell-thick walls + 300 million sacs = 70 m² area</text>
+    </svg>`,
+    explain: "Alveoli are tiny, grape-like air sacs at the end of the bronchioles. Because their walls are only one cell thick and wrapped in capillaries, oxygen diffuses into the blood while carbon dioxide diffuses out.",
+    english: "<b>🇬🇧 Academic English Tip:</b> <i>Alveoli</i> is a Latin plural noun (singular: <i>alveolus</i>). Always pair it with plural verbs: <i>\"Alveoli <b>are</b> wrapped in capillaries.\"</i>"
+  },
+  diaphragm: {
+    tag: "🫁 HUMAN & MAMMAL MECHANICS",
+    title: "Diaphragm (/ˈdaɪəfræm/) — Dome Muscle of Breathing",
+    svg: `<svg viewBox="0 0 280 140" width="100%" height="140">
+      <rect width="280" height="140" rx="10" fill="#F2FBF9"/>
+      <ellipse cx="105" cy="58" rx="26" ry="36" fill="#B5E8DC" stroke="#0F6E56" stroke-width="2.5"/>
+      <ellipse cx="175" cy="58" rx="26" ry="36" fill="#B5E8DC" stroke="#0F6E56" stroke-width="2.5"/>
+      <path d="M65,105 Q140,70 215,105" fill="none" stroke="#BA7517" stroke-width="5"/>
+      <path d="M65,115 Q140,112 215,115" fill="none" stroke="#0F6E56" stroke-width="4" stroke-dasharray="4,4"/>
+      <text x="80" y="132" font-size="11" fill="#0F6E56" font-weight="bold">Contracts ↓ = Inhale | Relaxes ↑ = Exhale</text>
+    </svg>`,
+    explain: "The diaphragm is a strong dome-shaped muscle beneath the lungs. When you inhale, it contracts and flattens downward, expanding chest volume so air rushes in.",
+    english: "<b>🇬🇧 Silent Letter Alert:</b> In <i>diaphragm</i>, the <b>'g' is completely silent</b> (/ˈdaɪəfræm/). Cause & effect: <i>\"When the diaphragm contracts, chest volume increases.\"</i>"
+  },
+  countercurrent: {
+    tag: "🐟 FISH GILL EFFICIENCY",
+    title: "Countercurrent Exchange (/ˌkaʊntərˈkɜːrənt/) & Lamellae",
+    svg: `<svg viewBox="0 0 280 140" width="100%" height="140">
+      <rect width="280" height="140" rx="10" fill="#EFF6FF"/>
+      <line x1="35" y1="45" x2="245" y2="45" stroke="#0284C7" stroke-width="8" stroke-linecap="round"/>
+      <text x="45" y="32" font-size="11" fill="#0284C7" font-weight="bold">🌊 Water Flow → (100% → 40% → 15% O₂)</text>
+      <line x1="245" y1="95" x2="35" y2="95" stroke="#DC2626" stroke-width="8" stroke-linecap="round"/>
+      <text x="45" y="118" font-size="11" fill="#DC2626" font-weight="bold">🩸 ← Blood Flow (85% ← 30% ← 5% O₂)</text>
+      <line x1="80" y1="53" x2="80" y2="87" stroke="#0F6E56" stroke-width="2.5" stroke-dasharray="3,2"/>
+      <line x1="140" y1="53" x2="140" y2="87" stroke="#0F6E56" stroke-width="2.5" stroke-dasharray="3,2"/>
+      <line x1="200" y1="53" x2="200" y2="87" stroke="#0F6E56" stroke-width="2.5" stroke-dasharray="3,2"/>
+      <text x="90" y="74" font-size="10.5" fill="#0F6E56" font-weight="bold">O₂ diffuses ↓ all along the gill (80% extracted!)</text>
+    </svg>`,
+    explain: "Inside fish gill lamellae, blood flows in the opposite direction to the water passing over them. This countercurrent design maintains a concentration gradient along the entire gill, extracting up to 80% of dissolved oxygen!",
+    english: "<b>🇬🇧 Prefix Power:</b> <i>Counter-</i> means 'opposite' + <i>current</i> means 'flow'. Use <b>so that</b> for purpose: <i>\"Blood flows opposite to water <b>so that</b> oxygen keeps diffusing.\"</i>"
+  },
+  operculum: {
+    tag: "🐟 FISH ANATOMY",
+    title: "Operculum (/oʊˈpɜːrkjələm/) — Bony Gill Cover",
+    svg: `<svg viewBox="0 0 280 140" width="100%" height="140">
+      <rect width="280" height="140" rx="10" fill="#F2FBF9"/>
+      <path d="M40,70 Q110,20 210,70 Q110,120 40,70 Z" fill="#B5E8DC" stroke="#0F6E56" stroke-width="3"/>
+      <path d="M115,42 Q135,70 115,98" fill="none" stroke="#BA7517" stroke-width="5"/>
+      <path d="M95,48 Q110,70 95,92" fill="none" stroke="#D94E4E" stroke-width="3"/>
+      <text x="20" y="74" font-size="11" fill="#0284C7" font-weight="bold">Water In →</text>
+      <text x="132" y="73" font-size="11" fill="#BA7517" font-weight="bold">Operculum Flap</text>
+    </svg>`,
+    explain: "The operculum is a hard bony flap that protects the delicate gill filaments and opens and closes like a pump to keep water moving across the gills even when the fish is still.",
+    english: "<b>🇬🇧 Academic Verb:</b> Notice the third-person singular <b>-s</b>: <i>\"The operculum <b>protects</b> the gills and <b>pumps</b> water across the filaments.\"</i>"
+  },
+  cutaneous: {
+    tag: "🐸 AMPHIBIAN DUAL BREATHING",
+    title: "Cutaneous Respiration (/kjuːˈteɪniəs/) — Moist Skin",
+    svg: `<svg viewBox="0 0 280 140" width="100%" height="140">
+      <rect width="280" height="140" rx="10" fill="#F2FBF9"/>
+      <rect x="30" y="55" width="220" height="18" rx="6" fill="#99E2D0" stroke="#0F6E56" stroke-width="2"/>
+      <text x="70" y="68" font-size="10.5" fill="#085041" font-weight="bold">Thin, Moist Mucus-Covered Skin</text>
+      <path d="M40,95 L240,95" stroke="#DC2626" stroke-width="6" stroke-linecap="round"/>
+      <text x="75" y="115" font-size="10.5" fill="#DC2626" font-weight="bold">Capillary Network Just Below Skin</text>
+      <text x="65" y="38" font-size="11" fill="#0284C7" font-weight="bold">O₂ Dissolves in Moisture ↓ &amp; ↑ CO₂ Exits</text>
+    </svg>`,
+    explain: "Amphibians breathe through their skin (cutaneous respiration) as well as simple lungs. Because gases can only diffuse across a wet surface, their skin must stay moist at all times.",
+    english: "<b>🇬🇧 Word Root:</b> From Latin <i>cutis</i> (skin). Spanish cognate: <i>cutáneo</i>. Conditional rule: <i>\"If an amphibian's skin <b>dries out</b>, it <b>cannot</b> exchange gases.\"</i>"
+  },
+  parabronchi: {
+    tag: "🦅 AVIAN ONE-WAY AIRFLOW",
+    title: "Parabronchi (/ˌpærəˈbrɒŋkaɪ/) & 9 Air Sacs",
+    svg: `<svg viewBox="0 0 280 140" width="100%" height="140">
+      <rect width="280" height="140" rx="10" fill="#FFFBEB"/>
+      <ellipse cx="60" cy="70" rx="28" ry="22" fill="#BAE6FD" stroke="#0284C7" stroke-width="2"/>
+      <text x="38" y="73" font-size="9.5" fill="#0369A1" font-weight="bold">Front Sacs</text>
+      <rect x="105" y="45" width="70" height="50" rx="8" fill="#FECACA" stroke="#DC2626" stroke-width="2.5"/>
+      <line x1="112" y1="58" x2="168" y2="58" stroke="#991B1B" stroke-width="3"/>
+      <line x1="112" y1="70" x2="168" y2="70" stroke="#991B1B" stroke-width="3"/>
+      <line x1="112" y1="82" x2="168" y2="82" stroke="#991B1B" stroke-width="3"/>
+      <text x="112" y="38" font-size="10" fill="#991B1B" font-weight="bold">← Parabronchi</text>
+      <ellipse cx="220" cy="70" rx="28" ry="22" fill="#A7F3D0" stroke="#059669" stroke-width="2"/>
+      <text x="198" y="73" font-size="9.5" fill="#065F46" font-weight="bold">Rear Sacs</text>
+      <text x="40" y="122" font-size="10.5" fill="#92400E" font-weight="bold">Continuous One-Way Airflow (Fresh O₂ on Inhale &amp; Exhale!)</text>
+    </svg>`,
+    explain: "Unlike mammals with dead-end alveoli, birds use 9 air sacs as bellows to push fresh air continuously in one direction through rigid lung tubes called parabronchi—powering high-altitude flight!",
+    english: "<b>🇬🇧 Contrast Connector:</b> <i>\"<b>Whereas</b> mammal lungs use two-way flow, bird lungs use continuous one-way flow through parabronchi.\"</i>"
+  },
+  spiracles: {
+    tag: "🦗 INSECT TRACHEAL SYSTEM",
+    title: "Spiracles (/ˈspɪrəkəlz/) & Tracheoles (/ˈtreɪkioʊlz/)",
+    svg: `<svg viewBox="0 0 280 140" width="100%" height="140">
+      <rect width="280" height="140" rx="10" fill="#F2FBF9"/>
+      <circle cx="40" cy="70" r="12" fill="#BA7517"/>
+      <text x="18" y="100" font-size="10" fill="#BA7517" font-weight="bold">Spiracle Valve</text>
+      <path d="M52,70 L130,70 L185,40 M130,70 L185,70 M130,70 L185,100" fill="none" stroke="#0F6E56" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="215" cy="40" r="14" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+      <circle cx="215" cy="70" r="14" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+      <circle cx="215" cy="100" r="14" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+      <text x="195" y="128" font-size="10" fill="#065F46" font-weight="bold">Direct to Body Cells (No Blood Used!)</text>
+    </svg>`,
+    explain: "Insects have no lungs and their blood (hemolymph) does not carry oxygen! Air enters through muscular valves called spiracles and branches into microscopic tracheoles that touch every cell directly.",
+    english: "<b>🇬🇧 False Friend Warning:</b> <i>Spiracles</i> are abdominal air valves in insects—not 'spirals' (<i>espirales</i> in Spanish: <i>espiráculos</i>)."
+  },
+  myoglobin: {
+    tag: "🐋 MARINE MAMMAL ADAPTATION",
+    title: "Myoglobin (/ˌmaɪəˈɡloʊbɪn/) — Deep-Dive Oxygen Storage",
+    svg: `<svg viewBox="0 0 280 140" width="100%" height="140">
+      <rect width="280" height="140" rx="10" fill="#EFF6FF"/>
+      <rect x="35" y="38" width="210" height="52" rx="12" fill="#991B1B" stroke="#7F1D1D" stroke-width="2"/>
+      <circle cx="75" cy="64" r="12" fill="#FCA5A5"/>
+      <text x="68" y="68" font-size="10" fill="#7F1D1D" font-weight="bold">O₂</text>
+      <circle cx="140" cy="64" r="12" fill="#FCA5A5"/>
+      <text x="133" y="68" font-size="10" fill="#7F1D1D" font-weight="bold">O₂</text>
+      <circle cx="205" cy="64" r="12" fill="#FCA5A5"/>
+      <text x="198" y="68" font-size="10" fill="#7F1D1D" font-weight="bold">O₂</text>
+      <text x="42" y="115" font-size="10.5" fill="#1E3A8A" font-weight="bold">Whales collapse lungs &amp; store O₂ in muscle myoglobin!</text>
+    </svg>`,
+    explain: "Deep-diving mammals like whales and seals exhale and collapse their lungs during deep dives to prevent nitrogen sickness, relying on high concentrations of oxygen-binding myoglobin in their muscles.",
+    english: "<b>🇬🇧 Greek Root:</b> <i>Myo-</i> means 'muscle' + <i>globin</i> (protein). Compare with <i>hemo-globin</i> (blood protein)."
+  },
+  diffusion: {
+    tag: "🔬 UNIVERSAL LAW OF GAS EXCHANGE",
+    title: "Diffusion (/dɪˈfjuːʒən/) & Psalm 150:6",
+    svg: `<svg viewBox="0 0 280 140" width="100%" height="140">
+      <rect width="280" height="140" rx="10" fill="#F2FBF9"/>
+      <line x1="140" y1="20" x2="140" y2="115" stroke="#0F6E56" stroke-width="4" stroke-dasharray="5,3"/>
+      <circle cx="55" cy="45" r="8" fill="#0284C7"/><circle cx="85" cy="60" r="8" fill="#0284C7"/>
+      <circle cx="50" cy="85" r="8" fill="#0284C7"/><circle cx="95" cy="90" r="8" fill="#0284C7"/>
+      <circle cx="110" cy="40" r="8" fill="#0284C7"/>
+      <circle cx="195" cy="55" r="8" fill="#0284C7"/><circle cx="220" cy="85" r="8" fill="#0284C7"/>
+      <text x="32" y="25" font-size="10.5" fill="#0369A1" font-weight="bold">High O₂ Concentration</text>
+      <text x="160" y="25" font-size="10.5" fill="#0F6E56" font-weight="bold">→ Low O₂ Concentration</text>
+      <text x="35" y="130" font-size="10" fill="#475569" font-weight="bold">Requires a THIN, MOIST surface with LARGE area</text>
+    </svg>`,
+    explain: "Every respiratory system in creation—lungs, gills, moist skin, or tracheoles—obeys the physical law of diffusion: gas molecules naturally move from higher concentration to lower concentration across a thin, moist membrane. As Psalm 150:6 declares: 'Let everything that has breath praise the Lord!'",
+    english: "<b>🇬🇧 Verb vs. Noun:</b> <i>Diffuse</i> (/dɪˈfjuːz/) is the verb; <i>diffusion</i> (/dɪˈfjuːʒən/) is the noun: <i>\"Oxygen <b>diffuses</b> across the membrane by <b>diffusion</b>.\"</i>"
+  }
+};
+
+let currentDiscoveryKey = 'diffusion';
+
+function updateDiscoveryCard(key) {
+  const card = CONCEPT_CARDS[key] || CONCEPT_CARDS.diffusion;
+  currentDiscoveryKey = key in CONCEPT_CARDS ? key : 'diffusion';
+  const panel = document.getElementById('discovery-panel');
+  document.getElementById('disc-tag').textContent = card.tag;
+  document.getElementById('disc-title').textContent = card.title;
+  document.getElementById('disc-svg-box').innerHTML = card.svg;
+  document.getElementById('disc-explain').textContent = card.explain;
+  document.getElementById('disc-english').innerHTML = card.english;
+  if (panel) {
+    panel.classList.remove('pulse');
+    void panel.offsetWidth;
+    panel.classList.add('pulse');
+  }
+}
+
+function speakDiscoveryCard() {
+  const card = CONCEPT_CARDS[currentDiscoveryKey] || CONCEPT_CARDS.diffusion;
+  speakText(`${card.title.split('(')[0]}. ${card.explain}`);
+}
+
+function switchArcadeGame(gameId, btn) {
+  document.querySelectorAll('.arcade-tab').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  document.querySelectorAll('.game-stage').forEach(stage => stage.classList.remove('active'));
+  const target = document.getElementById('game-stage-' + gameId);
+  if (target) target.classList.add('active');
+}
+
+/* ---------------- GAME 1: ANATOMICAL & CLIL MEMORY MATCH ---------------- */
+const MEMORY_DECKS = {
+  1: [
+    { id: 'alveoli', a: '🫁 Human Alveoli', b: '300 million tiny air sacs wrapped in capillaries' },
+    { id: 'operculum', a: '🐟 Fish Operculum', b: 'Hard bony flap that protects gills & pumps water' },
+    { id: 'cutaneous', a: '🐸 Amphibian Skin', b: 'Thin, moist outer surface for cutaneous respiration' },
+    { id: 'parabronchi', a: '🦅 Bird Parabronchi', b: 'One-way rigid lung tubes fed by 9 air sacs' },
+    { id: 'spiracles', a: '🦗 Insect Spiracles', b: 'Muscular body-side valves leading to tracheoles' },
+    { id: 'myoglobin', a: '🐋 Whale Myoglobin', b: 'Muscle protein that stores oxygen for deep dives' }
+  ],
+  2: [
+    { id: 'diaphragm', a: 'Diaphragm Contracts ↓', b: 'Chest volume expands & air rushes into mammal lungs' },
+    { id: 'countercurrent', a: 'Countercurrent Exchange', b: 'Blood flows opposite to water to extract 80% of O₂' },
+    { id: 'cutaneous', a: 'Why Frog Skin Must Stay Wet', b: 'Gases can only diffuse across a moist membrane' },
+    { id: 'parabronchi', a: 'Two-Cycle Bird Breathing', b: 'Fresh air flows through the lungs on both inhale & exhale' },
+    { id: 'spiracles', a: 'Insect Hemolymph (Blood)', b: 'Carries nutrients only; tracheoles deliver O₂ directly to cells' },
+    { id: 'alveoli', a: 'Reptile Rib Ventilation', b: 'Uses rib-cage muscles because reptiles lack a diaphragm' }
+  ],
+  3: [
+    { id: 'diffusion', a: '📖 Psalm 150:6 Principle', b: '"Let everything that has breath praise the Lord!"' },
+    { id: 'diffusion', a: 'Universal Law of Diffusion', b: 'O₂ moves from high to low concentration across a thin, moist surface' },
+    { id: 'countercurrent', a: '🌊 Aquatic Creation Design', b: 'Feathery gill lamellae + countercurrent blood flow in fish' },
+    { id: 'parabronchi', a: '🏔️ High-Altitude Flight Design', b: 'Unidirectional airflow through avian parabronchi & air sacs' },
+    { id: 'myoglobin', a: '🌊 Deep-Ocean Dive Design', b: 'Collapsible lungs + oxygen-rich myoglobin in marine mammals' },
+    { id: 'cutaneous', a: '🌿 Metamorphosis Design', b: 'Tadpole gills transform into adult lungs & moist skin' }
+  ]
+};
+
+let memState = { level: 1, flipped: [], matched: 0, moves: 0, lock: false };
+
+function initMemoryGame(level = 1) {
+  memState = { level, flipped: [], matched: 0, moves: 0, lock: false };
+  [1, 2, 3].forEach(l => {
+    const b = document.getElementById('mem-lvl-' + l);
+    if (b) b.classList.toggle('active', l === level);
+  });
+  document.getElementById('mem-moves').textContent = '0';
+  document.getElementById('mem-pairs').textContent = '0/6';
+
+  const pairs = MEMORY_DECKS[level] || MEMORY_DECKS[1];
+  const cards = [];
+  pairs.forEach((p, idx) => {
+    cards.push({ pairId: idx, concept: p.id, type: 'Term / System', text: p.a });
+    cards.push({ pairId: idx, concept: p.id, type: 'Function / Design', text: p.b });
+  });
+  cards.sort(() => Math.random() - 0.5);
+
+  const grid = document.getElementById('memory-grid');
+  grid.innerHTML = '';
+  cards.forEach((c) => {
+    const el = document.createElement('div');
+    el.className = 'mem-card';
+    el.dataset.pairId = c.pairId;
+    el.dataset.concept = c.concept;
+    el.innerHTML = `
+      <div class="mem-card-inner">
+        <div class="mem-face mem-front">🧬<small>BREATH OF LIFE</small></div>
+        <div class="mem-face mem-back">
+          <span class="mem-type">${c.type}</span>
+          <div>${c.text}</div>
+        </div>
+      </div>
+    `;
+    el.addEventListener('click', () => flipMemoryCard(el, c));
+    grid.appendChild(el);
+  });
+}
+
+function flipMemoryCard(el, cardData) {
+  if (memState.lock || el.classList.contains('flipped') || el.classList.contains('matched')) return;
+  el.classList.add('flipped');
+  memState.flipped.push({ el, cardData });
+
+  if (memState.flipped.length === 2) {
+    memState.lock = true;
+    memState.moves++;
+    document.getElementById('mem-moves').textContent = memState.moves;
+    const [first, second] = memState.flipped;
+
+    if (first.cardData.pairId === second.cardData.pairId) {
+      first.el.classList.add('matched');
+      second.el.classList.add('matched');
+      memState.matched++;
+      document.getElementById('mem-pairs').textContent = `${memState.matched}/6`;
+      updateDiscoveryCard(first.cardData.concept);
+      addArcadeXP(25);
+      memState.flipped = [];
+      memState.lock = false;
+      if (memState.matched === 6) {
+        unlockBadge('memory');
+        addArcadeXP(50);
+      }
+    } else {
+      setTimeout(() => {
+        first.el.classList.remove('flipped');
+        second.el.classList.remove('flipped');
+        memState.flipped = [];
+        memState.lock = false;
+      }, 950);
+    }
+  }
+}
+
+/* ---------------- GAME 2: SECRET SCIENTIST WORD SEARCH (12x12) ---------------- */
+const WS_WORDS = [
+  { word: "ALVEOLI", concept: "alveoli", clue: "Tiny air sacs in human lungs where gas exchange happens" },
+  { word: "DIAPHRAGM", concept: "diaphragm", clue: "Dome-shaped muscle beneath the lungs (silent 'g')" },
+  { word: "DIFFUSION", concept: "diffusion", clue: "Movement of gas from high to low concentration" },
+  { word: "LAMELLAE", concept: "countercurrent", clue: "Microscopic folds on fish gill filaments for gas exchange" },
+  { word: "OPERCULUM", concept: "operculum", clue: "Hard bony flap that covers and pumps fish gills" },
+  { word: "CUTANEOUS", concept: "cutaneous", clue: "Adjective meaning 'breathing through thin, moist skin'" },
+  { word: "SPIRACLES", concept: "spiracles", clue: "Small valve openings along an insect's abdomen" },
+  { word: "TRACHEOLES", concept: "spiracles", clue: "Microscopic insect air tubes touching individual cells" },
+  { word: "MYOGLOBIN", concept: "myoglobin", clue: "Oxygen-storing protein in diving mammal muscles" },
+  { word: "PARABRONCHI", concept: "parabronchi", clue: "One-way microscopic air tubes inside rigid bird lungs" }
+];
+
+let wsState = {
+  size: 12,
+  grid: [],
+  placements: {},
+  found: new Set(),
+  firstCell: null,
+  showWords: false
+};
+
+function initWordSearch() {
+  const N = 12;
+  wsState.grid = Array.from({ length: N }, () => Array(N).fill(''));
+  wsState.placements = {};
+  wsState.found = new Set();
+  wsState.firstCell = null;
+  document.getElementById('ws-found-count').textContent = `0/${WS_WORDS.length}`;
+
+  // Sort longest first for clean placement
+  const sorted = [...WS_WORDS].sort((a, b) => b.word.length - a.word.length);
+  const dirs = [[0, 1], [1, 0], [1, 1], [0, -1]];
+
+  sorted.forEach(item => {
+    const w = item.word;
+    let placed = false;
+    for (let attempt = 0; attempt < 250 && !placed; attempt++) {
+      const [dr, dc] = dirs[Math.floor(Math.random() * dirs.length)];
+      const r0 = Math.floor(Math.random() * N);
+      const c0 = Math.floor(Math.random() * N);
+      const rEnd = r0 + dr * (w.length - 1);
+      const cEnd = c0 + dc * (w.length - 1);
+      if (rEnd < 0 || rEnd >= N || cEnd < 0 || cEnd >= N) continue;
+
+      let canPlace = true;
+      for (let i = 0; i < w.length; i++) {
+        const ch = wsState.grid[r0 + dr * i][c0 + dc * i];
+        if (ch !== '' && ch !== w[i]) { canPlace = false; break; }
+      }
+      if (canPlace) {
+        const coords = [];
+        for (let i = 0; i < w.length; i++) {
+          const rr = r0 + dr * i, cc = c0 + dc * i;
+          wsState.grid[rr][cc] = w[i];
+          coords.push([rr, cc]);
+        }
+        wsState.placements[w] = coords;
+        placed = true;
+      }
+    }
+    // Fallback deterministic row placement if random didn't hit
+    if (!placed) {
+      for (let r = 0; r < N && !placed; r++) {
+        if (w.length <= N) {
+          let free = true;
+          for (let i = 0; i < w.length; i++) {
+            if (wsState.grid[r][i] !== '' && wsState.grid[r][i] !== w[i]) free = false;
+          }
+          if (free) {
+            const coords = [];
+            for (let i = 0; i < w.length; i++) {
+              wsState.grid[r][i] = w[i];
+              coords.push([r, i]);
+            }
+            wsState.placements[w] = coords;
+            placed = true;
+          }
+        }
+      }
+    }
+  });
+
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  for (let r = 0; r < N; r++) {
+    for (let c = 0; c < N; c++) {
+      if (!wsState.grid[r][c]) {
+        wsState.grid[r][c] = letters[Math.floor(Math.random() * letters.length)];
+      }
+    }
+  }
+  renderWordSearch();
+}
+
+function renderWordSearch() {
+  const gridEl = document.getElementById('ws-grid');
+  gridEl.innerHTML = '';
+  const N = wsState.size;
+  for (let r = 0; r < N; r++) {
+    for (let c = 0; c < N; c++) {
+      const cell = document.createElement('div');
+      cell.className = 'ws-cell';
+      cell.id = `ws-cell-${r}-${c}`;
+      cell.textContent = wsState.grid[r][c];
+      cell.addEventListener('click', () => handleWsCellClick(r, c));
+      gridEl.appendChild(cell);
+    }
+  }
+
+  wsState.found.forEach(w => {
+    (wsState.placements[w] || []).forEach(([r, c]) => {
+      const el = document.getElementById(`ws-cell-${r}-${c}`);
+      if (el) el.classList.add('found');
+    });
+  });
+
+  renderWsClues();
+}
+
+function renderWsClues() {
+  const cluesEl = document.getElementById('ws-clues');
+  cluesEl.innerHTML = '';
+  WS_WORDS.forEach(item => {
+    const isFound = wsState.found.has(item.word);
+    const div = document.createElement('div');
+    div.className = 'ws-clue-item' + (isFound ? ' solved' : '');
+    const wordDisplay = (isFound || wsState.showWords)
+      ? `<span class="ws-word-badge">${item.word}</span>`
+      : `<span class="ws-word-badge">${item.word[0]}${'•'.repeat(item.word.length - 1)} (${item.word.length})</span>`;
+    div.innerHTML = `${wordDisplay} <span>${item.clue}</span>`;
+    div.addEventListener('click', () => {
+      if (isFound) updateDiscoveryCard(item.concept);
+    });
+    cluesEl.appendChild(div);
+  });
+}
+
+function toggleWsShowWords() {
+  wsState.showWords = !wsState.showWords;
+  renderWsClues();
+}
+
+function handleWsCellClick(r, c) {
+  const cellEl = document.getElementById(`ws-cell-${r}-${c}`);
+  if (!wsState.firstCell) {
+    wsState.firstCell = [r, c];
+    if (cellEl) cellEl.classList.add('selected');
+    return;
+  }
+
+  const [r1, c1] = wsState.firstCell;
+  const prevEl = document.getElementById(`ws-cell-${r1}-${c1}`);
+  if (prevEl) prevEl.classList.remove('selected');
+  wsState.firstCell = null;
+
+  // Check if [r1,c1] -> [r,c] matches any word placement (forwards or backwards)
+  WS_WORDS.forEach(item => {
+    if (wsState.found.has(item.word)) return;
+    const coords = wsState.placements[item.word];
+    if (!coords || !coords.length) return;
+    const [sr, sc] = coords[0];
+    const [er, ec] = coords[coords.length - 1];
+    const matchForward = (r1 === sr && c1 === sc && r === er && c === ec);
+    const matchReverse = (r1 === er && c1 === ec && r === sr && c === sc);
+
+    if (matchForward || matchReverse) {
+      wsState.found.add(item.word);
+      coords.forEach(([rr, cc]) => {
+        const el = document.getElementById(`ws-cell-${rr}-${cc}`);
+        if (el) el.classList.add('found');
+      });
+      document.getElementById('ws-found-count').textContent = `${wsState.found.size}/${WS_WORDS.length}`;
+      renderWsClues();
+      updateDiscoveryCard(item.concept);
+      speakText(`${item.word}. ${item.clue}`);
+      addArcadeXP(30);
+      if (wsState.found.size === WS_WORDS.length) {
+        unlockBadge('wordsearch');
+        addArcadeXP(75);
+      }
+    }
+  });
+}
+
+function giveWordSearchHint() {
+  const remaining = WS_WORDS.find(w => !wsState.found.has(w.word));
+  if (!remaining) return;
+  const coords = wsState.placements[remaining.word];
+  if (!coords || !coords.length) return;
+  const [r, c] = coords[0];
+  const cell = document.getElementById(`ws-cell-${r}-${c}`);
+  if (cell) {
+    cell.classList.add('selected');
+    wsState.firstCell = [r, c];
+  }
+}
+
+/* ---------------- GAME 3: THE RESPIRATORY SYSTEM CROSSWORD (11x17) ---------------- */
+const CW_WORDS = [
+  { num: 1, dir: 'across', word: 'PARABRONCHI', r: 0, c: 2, concept: 'parabronchi', clue: 'Tiny one-way tubes inside rigid bird lungs' },
+  { num: 2, dir: 'down',   word: 'ALVEOLI',     r: 0, c: 5, concept: 'alveoli',     clue: 'Microscopic grape-like air sacs in human lungs' },
+  { num: 3, dir: 'down',   word: 'OPERCULUM',   r: 0, c: 8, concept: 'operculum',   clue: 'Hard bony flap covering and pumping fish gills' },
+  { num: 4, dir: 'down',   word: 'SPIRACLES',   r: 2, c: 0, concept: 'spiracles',   clue: 'External valve openings along an insect\'s body' },
+  { num: 5, dir: 'across', word: 'PRAISE',      r: 3, c: 0, concept: 'diffusion',   clue: 'Psalm 150:6 — "Let everything that has breath ___ the Lord!"' },
+  { num: 6, dir: 'across', word: 'TRACHEA',     r: 3, c: 7, concept: 'alveoli',     clue: 'Cartilage-ringed windpipe carrying air toward the lungs' },
+  { num: 7, dir: 'down',   word: 'DIFFUSION',   r: 2, c: 15, concept: 'diffusion',  clue: 'Passive movement of gas from high to low concentration' },
+  { num: 8, dir: 'across', word: 'LUNGS',       r: 6, c: 8, concept: 'cutaneous',   clue: 'Primary breathing organs of adult mammals, reptiles, and birds' },
+  { num: 9, dir: 'across', word: 'MYOGLOBIN',   r: 8, c: 8, concept: 'myoglobin',   clue: 'Oxygen-storing muscle protein in deep-diving whales' },
+  { num: 10, dir: 'across', word: 'SKIN',       r: 10, c: 0, concept: 'cutaneous',  clue: 'Moist outer organ used by frogs for cutaneous respiration' }
+];
+
+let cwMap = {};
+let cwSolvedSet = new Set();
+
+function initCrossword() {
+  cwMap = {};
+  cwSolvedSet = new Set();
+  document.getElementById('cw-solved-count').textContent = `0/${CW_WORDS.length}`;
+
+  CW_WORDS.forEach(item => {
+    for (let i = 0; i < item.word.length; i++) {
+      const rr = item.dir === 'down' ? item.r + i : item.r;
+      const cc = item.dir === 'across' ? item.c + i : item.c;
+      const key = `${rr}-${cc}`;
+      if (!cwMap[key]) cwMap[key] = { ans: item.word[i], num: null, words: [] };
+      if (i === 0 && !cwMap[key].num) cwMap[key].num = item.num;
+      cwMap[key].words.push(item);
+    }
+  });
+
+  const gridEl = document.getElementById('cw-grid');
+  gridEl.innerHTML = '';
+  for (let r = 0; r < 11; r++) {
+    for (let c = 0; c < 17; c++) {
+      const key = `${r}-${c}`;
+      const cell = document.createElement('div');
+      if (!cwMap[key]) {
+        cell.className = 'cw-cell blocked';
+      } else {
+        cell.className = 'cw-cell';
+        if (cwMap[key].num) {
+          const numSpan = document.createElement('span');
+          numSpan.className = 'cw-num';
+          numSpan.textContent = cwMap[key].num;
+          cell.appendChild(numSpan);
+        }
+        const inp = document.createElement('input');
+        inp.maxLength = 1;
+        inp.id = `cw-inp-${r}-${c}`;
+        inp.dataset.r = r;
+        inp.dataset.c = c;
+        inp.addEventListener('input', (e) => handleCwInput(e, r, c));
+        cell.appendChild(inp);
+      }
+      gridEl.appendChild(cell);
+    }
+  }
+  renderCwClues();
+}
+
+function renderCwClues() {
+  const acrossEl = document.getElementById('cw-across-list');
+  const downEl = document.getElementById('cw-down-list');
+  acrossEl.innerHTML = '';
+  downEl.innerHTML = '';
+
+  CW_WORDS.forEach(item => {
+    const div = document.createElement('div');
+    const solved = cwSolvedSet.has(item.num + item.dir);
+    div.className = 'cw-clue-row' + (solved ? ' solved' : '');
+    div.innerHTML = `<b>${item.num}.</b> ${item.clue} <span style="color:var(--ink-soft); font-size:11px;">(${item.word.length})</span>`;
+    div.addEventListener('click', () => {
+      const firstInput = document.getElementById(`cw-inp-${item.r}-${item.c}`);
+      if (firstInput) firstInput.focus();
+      updateDiscoveryCard(item.concept);
+    });
+    if (item.dir === 'across') acrossEl.appendChild(div);
+    else downEl.appendChild(div);
+  });
+}
+
+function handleCwInput(e, r, c) {
+  const val = e.target.value.toUpperCase().replace(/[^A-Z]/g, '');
+  e.target.value = val;
+  e.target.parentElement.classList.remove('wrong');
+  if (val) {
+    // Move focus to next available right or down input
+    const nextRight = document.getElementById(`cw-inp-${r}-${c + 1}`);
+    const nextDown = document.getElementById(`cw-inp-${r + 1}-${c}`);
+    if (nextRight) nextRight.focus();
+    else if (nextDown) nextDown.focus();
+  }
+  autoCheckCrosswordWords();
+}
+
+function autoCheckCrosswordWords() {
+  CW_WORDS.forEach(item => {
+    const id = item.num + item.dir;
+    if (cwSolvedSet.has(id)) return;
+    let completeCorrect = true;
+    for (let i = 0; i < item.word.length; i++) {
+      const rr = item.dir === 'down' ? item.r + i : item.r;
+      const cc = item.dir === 'across' ? item.c + i : item.c;
+      const inp = document.getElementById(`cw-inp-${rr}-${cc}`);
+      if (!inp || inp.value.toUpperCase() !== item.word[i]) {
+        completeCorrect = false;
+        break;
+      }
+    }
+    if (completeCorrect) {
+      cwSolvedSet.add(id);
+      for (let i = 0; i < item.word.length; i++) {
+        const rr = item.dir === 'down' ? item.r + i : item.r;
+        const cc = item.dir === 'across' ? item.c + i : item.c;
+        const inp = document.getElementById(`cw-inp-${rr}-${cc}`);
+        if (inp) inp.parentElement.classList.add('correct');
+      }
+      document.getElementById('cw-solved-count').textContent = `${cwSolvedSet.size}/${CW_WORDS.length}`;
+      renderCwClues();
+      updateDiscoveryCard(item.concept);
+      addArcadeXP(35);
+      if (cwSolvedSet.size === CW_WORDS.length) {
+        unlockBadge('crossword');
+        addArcadeXP(80);
+      }
+    }
+  });
+}
+
+function checkCrossword() {
+  Object.keys(cwMap).forEach(key => {
+    const [r, c] = key.split('-');
+    const inp = document.getElementById(`cw-inp-${r}-${c}`);
+    if (!inp || !inp.value) return;
+    inp.parentElement.classList.remove('correct', 'wrong');
+    if (inp.value.toUpperCase() === cwMap[key].ans) {
+      inp.parentElement.classList.add('correct');
+    } else {
+      inp.parentElement.classList.add('wrong');
+    }
+  });
+  autoCheckCrosswordWords();
+}
+
+function revealCrosswordHint() {
+  for (const key of Object.keys(cwMap)) {
+    const [r, c] = key.split('-');
+    const inp = document.getElementById(`cw-inp-${r}-${c}`);
+    if (inp && inp.value.toUpperCase() !== cwMap[key].ans) {
+      inp.value = cwMap[key].ans;
+      inp.parentElement.classList.remove('wrong');
+      inp.parentElement.classList.add('correct');
+      autoCheckCrosswordWords();
+      break;
+    }
+  }
+}
+
+/* ---------------- GAME 4: PATHWAY & ENGLISH SYNTAX BUILDER ---------------- */
+const BUILDER_MISSIONS = [
+  {
+    title: "Mission 1 (Human Pathway): Order the path of inhaled oxygen in humans from outside to the blood.",
+    concept: "alveoli",
+    blocks: ["Nose & Mouth", "Trachea (Windpipe)", "Bronchi", "Bronchioles", "Alveoli", "Blood Capillaries"]
+  },
+  {
+    title: "Mission 2 (Avian Two-Cycle Pathway): Order the one-way path of air inside a flying bird.",
+    concept: "parabronchi",
+    blocks: ["Trachea", "Posterior Air Sacs", "Rigid Lungs (Parabronchi)", "Anterior Air Sacs", "Exhaled Out Trachea"]
+  },
+  {
+    title: "Mission 3 (Insect Direct Pathway): Order how oxygen reaches an insect's body cells without blood.",
+    concept: "spiracles",
+    blocks: ["Outside Air", "Spiracle Valves", "Tracheal Tubes", "Microscopic Tracheoles", "Individual Body Cells"]
+  },
+  {
+    title: "Mission 4 (Academic English — Fish): Build a scientific cause-and-effect sentence about countercurrent exchange.",
+    concept: "countercurrent",
+    blocks: ["Because blood flows", "opposite to water", "across the gill lamellae,", "fish can extract", "up to 80% of", "dissolved oxygen."]
+  },
+  {
+    title: "Mission 5 (Academic English — Contrast): Build a comparative sentence contrasting mammals and birds.",
+    concept: "parabronchi",
+    blocks: ["Whereas mammals breathe", "with two-way airflow,", "birds use nine air sacs", "to push fresh air", "in one direction", "through parabronchi."]
+  },
+  {
+    title: "Mission 6 (Biblical Integration — Psalm 150:6): Build the synthesis statement of the entire unit.",
+    concept: "diffusion",
+    blocks: ["Whether through lungs,", "feathery gills, or tracheoles,", "every living creature", "relies on diffusion", "and praises the Creator", "(Psalm 150:6)."]
+  }
+];
+
+let currentBuilderIdx = 0;
+let builderSelected = [];
+let builderPoolItems = [];
+let builderCompletedCount = 0;
+
+function loadBuilderMission(idx = 0) {
+  currentBuilderIdx = idx % BUILDER_MISSIONS.length;
+  const m = BUILDER_MISSIONS[currentBuilderIdx];
+  document.getElementById('builder-mission-num').textContent = `${currentBuilderIdx + 1} / ${BUILDER_MISSIONS.length}`;
+  document.getElementById('builder-prompt').innerHTML = `<b>${m.title}</b>`;
+  document.getElementById('result-builder').classList.remove('show');
+
+  builderSelected = [];
+  builderPoolItems = m.blocks.map((text, i) => ({ origIdx: i, text, used: false }));
+  builderPoolItems.sort(() => Math.random() - 0.5);
+  renderBuilderUI();
+}
+
+function renderBuilderUI() {
+  const slotsEl = document.getElementById('builder-slots');
+  const poolEl = document.getElementById('builder-pool');
+  slotsEl.innerHTML = '';
+  poolEl.innerHTML = '';
+
+  builderSelected.forEach((item, pos) => {
+    const chip = document.createElement('button');
+    chip.className = 'builder-chip in-slot';
+    chip.innerHTML = `<span class="step-arrow">${pos + 1}.</span> ${item.text}`;
+    chip.addEventListener('click', () => {
+      item.used = false;
+      builderSelected.splice(pos, 1);
+      renderBuilderUI();
+    });
+    slotsEl.appendChild(chip);
+  });
+
+  builderPoolItems.forEach(item => {
+    const chip = document.createElement('button');
+    chip.className = 'builder-chip' + (item.used ? ' used' : '');
+    chip.textContent = item.text;
+    chip.addEventListener('click', () => {
+      if (item.used) return;
+      item.used = true;
+      builderSelected.push(item);
+      renderBuilderUI();
+    });
+    poolEl.appendChild(chip);
+  });
+}
+
+function checkBuilderMission() {
+  const m = BUILDER_MISSIONS[currentBuilderIdx];
+  const resEl = document.getElementById('result-builder');
+  resEl.classList.add('show');
+
+  const userSentence = builderSelected.map(b => b.text).join(' ');
+  const targetSentence = m.blocks.join(' ');
+
+  if (userSentence === targetSentence) {
+    resEl.querySelector('.result-score').textContent = '✓ Perfect Sequence!';
+    resEl.querySelector('.result-msg').textContent = `"${targetSentence}"`;
+    updateDiscoveryCard(m.concept);
+    speakText(targetSentence);
+    addArcadeXP(40);
+    builderCompletedCount++;
+    if (builderCompletedCount >= 3) unlockBadge('pathway');
+  } else {
+    resEl.querySelector('.result-score').textContent = '✗ Keep Adjusting the Order';
+    resEl.querySelector('.result-msg').textContent = `Check the biological flow or English grammar connectors and try again!`;
+  }
+}
+
+function nextBuilderMission() {
+  loadBuilderMission(currentBuilderIdx + 1);
+}
+
+/* ---------------- GAME 5: 7-SYSTEMS ADAPTATION BLITZ ---------------- */
+const BLITZ_CASES = [
+  { text: "Uses countercurrent blood flow across microscopic gill lamellae to extract 80% of dissolved O₂ from water.", answer: "Fish", concept: "countercurrent" },
+  { text: "Uses 9 air sacs as bellows to push fresh air in a continuous one-way loop through rigid parabronchi.", answer: "Birds", concept: "parabronchi" },
+  { text: "Delivers oxygen directly to body cells through spiracles and microscopic tracheoles without using blood!", answer: "Insects", concept: "spiracles" },
+  { text: "Breathes using external gills as a tadpole, then transforms to use simple lungs and moist cutaneous skin.", answer: "Amphibians", concept: "cutaneous" },
+  { text: "Lacks a diaphragm; expands and contracts rib-cage muscles to ventilate septate lungs (snakes have one long lung).", answer: "Reptiles", concept: "alveoli" },
+  { text: "Collapses its lungs during deep ocean dives and stores oxygen in muscle myoglobin.", answer: "Marine Mammals", concept: "myoglobin" },
+  { text: "Contracts a dome-shaped diaphragm muscle to pull air into 300 million grape-like alveoli.", answer: "Humans", concept: "diaphragm" },
+  { text: "Pumps water across feathery gill filaments using a protective bony flap called the operculum.", answer: "Fish", concept: "operculum" },
+  { text: "Requires TWO full breath cycles (inhale + exhale) for a single packet of air to exit the respiratory system.", answer: "Birds", concept: "parabronchi" },
+  { text: "Suffocates if its mucus-covered outer skin dries out, even when surrounded by air.", answer: "Amphibians", concept: "cutaneous" }
+];
+
+const BLITZ_CHOICES = ["Humans", "Fish", "Amphibians", "Reptiles", "Birds", "Insects", "Marine Mammals"];
+let blitzState = { idx: 0, streak: 0, score: 0 };
+
+function initBlitzGame() {
+  blitzState = { idx: 0, streak: 0, score: 0 };
+  document.getElementById('result-blitz').classList.remove('show');
+  renderBlitzCase();
+}
+
+function renderBlitzCase() {
+  const item = BLITZ_CASES[blitzState.idx];
+  document.getElementById('blitz-progress').textContent = `${blitzState.idx + 1} / ${BLITZ_CASES.length}`;
+  document.getElementById('blitz-streak').textContent = blitzState.streak;
+  document.getElementById('blitz-score').textContent = blitzState.score;
+  document.getElementById('blitz-case-text').textContent = `"${item.text}"`;
+  document.getElementById('blitz-clue-text').textContent = "Click the matching animal group below:";
+
+  const btnBox = document.getElementById('blitz-buttons');
+  btnBox.innerHTML = '';
+  BLITZ_CHOICES.forEach(choice => {
+    const btn = document.createElement('button');
+    btn.className = 'blitz-btn';
+    btn.textContent = choice;
+    btn.addEventListener('click', () => handleBlitzAnswer(choice, btn));
+    btnBox.appendChild(btn);
+  });
+}
+
+function handleBlitzAnswer(choice, btn) {
+  const item = BLITZ_CASES[blitzState.idx];
+  const allBtns = document.querySelectorAll('#blitz-buttons .blitz-btn');
+  allBtns.forEach(b => b.disabled = true);
+
+  if (choice === item.answer) {
+    btn.classList.add('correct');
+    blitzState.streak++;
+    blitzState.score += 20 + (blitzState.streak * 5);
+    updateDiscoveryCard(item.concept);
+    addArcadeXP(20);
+  } else {
+    btn.classList.add('wrong');
+    blitzState.streak = 0;
+    allBtns.forEach(b => {
+      if (b.textContent === item.answer) b.classList.add('correct');
+    });
+  }
+
+  document.getElementById('blitz-streak').textContent = blitzState.streak;
+  document.getElementById('blitz-score').textContent = blitzState.score;
+
+  setTimeout(() => {
+    blitzState.idx++;
+    if (blitzState.idx >= BLITZ_CASES.length) {
+      const res = document.getElementById('result-blitz');
+      res.classList.add('show');
+      res.querySelector('.result-score').textContent = `Blitz Complete! Score: ${blitzState.score} pts`;
+      res.querySelector('.result-msg').innerHTML = `Awesome taxonomy speed! <button class="clil-btn" onclick="initBlitzGame()">🔄 Play Blitz Again</button>`;
+      unlockBadge('blitz');
+    } else {
+      renderBlitzCase();
+    }
+  }, 1100);
+}
+
+/* ---------------- GAME 6: BREATH OF LIFE & PSALM 150:6 CHAMPIONSHIP ---------------- */
+const QSHOW_LEVELS = [
+  { prize: "100 XP", concept: "alveoli", hint: "Think of tiny clusters of grapes wrapped in capillaries.", q: "Level 1: In human lungs, across which microscopic structures does gas exchange actually occur?", options: ["Tracheal cartilage rings", "Alveoli", "Diaphragm fibers", "Nasal passages"], correct: 1, explain: "Alveoli have walls only one cell thick and provide 70 m² of surface area for O₂ and CO₂ diffusion." },
+  { prize: "200 XP", concept: "diaphragm", hint: "Look at the phonetic transcription /ˈdaɪəfræm/.", q: "Level 2 (English Pronunciation): Which letter is completely SILENT in the word 'diaphragm'?", options: ["The letter 'p'", "The letter 'r'", "The letter 'g'", "The letter 'd'"], correct: 2, explain: "In English, 'diaphragm' is pronounced /ˈdaɪəfræm/ — the 'g' before 'm' is silent!" },
+  { prize: "300 XP", concept: "operculum", hint: "It acts like both a shield and a water pump on the side of the fish's head.", q: "Level 3: What is the function of the bony operculum in fish?", options: ["It stores fat for winter", "It protects the gills and pumps water across the filaments", "It connects the lungs to the heart", "It absorbs nitrogen from air"], correct: 1, explain: "The operculum opens and closes to keep water flowing over the gill filaments even when the fish is stationary." },
+  { prize: "400 XP", concept: "countercurrent", hint: "Opposite directions maintain a concentration gradient along the entire gill.", q: "Level 4: Why does countercurrent exchange allow fish gills to extract up to 80% of dissolved oxygen?", options: ["Blood and water flow in opposite directions, maintaining an O₂ gradient", "Water has 50 times more oxygen than air", "Fish gills boil water to release oxygen", "Fish blood contains no red blood cells"], correct: 0, explain: "Because blood flows opposite to water, blood always meets water with a higher oxygen concentration." },
+  { prize: "500 XP", concept: "cutaneous", hint: "In English grammar, a real scientific cause-and-effect rule uses Present Simple in both clauses.", q: "Level 5 (Academic English Grammar): Choose the correct Zero Conditional sentence about amphibians:", options: ["If an amphibian's skin dries out, gases cannot diffuse across it.", "If an amphibian's skin dried out, it will fly.", "Whereas amphibians breathe, their skin dry.", "Amphibians skin drying out because diffusion."], correct: 0, explain: "Scientific facts use the Zero Conditional (If + Present Simple, Present Simple): gases only dissolve and diffuse across a wet membrane." },
+  { prize: "600 XP", concept: "spiracles", hint: "Insects have open circulation with hemolymph, not oxygen-carrying blood.", q: "Level 6: Why can insects continue delivering oxygen to their muscles even if their circulatory fluid (hemolymph) is blocked?", options: ["They breathe through feathers", "Tracheoles deliver air directly from spiracles to individual body cells", "They have four diaphragms", "Their bones produce oxygen"], correct: 1, explain: "The insect tracheal system is completely separate from the circulatory system—tracheoles touch cells directly!" },
+  { prize: "700 XP", concept: "parabronchi", hint: "Remember where fresh inhaled air goes first in a bird's two-cycle system.", q: "Level 7: When a bird inhales for the first time, where does most of the fresh air go first?", options: ["Directly out the mouth", "Into the posterior (rear) air sacs", "Into the stomach", "Into dead-end alveoli"], correct: 1, explain: "Inhaled air flows first into the posterior air sacs, which then squeeze it forward through the rigid parabronchi!" },
+  { prize: "800 XP", concept: "myoglobin", hint: "Myo- means muscle; deep water pressure compresses air spaces.", q: "Level 8: How do deep-diving whales prevent decompression sickness while staying underwater for over an hour?", options: ["They breathe water through gills", "They exhale to collapse their lungs and store O₂ in blood and muscle myoglobin", "They inflate nine avian air sacs", "They absorb oxygen through dry scales"], correct: 1, explain: "Collapsing the lungs stops nitrogen from dissolving into the blood under high pressure, while myoglobin supplies oxygen to muscles." },
+  { prize: "900 XP", concept: "diffusion", hint: "Every gas-exchange organ—lung, gill, or skin—shares three physical traits.", q: "Level 9 (Synthesis): Which three characteristics are shared by ALL efficient gas-exchange surfaces across the animal kingdom?", options: ["Thick, dry, and flat", "Thin walls, moist surface, and large surface area", "Made of bone, cartilage, and scales", "Located outside the body and covered in fur"], correct: 1, explain: "Fick's Law of Diffusion requires a thin barrier, a moist lining for gases to dissolve, and a large surface area." },
+  { prize: "1,000 XP 👑", concept: "diffusion", hint: "Read Psalm 150:6 and Psalm 36:9 in the Biblical Reflection chapter.", q: "Level 10 (Grand Finale — Psalm 150:6): How do the 7 respiratory systems illustrate the Biblical principle 'Let everything that has breath praise the Lord'?", options: ["Each system is wisdom-designed for its habitat—water, land, or sky—yet unified by the same physical law of diffusion created by God.", "Only humans have breath, while animals do not exchange gases.", "All animals use identical lungs regardless of where they live.", "Breathing is random and unrelated to an animal's environment."], correct: 0, explain: "Champion! From fish lamellae in the ocean to avian parabronchi in the sky, every creature's breath testifies to the Creator's wisdom." }
+];
+
+let qshowState = { idx: 0, answered: false, used5050: false, usedHint: false };
+
+function initQuizShow() {
+  qshowState = { idx: 0, answered: false, used5050: false, usedHint: false };
+  document.getElementById('ll-5050').disabled = false;
+  document.getElementById('ll-hint').disabled = false;
+  renderQuizShowLevel();
+}
+
+function renderQuizShowLevel() {
+  const item = QSHOW_LEVELS[qshowState.idx];
+  qshowState.answered = false;
+  document.getElementById('qshow-prize').textContent = item.prize;
+
+  const ladderEl = document.getElementById('qshow-ladder');
+  ladderEl.innerHTML = '';
+  QSHOW_LEVELS.forEach((lvl, i) => {
+    const step = document.createElement('span');
+    step.className = 'ladder-step' + (i < qshowState.idx ? ' done' : (i === qshowState.idx ? ' current' : ''));
+    step.textContent = `${i + 1}: ${lvl.prize}`;
+    ladderEl.appendChild(step);
+  });
+
+  document.getElementById('qshow-question').textContent = item.q;
+  const optBox = document.getElementById('qshow-options');
+  optBox.innerHTML = '';
+  item.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.id = `qshow-opt-${i}`;
+    btn.textContent = opt;
+    btn.addEventListener('click', () => selectQShowAnswer(i, btn));
+    optBox.appendChild(btn);
+  });
+
+  const expEl = document.getElementById('qshow-explain');
+  expEl.classList.remove('show');
+  expEl.textContent = '';
+  document.getElementById('qshow-next').classList.remove('show');
+}
+
+function selectQShowAnswer(i, btn) {
+  if (qshowState.answered) return;
+  qshowState.answered = true;
+  const item = QSHOW_LEVELS[qshowState.idx];
+  const allBtns = document.querySelectorAll('#qshow-options .quiz-opt');
+  allBtns.forEach(b => b.disabled = true);
+
+  const expEl = document.getElementById('qshow-explain');
+  expEl.classList.add('show');
+
+  if (i === item.correct) {
+    btn.classList.add('correct');
+    expEl.innerHTML = `<strong>✓ Correct (${item.prize})!</strong> ${item.explain}`;
+    updateDiscoveryCard(item.concept);
+    addArcadeXP(50);
+    const nextBtn = document.getElementById('qshow-next');
+    if (qshowState.idx === QSHOW_LEVELS.length - 1) {
+      unlockBadge('qshow');
+      addArcadeXP(200);
+      expEl.innerHTML += `<br><br>🏆 <b>CONGRATULATIONS! You are a Psalm 150:6 Science & English Champion!</b>`;
+    } else {
+      nextBtn.classList.add('show');
+    }
+  } else {
+    btn.classList.add('wrong');
+    allBtns[item.correct].classList.add('correct');
+    expEl.innerHTML = `<strong>✗ Championship Run Ended at Level ${qshowState.idx + 1}.</strong> ${item.explain} <br><button class="clil-btn" style="margin-top:8px;" onclick="initQuizShow()">🔄 Try Championship Again</button>`;
+  }
+}
+
+function nextQuizShowQuestion() {
+  if (qshowState.idx < QSHOW_LEVELS.length - 1) {
+    qshowState.idx++;
+    renderQuizShowLevel();
+  }
+}
+
+function useLifeline5050() {
+  if (qshowState.used5050 || qshowState.answered) return;
+  qshowState.used5050 = true;
+  document.getElementById('ll-5050').disabled = true;
+  const item = QSHOW_LEVELS[qshowState.idx];
+  let removed = 0;
+  item.options.forEach((_, i) => {
+    if (i !== item.correct && removed < 2) {
+      const b = document.getElementById(`qshow-opt-${i}`);
+      if (b) {
+        b.disabled = true;
+        b.style.opacity = '0.35';
+        removed++;
+      }
+    }
+  });
+}
+
+function useLifelineHint() {
+  if (qshowState.usedHint || qshowState.answered) return;
+  qshowState.usedHint = true;
+  document.getElementById('ll-hint').disabled = true;
+  const item = QSHOW_LEVELS[qshowState.idx];
+  const expEl = document.getElementById('qshow-explain');
+  expEl.classList.add('show');
+  expEl.innerHTML = `🔬 <b>Scientist's Clue:</b> ${item.hint}`;
+}
+
+function speakQShowCurrent() {
+  const item = QSHOW_LEVELS[qshowState.idx];
+  speakText(`${item.q}. Options: ${item.options.join('. ')}`);
+}
+
+/* ---------- PERSISTENCE & INITIALIZATION ---------- */
 function saveProgress() {
   try {
     const payload = {
       studentName: document.getElementById('student-name')?.value || '',
       studentGroup: document.getElementById('student-group')?.value || '',
-      activityState
+      activityState,
+      arcadeXP,
+      arcadeBadges
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
   } catch (e) {}
@@ -2981,6 +4394,15 @@ function loadProgress() {
     if (data.studentGroup && document.getElementById('student-group')) {
       document.getElementById('student-group').value = data.studentGroup;
     }
+    if (typeof data.arcadeXP === 'number') {
+      arcadeXP = data.arcadeXP;
+    }
+    if (data.arcadeBadges) {
+      Object.keys(data.arcadeBadges).forEach(k => {
+        if (k in arcadeBadges) arcadeBadges[k] = data.arcadeBadges[k];
+      });
+    }
+    renderBadges();
     if (data.activityState) {
       Object.keys(data.activityState).forEach(k => {
         if (activityState[k]) {
@@ -3007,6 +4429,9 @@ function clearAllProgress() {
     activityState[k].completed = false;
     activityState[k].correct = 0;
   });
+  arcadeXP = 0;
+  Object.keys(arcadeBadges).forEach(k => arcadeBadges[k] = false);
+  renderBadges();
   resetDragDrop();
   resetFillBlank();
   resetTrueFalse();
@@ -3017,6 +4442,14 @@ function clearAllProgress() {
   updateDashboard();
 }
 
+// Initialize all 6 Arcade Games & Illustrated Discovery Panel
+updateDiscoveryCard('diffusion');
+initMemoryGame(1);
+initWordSearch();
+initCrossword();
+loadBuilderMission(0);
+initBlitzGame();
+initQuizShow();
 loadProgress();
 </script>
 </body>
