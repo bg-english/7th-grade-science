@@ -995,6 +995,237 @@
     .ws-layout{grid-template-columns:1fr;}
     .memory-grid{grid-template-columns:repeat(3, 1fr);}
   }
+
+  /* ==================== HIGH-IMPACT UPGRADES (SIMULATORS & CLIL) ==================== */
+  /* Mobile Sticky Navbar fix */
+  @media (max-width: 880px) {
+    nav.sidenav { height: 50px !important; position: sticky !important; top: 0 !important; z-index: 50 !important; }
+    .clil-toolbar { top: 50px !important; z-index: 45 !important; }
+  }
+
+  /* Hotspot Numbering, Visited, and Active States */
+  .img-hotspot {
+    position: absolute; width: 24px; height: 24px; margin: -12px 0 0 -12px;
+    border-radius: 50%; border: 2px solid var(--accent); background: rgba(246,244,238,0.92);
+    cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: var(--ink); font-family: 'Inter', sans-serif;
+    transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+    z-index: 5;
+  }
+  .img-hotspot:hover {
+    transform: scale(1.15); background: white; z-index: 10; box-shadow: 0 0 12px var(--accent);
+  }
+  .img-hotspot.active {
+    transform: scale(1.28); background: var(--accent); color: white; border: 2px solid white;
+    box-shadow: 0 0 16px var(--accent); z-index: 12;
+  }
+  .img-hotspot.visited::after {
+    content: '✓'; position: absolute; top: -5px; right: -5px; width: 12px; height: 12px;
+    background: #4CAF78; color: white; border-radius: 50%; font-size: 8px; font-weight: 900;
+    display: flex; align-items: center; justify-content: center; border: 1px solid white;
+  }
+  .diagram-progress {
+    display: flex; justify-content: space-between; align-items: center; font-size: 12px;
+    color: var(--ink-soft); margin-top: 10px;
+  }
+  .diagram-progress-badge {
+    font-weight: 600; color: var(--accent); background: var(--paper); padding: 3px 8px;
+    border-radius: 10px; border: 1px solid var(--line);
+  }
+  .info-nav-row {
+    display: flex; justify-content: space-between; align-items: center; margin-top: 12px;
+    padding-top: 10px; border-top: 1px dashed var(--line);
+  }
+  .info-nav-btn {
+    border: 1px solid var(--line); background: white; color: var(--ink); padding: 4px 10px;
+    border-radius: 6px; font-size: 11.5px; font-weight: 600; cursor: pointer; transition: all .15s;
+  }
+  .info-nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Interactive Simulators General Styles */
+  .sim-box {
+    background: white; border: 1.5px solid var(--line); border-radius: 14px; padding: 24px;
+    margin-top: 28px; box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+  }
+  .sim-header {
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+    gap: 12px; margin-bottom: 16px; border-bottom: 1px solid var(--line); padding-bottom: 12px;
+  }
+  .sim-title { font-family: 'Fraunces', serif; font-size: 19px; color: var(--ink); margin: 0; }
+  .sim-badge {
+    background: var(--teal-light); color: var(--teal); font-size: 11.5px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .04em; padding: 4px 10px; border-radius: 12px;
+  }
+  .sim-grid {
+    display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; align-items: center;
+  }
+  @media (max-width: 880px) { .sim-grid { grid-template-columns: 1fr; } }
+  .sim-controls { display: flex; flex-direction: column; gap: 14px; }
+  .sim-control-group { display: flex; flex-direction: column; gap: 5px; }
+  .sim-control-label {
+    display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; color: var(--ink);
+  }
+  .sim-control-val { color: var(--teal); font-family: monospace; font-size: 12.5px; }
+  .sim-slider { width: 100%; accent-color: var(--teal); cursor: pointer; }
+  .sim-readout-box { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+  .sim-readout-card {
+    flex: 1; min-width: 110px; background: var(--paper); border: 1px solid var(--line);
+    border-radius: 8px; padding: 8px 12px; text-align: center;
+  }
+  .sim-readout-num {
+    font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700; color: var(--teal); line-height: 1.1;
+  }
+  .sim-readout-label {
+    font-size: 10.5px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .03em; margin-top: 3px;
+  }
+  .sim-alert {
+    padding: 9px 12px; border-radius: 8px; font-size: 12.5px; margin-top: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .sim-alert.optimal { background: #E2F3EA; color: #165236; border: 1px solid #4CAF78; }
+  .sim-alert.warning { background: #FFFBEB; color: #8A5300; border: 1px solid #E8A33D; }
+  .sim-alert.danger { background: #FDECEA; color: #B33A32; border: 1px solid #D65A50; }
+
+  /* Discovery panel pulse glow animation */
+  @keyframes discoveryGlow {
+    0% { box-shadow: 0 6px 20px rgba(42,127,114,0.08); border-color: var(--teal); }
+    50% { box-shadow: 0 0 24px rgba(232,163,61,0.55); border-color: var(--amber); transform: scale(1.015); }
+    100% { box-shadow: 0 6px 20px rgba(42,127,114,0.08); border-color: var(--teal); }
+  }
+  .discovery-panel.pulse { animation: discoveryGlow 1.2s ease; }
+
+  /* Game 2 Word Search synchronizations */
+  .ws-cell.selected {
+    background: var(--amber) !important; color: #1B2B29 !important;
+    border-color: #B87818 !important; transform: scale(1.08);
+  }
+  .ws-cell.found {
+    background: #4CAF78 !important; color: white !important;
+    border-color: #388E3C !important;
+  }
+  .ws-clue-item.solved {
+    background: #E2F3EA !important; border-color: #4CAF78 !important;
+    text-decoration: line-through; opacity: .85;
+  }
+
+  /* Game 3 Crossword synchronizations */
+  .cw-cell.blocked { background: #182423 !important; }
+  .cw-cell.correct { background: #E2F3EA !important; }
+  .cw-cell.correct input { color: #165236 !important; font-weight: 700; }
+  .cw-cell.wrong { background: #FDECEA !important; }
+  .cw-cell.wrong input { color: #B33A32 !important; }
+  .cw-cell input {
+    width: 100%; height: 100%; border: none; background: transparent;
+    text-align: center; font-size: 13.5px; font-weight: 700; text-transform: uppercase;
+    color: var(--ink); padding: 2px 0 0 0; font-family: 'Inter', sans-serif;
+  }
+  .cw-cell input:focus { outline: 2px solid var(--amber); background: var(--amber-light); }
+  .cw-clue-row {
+    padding: 6px 8px; border-radius: 6px; cursor: pointer; margin-bottom: 4px;
+    border-left: 3px solid transparent; transition: all .15s;
+  }
+  .cw-clue-row:hover, .cw-clue-row.active { background: var(--teal-light); border-left-color: var(--teal); }
+  .cw-clue-row.solved { background: #E2F3EA; border-left-color: #4CAF78; text-decoration: line-through; opacity: .8; }
+
+  /* Game 4 Pathway & Syntax Builder */
+  .builder-chip {
+    padding: 8px 14px; border-radius: 8px; background: white; border: 1.5px solid var(--teal);
+    font-size: 13.5px; font-weight: 600; color: var(--ink); cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px; transition: all .15s;
+  }
+  .builder-chip:hover { background: var(--teal); color: white; transform: translateY(-1px); }
+  .builder-chip.used { opacity: 0.35; pointer-events: none; transform: scale(0.95); background: var(--paper-deep); border-color: var(--line); }
+  .builder-chip.in-slot { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .builder-chip.in-slot:hover { background: #D65A50; border-color: #D65A50; }
+  .step-arrow { color: var(--amber); font-weight: 700; }
+
+  /* Game 5 Adaptation Blitz */
+  .blitz-btn.correct { background: #E2F3EA !important; border-color: #4CAF78 !important; color: #165236 !important; }
+  .blitz-btn.wrong { background: #FDECEA !important; border-color: #D65A50 !important; color: #B33A32 !important; }
+
+  /* Game 6 Quiz Show */
+  .ladder-step {
+    flex: 1; min-width: 52px; text-align: center; padding: 5px 4px; border-radius: 6px;
+    font-size: 11px; font-weight: 700; background: var(--paper); border: 1px solid var(--line);
+    color: var(--ink-soft); transition: all .2s;
+  }
+  .ladder-step.current {
+    background: var(--amber) !important; color: #1B2B29 !important; border-color: var(--amber) !important;
+    transform: scale(1.05); box-shadow: 0 0 10px rgba(232,163,61,0.4);
+  }
+  .ladder-step.done { background: #4CAF78 !important; color: white !important; border-color: #4CAF78 !important; }
+
+  /* Bird Exam Diagram Trainer */
+  .exam-trainer-card {
+    background: white; border: 2px solid var(--bird); border-radius: 14px; padding: 24px;
+    margin-top: 32px; box-shadow: 0 4px 16px rgba(193,101,47,0.08);
+  }
+  .exam-diagram-wrap {
+    position: relative; width: 100%; border-radius: 8px; overflow: hidden;
+    border: 1px solid var(--line); margin-bottom: 20px;
+  }
+  .exam-diagram-wrap img { width: 100%; height: auto; display: block; }
+  .exam-q-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px; margin-bottom: 18px;
+  }
+  .exam-q-row {
+    background: var(--paper); border: 1px solid var(--line); border-radius: 8px;
+    padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  }
+  .exam-q-tag {
+    font-weight: 700; font-size: 13px; color: var(--bird); background: var(--bird-light);
+    padding: 3px 8px; border-radius: 6px;
+  }
+  .exam-q-select {
+    flex: 1; padding: 6px 10px; border-radius: 6px; border: 1.5px solid var(--line);
+    font-size: 12.5px; background: white;
+  }
+  .exam-q-select.correct { border-color: #4CAF78; background: #E2F3EA; }
+  .exam-q-select.wrong { border-color: #D65A50; background: #FDECEA; }
+
+  /* In-text Contextual CLIL Micro-Tooltips */
+  .clil-term {
+    border-bottom: 1.8px dotted var(--teal); cursor: pointer; font-weight: 600;
+    color: var(--ink); transition: background .15s; position: relative; display: inline-block;
+  }
+  .clil-term:hover { background: var(--teal-light); }
+
+  /* BICS to CALP Upgrade Studio */
+  .bics-calp-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 18px; margin-top: 24px;
+  }
+  .bics-calp-card {
+    background: white; border: 1px solid var(--line); border-radius: 12px;
+    padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  }
+  .bics-level-tag {
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
+    padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 6px;
+  }
+  .bics-tag { background: #FDECEA; color: #B33A32; }
+  .calp-tag { background: #E2F3EA; color: #165236; }
+  .bics-quote {
+    font-size: 13.5px; color: var(--ink-soft); font-style: italic; margin-bottom: 12px;
+    padding-left: 10px; border-left: 2px solid #D65A50;
+  }
+  .calp-quote {
+    font-size: 14px; color: var(--ink); font-weight: 500; padding-left: 10px;
+    border-left: 2px solid #4CAF78; margin-bottom: 8px;
+  }
+
+  /* Filter pills for compare table */
+  .compare-filter-bar {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;
+  }
+  .compare-eff-bar {
+    width: 100%; height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; margin-top: 4px;
+  }
+  .compare-eff-fill {
+    height: 100%; background: var(--teal); border-radius: 3px;
+  }
+
 </style>
 </head>
 <body>
@@ -1116,7 +1347,89 @@
           <li><b>Every system on this page is a variation on the same theme</b> — purposeful biological design solving one vital problem in at least six different ways.</li>
         </ul>
       </div>
-    </section>
+    
+      <!-- ===================== FICK'S LAW OF DIFFUSION LAB ===================== -->
+      <div class="sim-box" id="fick-sim-box">
+        <div class="sim-header">
+          <div>
+            <span class="sim-badge">🔬 Constructivist Lab · Physics of Gas Exchange</span>
+            <h3 class="sim-title" style="margin-top:4px;">Fick's Law of Diffusion Simulator</h3>
+          </div>
+          <button class="clil-btn" onclick="resetFickSim()">🔄 Reset Lab</button>
+        </div>
+        <p style="font-size:13.5px; color:var(--ink-soft); margin-bottom:16px;">
+          Diffusion rate depends on three physical variables: <b>Membrane Thickness</b>, <b>Surface Moisture</b>, and <b>Surface Area</b>. Move the sliders below to see what happens to cellular oxygen uptake and ATP energy output!
+        </p>
+
+        <div class="sim-grid">
+          <div>
+            <div id="fick-svg-stage" style="background:#F4F8F7; border:1px solid var(--line); border-radius:10px; padding:12px; text-align:center;">
+              <svg id="fick-canvas" viewBox="0 0 360 170" width="100%" height="170">
+                <rect width="360" height="170" rx="8" fill="#F4F8F7"/>
+                <!-- Outside Environment (Left) -->
+                <text x="25" y="22" font-size="11" font-weight="bold" fill="#0284C7">Outside Medium (Air / Water)</text>
+                <text x="25" y="37" font-size="10" fill="#64748B">High O₂ Concentration</text>
+                
+                <!-- Inside Capillary / Tissue (Right) -->
+                <text x="220" y="22" font-size="11" font-weight="bold" fill="#DC2626">Body Capillary / Cells</text>
+                <text x="220" y="37" font-size="10" fill="#64748B">Low O₂ / High CO₂</text>
+
+                <!-- Membrane Body -->
+                <rect id="fick-membrane" x="165" y="45" width="20" height="115" rx="3" fill="#BAE6FD" stroke="#0284C7" stroke-width="2"/>
+                <rect id="fick-moisture" x="160" y="45" width="30" height="115" rx="4" fill="#38BDF8" opacity="0.3"/>
+                <text id="fick-mem-label" x="175" y="166" font-size="9" text-anchor="middle" font-weight="bold" fill="#0F6E56">1 Cell (0.2 µm)</text>
+
+                <!-- Dynamic Diffusion Particles (Injected via JS) -->
+                <g id="fick-particles"></g>
+              </svg>
+            </div>
+            <div class="sim-readout-box">
+              <div class="sim-readout-card">
+                <div class="sim-readout-num" id="fick-rate-val">95%</div>
+                <div class="sim-readout-label">Diffusion Rate</div>
+              </div>
+              <div class="sim-readout-card">
+                <div class="sim-readout-num" id="fick-atp-val" style="color:var(--amber);">98%</div>
+                <div class="sim-readout-label">Cellular ATP Yield</div>
+              </div>
+            </div>
+            <div class="sim-alert optimal" id="fick-alert">
+              <span>✅ <b>Optimal Gas Exchange:</b> Thin, 100% moist, large-area surface allows rapid cellular respiration!</span>
+            </div>
+          </div>
+
+          <div class="sim-controls">
+            <div class="sim-control-group">
+              <div class="sim-control-label">
+                <span>1. Membrane Thickness (Barrier)</span>
+                <span class="sim-control-val" id="val-fick-thick">1 cell (Thin)</span>
+              </div>
+              <input type="range" class="sim-slider" id="slider-fick-thick" min="1" max="10" value="1" oninput="updateFickSim()"/>
+              <span style="font-size:11px; color:var(--ink-soft);">Thin = Alveoli/Lamellae (1 cell) | Thick = Scaly reptile skin (10 cells)</span>
+            </div>
+
+            <div class="sim-control-group">
+              <div class="sim-control-label">
+                <span>2. Surface Moisture (Dissolving Layer)</span>
+                <span class="sim-control-val" id="val-fick-moist">100% (Wet)</span>
+              </div>
+              <input type="range" class="sim-slider" id="slider-fick-moist" min="0" max="100" value="100" oninput="updateFickSim()"/>
+              <span style="font-size:11px; color:var(--ink-soft);">100% = Damp frog skin/lungs | 0% = Desiccated (Diffusion completely halts)</span>
+            </div>
+
+            <div class="sim-control-group">
+              <div class="sim-control-label">
+                <span>3. Surface Area (Folding Factor)</span>
+                <span class="sim-control-val" id="val-fick-area">70 m² (Folded Alveoli)</span>
+              </div>
+              <input type="range" class="sim-slider" id="slider-fick-area" min="5" max="70" value="70" oninput="updateFickSim()"/>
+              <span style="font-size:11px; color:var(--ink-soft);">70 m² = Millions of alveoli/lamellae | 5 m² = Unfolded balloon sac</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+</section>
 
     <!-- ===================== HUMAN ===================== -->
     <section class="chapter" id="human">
@@ -1132,11 +1445,11 @@
         <div class="diagram-frame img-diagram-frame">
           <div class="img-hotspot-wrap" id="human-imgwrap">
             <img src="assets/human-atlas.jpg" alt="Antique-style anatomical atlas illustration of the human respiratory system, showing the trachea, bronchi, lungs, alveoli, and diaphragm" />
-            <button class="img-hotspot" data-part="trachea" style="left:47.6%; top:39.8%;" aria-label="Trachea"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="bronchi" style="left:59.9%; top:58.4%;" aria-label="Bronchi"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="lungs" style="left:60.6%; top:73.3%;" aria-label="Lungs"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="alveoli" style="left:56.9%; top:49.7%;" aria-label="Alveoli"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="diaphragm" style="left:59.9%; top:88.8%;" aria-label="Diaphragm"><span class="pulse-ring"></span></button>
+            <button class="img-hotspot" data-part="trachea" data-num="1" style="left:47.6%; top:39.8%;" aria-label="1. Trachea"><span class="pulse-ring"></span>1</button>
+            <button class="img-hotspot" data-part="bronchi" data-num="2" style="left:59.9%; top:58.4%;" aria-label="2. Bronchi"><span class="pulse-ring"></span>2</button>
+            <button class="img-hotspot" data-part="lungs" data-num="3" style="left:43.5%; top:68.0%;" aria-label="3. Lungs"><span class="pulse-ring"></span>3</button>
+            <button class="img-hotspot" data-part="alveoli" data-num="4" style="left:74.2%; top:21.5%;" aria-label="4. Alveoli (Magnified Inset)"><span class="pulse-ring"></span>4</button>
+            <button class="img-hotspot" data-part="diaphragm" data-num="5" style="left:54.0%; top:88.0%;" aria-label="5. Diaphragm"><span class="pulse-ring"></span>5</button>
           </div>
           <div class="diagram-hint">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
@@ -1172,13 +1485,13 @@
         <div class="diagram-frame img-diagram-frame">
           <div class="img-hotspot-wrap" id="fish-imgwrap">
             <img src="assets/fish-atlas.jpg" alt="Antique-style anatomical atlas illustration of a fish's gill system, showing the mouth, gill arch, gill filaments, lamellae, and operculum" />
-            <button class="img-hotspot" data-part="mouth" style="left:21.6%; top:56%;" aria-label="Mouth"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="gill-arch" style="left:43.3%; top:59.4%;" aria-label="Gill Arch"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="filaments" style="left:60.6%; top:59.4%;" aria-label="Gill Filaments"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="operculum" style="left:74.9%; top:67.6%;" aria-label="Operculum"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="lamellae" style="left:74.5%; top:46.8%;" aria-label="Lamellae"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="blood-flow" style="left:68.8%; top:52.6%;" aria-label="Blood Flow"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="water-flow" style="left:84%; top:14%;" aria-label="Water Flow"><span class="pulse-ring"></span></button>
+            <button class="img-hotspot" data-part="mouth" data-num="1" style="left:17.5%; top:54.5%;" aria-label="1. Mouth (Water In)"><span class="pulse-ring"></span>1</button>
+            <button class="img-hotspot" data-part="gill-arch" data-num="2" style="left:43.3%; top:59.4%;" aria-label="2. Gill Arch"><span class="pulse-ring"></span>2</button>
+            <button class="img-hotspot" data-part="filaments" data-num="3" style="left:58.0%; top:55.0%;" aria-label="3. Gill Filaments"><span class="pulse-ring"></span>3</button>
+            <button class="img-hotspot" data-part="operculum" data-num="4" style="left:68.5%; top:68.5%;" aria-label="4. Operculum"><span class="pulse-ring"></span>4</button>
+            <button class="img-hotspot" data-part="lamellae" data-num="5" style="left:83.5%; top:20.5%;" aria-label="5. Lamellae (Microscopic Inset)"><span class="pulse-ring"></span>5</button>
+            <button class="img-hotspot" data-part="water-flow" data-num="6" style="left:79.5%; top:13.5%;" aria-label="6. Water Flow"><span class="pulse-ring"></span>6</button>
+            <button class="img-hotspot" data-part="blood-flow" data-num="7" style="left:88.5%; top:19.5%;" aria-label="7. Blood Flow"><span class="pulse-ring"></span>7</button>
           </div>
           <div class="diagram-hint">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
@@ -1196,7 +1509,68 @@
           <div class="callout"><b>Compare:</b> humans extract about 25% of the oxygen in each breath of air. Fish gills, using countercurrent exchange, are actually a more efficient extraction system — they just have far less oxygen available to work with.</div>
         </div>
       </div>
-    </section>
+    
+      <!-- ===================== COUNTERCURRENT VS CONCURRENT SIMULATOR ===================== -->
+      <div class="sim-box" id="fish-sim-box">
+        <div class="sim-header">
+          <div>
+            <span class="sim-badge" style="background:var(--fish-light); color:var(--fish);">🐟 Fluid Mechanics Lab · Gills</span>
+            <h3 class="sim-title" style="margin-top:4px;">Countercurrent vs. Concurrent Flow Simulator</h3>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="clil-btn active" id="btn-flow-counter" onclick="setFlowMode('counter')">🔄 Countercurrent (Fish Gills)</button>
+            <button class="clil-btn" id="btn-flow-concur" onclick="setFlowMode('concur')">➡️ Concurrent (Hypothetical)</button>
+          </div>
+        </div>
+        <p style="font-size:13.5px; color:var(--ink-soft); margin-bottom:14px;">
+          Compare the biological design of fish gills (opposite flow) with parallel flow. Watch the oxygen percentage along the gill capillary:
+        </p>
+
+        <div style="background:#F2F7FA; border:1px solid var(--line); border-radius:10px; padding:16px;">
+          <svg viewBox="0 0 540 180" width="100%" height="180" id="flow-svg">
+            <!-- Water Stream (Top) -->
+            <rect x="50" y="25" width="440" height="42" rx="8" fill="#E0F2FE" stroke="#0284C7" stroke-width="2"/>
+            <text x="60" y="48" font-size="11" font-weight="bold" fill="#0369A1">🌊 Water Flow →</text>
+            <circle cx="160" cy="46" r="14" fill="#0284C7"/><text id="water-p1" x="160" y="50" font-size="10" font-weight="bold" fill="white" text-anchor="middle">100%</text>
+            <circle cx="270" cy="46" r="14" fill="#38BDF8"/><text id="water-p2" x="270" y="50" font-size="10" font-weight="bold" fill="#0C4A6E" text-anchor="middle">70%</text>
+            <circle cx="380" cy="46" r="14" fill="#7DD3FC"/><text id="water-p3" x="380" y="50" font-size="10" font-weight="bold" fill="#0C4A6E" text-anchor="middle">40%</text>
+            <circle cx="465" cy="46" r="14" fill="#BAE6FD"/><text id="water-p4" x="465" y="50" font-size="10" font-weight="bold" fill="#0C4A6E" text-anchor="middle">15%</text>
+
+            <!-- Blood Capillary (Bottom) -->
+            <rect x="50" y="105" width="440" height="42" rx="8" fill="#FFE4E6" stroke="#E11D48" stroke-width="2"/>
+            <text id="blood-dir-label" x="60" y="128" font-size="11" font-weight="bold" fill="#BE123C">🩸 ← Blood Flow</text>
+            <circle cx="160" cy="126" r="14" fill="#BE123C"/><text id="blood-p1" x="160" y="130" font-size="10" font-weight="bold" fill="white" text-anchor="middle">85%</text>
+            <circle cx="270" cy="126" r="14" fill="#E11D48"/><text id="blood-p2" x="270" y="130" font-size="10" font-weight="bold" fill="white" text-anchor="middle">55%</text>
+            <circle cx="380" cy="126" r="14" fill="#FB7185"/><text id="blood-p3" x="380" y="130" font-size="10" font-weight="bold" fill="white" text-anchor="middle">25%</text>
+            <circle cx="465" cy="126" r="14" fill="#FDA4AF"/><text id="blood-p4" x="465" y="130" font-size="10" font-weight="bold" fill="#881337" text-anchor="middle">5%</text>
+
+            <!-- Diffusion Gradient Connectors -->
+            <g id="flow-arrows" stroke="#0F6E56" stroke-width="2" stroke-dasharray="3,2">
+              <line x1="160" y1="67" x2="160" y2="105"/>
+              <line x1="270" y1="67" x2="270" y2="105"/>
+              <line x1="380" y1="67" x2="380" y2="105"/>
+              <line x1="465" y1="67" x2="465" y2="105"/>
+            </g>
+          </svg>
+        </div>
+
+        <div class="sim-readout-box" style="margin-top:14px;">
+          <div class="sim-readout-card">
+            <div class="sim-readout-num" id="fish-extract-val" style="color:var(--fish);">80%</div>
+            <div class="sim-readout-label">Net O₂ Extracted from Water</div>
+          </div>
+          <div class="sim-readout-card">
+            <div class="sim-readout-num" id="fish-gradient-val">Constant 15%</div>
+            <div class="sim-readout-label">Diffusion Gradient Along Gill</div>
+          </div>
+        </div>
+
+        <div class="sim-alert optimal" id="fish-sim-alert">
+          <span>✅ <b>Countercurrent Superiority:</b> Because blood and water flow in opposite directions, blood constantly meets water with a higher oxygen level. Diffusion never stalls!</span>
+        </div>
+      </div>
+
+</section>
 
     <!-- ===================== AMPHIBIAN ===================== -->
     <section class="chapter" id="amphibian">
@@ -1212,10 +1586,10 @@
         <div class="diagram-frame img-diagram-frame">
           <div class="img-hotspot-wrap" id="amphibian-imgwrap">
             <img src="assets/amphibian-atlas.jpg" alt="Antique-style anatomical atlas illustration of an amphibian's respiratory system, showing moist skin, lungs, mouth lining, and tadpole-stage gills" />
-            <button class="img-hotspot" data-part="skin" style="left:27%; top:33%;" aria-label="Skin (moist surface)"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="lungs-amph" style="left:44%; top:27%;" aria-label="Lungs"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="mouth-lining" style="left:77%; top:45%;" aria-label="Mouth Lining"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="gills-tadpole" style="left:82%; top:81%;" aria-label="Gills (tadpole stage)"><span class="pulse-ring"></span></button>
+            <button class="img-hotspot" data-part="skin" data-num="1" style="left:27%; top:33%;" aria-label="1. Skin (Cutaneous Respiration)"><span class="pulse-ring"></span>1</button>
+            <button class="img-hotspot" data-part="lungs-amph" data-num="2" style="left:43.5%; top:38.5%;" aria-label="2. Simple Sac-like Lungs"><span class="pulse-ring"></span>2</button>
+            <button class="img-hotspot" data-part="mouth-lining" data-num="3" style="left:71.5%; top:31%;" aria-label="3. Vascular Mouth Lining"><span class="pulse-ring"></span>3</button>
+            <button class="img-hotspot" data-part="gills-tadpole" data-num="4" style="left:83.5%; top:80.5%;" aria-label="4. Tadpole Gills (Larval Stage)"><span class="pulse-ring"></span>4</button>
           </div>
           <div class="diagram-hint">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
@@ -1249,11 +1623,11 @@
         <div class="diagram-frame img-diagram-frame">
           <div class="img-hotspot-wrap" id="reptile-imgwrap">
             <img src="assets/reptile-atlas.jpg" alt="Antique-style anatomical atlas illustration of a reptile's respiratory system, showing the nostril, windpipe, main lung, reduced lung, and ribs" />
-            <button class="img-hotspot" data-part="single-nostril" style="left:9%; top:43%;" aria-label="Nostril"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="windpipe" style="left:33.5%; top:50%;" aria-label="Windpipe"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="elongated-lung" style="left:60%; top:54%;" aria-label="Lung (main)"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="reduced-lung" style="left:49%; top:58%;" aria-label="Lung (reduced)"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="rib-muscles" style="left:76%; top:38%;" aria-label="Ribs"><span class="pulse-ring"></span></button>
+            <button class="img-hotspot" data-part="single-nostril" data-num="1" style="left:9%; top:43%;" aria-label="1. Nostril"><span class="pulse-ring"></span>1</button>
+            <button class="img-hotspot" data-part="windpipe" data-num="2" style="left:33.5%; top:50%;" aria-label="2. Windpipe with Cartilage Rings"><span class="pulse-ring"></span>2</button>
+            <button class="img-hotspot" data-part="reduced-lung" data-num="3" style="left:49%; top:58%;" aria-label="3. Vestigial Reduced Lung"><span class="pulse-ring"></span>3</button>
+            <button class="img-hotspot" data-part="elongated-lung" data-num="4" style="left:62%; top:54%;" aria-label="4. Elongated Main Lung"><span class="pulse-ring"></span>4</button>
+            <button class="img-hotspot" data-part="rib-muscles" data-num="5" style="left:78%; top:38%;" aria-label="5. Rib Muscles (No Diaphragm)"><span class="pulse-ring"></span>5</button>
           </div>
           <div class="diagram-hint">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
@@ -1287,13 +1661,12 @@
         <div class="diagram-frame img-diagram-frame">
           <div class="img-hotspot-wrap" id="bird-imgwrap">
             <img src="assets/bird-atlas.jpg" alt="Antique-style anatomical atlas illustration of a bird's respiratory system, showing the trachea, cervical and clavicular air sacs, lung, parabronchi, and anterior and posterior air sacs" />
-            <button class="img-hotspot" data-part="trachea-bird" style="left:13%; top:40%;" aria-label="Trachea"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="cervical" style="left:19%; top:22%;" aria-label="Cervical Air Sac"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="clavicular" style="left:27%; top:36%;" aria-label="Clavicular Air Sac"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="lung-bird" style="left:47%; top:42%;" aria-label="Lung"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="parabronchi" style="left:55%; top:49%;" aria-label="Parabronchi"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="ant-air-sac" style="left:23%; top:52%;" aria-label="Anterior Air Sacs"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="post-air-sac" style="left:66%; top:74%;" aria-label="Posterior Air Sacs"><span class="pulse-ring"></span></button>
+            <button class="img-hotspot" data-part="trachea-bird" data-num="1" style="left:13%; top:40%;" aria-label="1. Trachea"><span class="pulse-ring"></span>1</button>
+            <button class="img-hotspot" data-part="cervical" data-num="2" style="left:19%; top:22%;" aria-label="2. Cervical Air Sac"><span class="pulse-ring"></span>2</button>
+            <button class="img-hotspot" data-part="ant-air-sac" data-num="3" style="left:23%; top:52%;" aria-label="3. Anterior Air Sacs"><span class="pulse-ring"></span>3</button>
+            <button class="img-hotspot" data-part="lung-bird" data-num="4" style="left:47%; top:42%;" aria-label="4. Rigid Lung"><span class="pulse-ring"></span>4</button>
+            <button class="img-hotspot" data-part="post-air-sac" data-num="5" style="left:66%; top:74%;" aria-label="5. Posterior Air Sacs"><span class="pulse-ring"></span>5</button>
+            <button class="img-hotspot" data-part="parabronchi" data-num="6" style="left:83.5%; top:22%;" aria-label="6. Parabronchi (Microscopic Inset)"><span class="pulse-ring"></span>6</button>
           </div>
           <div class="diagram-hint">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
@@ -1311,7 +1684,160 @@
           <div class="callout"><b>Why it matters:</b> this system is so efficient that bar-headed geese can fly over the Himalayas at altitudes above 7,000 meters, where the air holds a third of the oxygen it does at sea level.</div>
         </div>
       </div>
-    </section>
+    
+      <!-- ===================== AVIAN 2-BREATH CYCLE ANIMATOR ===================== -->
+      <div class="sim-box" id="bird-cycle-box">
+        <div class="sim-header">
+          <div>
+            <span class="sim-badge" style="background:var(--bird-light); color:var(--bird);">🦅 Avian Aerodynamics · Continuous One-Way Flow</span>
+            <h3 class="sim-title" style="margin-top:4px;">Bird 2-Breath Cycle Simulator</h3>
+          </div>
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <button class="clil-btn active" id="btn-cycle-1" onclick="setBirdCycleStep(1)">1. Inhale 1</button>
+            <button class="clil-btn" id="btn-cycle-2" onclick="setBirdCycleStep(2)">2. Exhale 1</button>
+            <button class="clil-btn" id="btn-cycle-3" onclick="setBirdCycleStep(3)">3. Inhale 2</button>
+            <button class="clil-btn" id="btn-cycle-4" onclick="setBirdCycleStep(4)">4. Exhale 2</button>
+            <button class="clil-btn" id="btn-cycle-auto" onclick="toggleBirdCycleAuto()">▶️ Auto-Play</button>
+          </div>
+        </div>
+
+        <p style="font-size:13.5px; color:var(--ink-soft); margin-bottom:14px;" id="bird-cycle-desc">
+          <b>Step 1 (Inhale 1):</b> Fresh air travels down the trachea directly into the <b>Posterior (Rear) Air Sacs</b>. (The rigid lungs do NOT expand like balloons).
+        </p>
+
+        <div style="background:#FFFBF8; border:1px solid var(--line); border-radius:10px; padding:16px; text-align:center;">
+          <svg viewBox="0 0 540 180" width="100%" height="180" id="bird-cycle-svg">
+            <rect width="540" height="180" rx="8" fill="#FFFBF8"/>
+            <!-- Bird Airway Schematic -->
+            <path d="M40,90 Q90,90 140,90" stroke="#78350F" stroke-width="8" stroke-linecap="round"/>
+            <text x="40" y="75" font-size="11" font-weight="bold" fill="#78350F">Trachea</text>
+
+            <!-- Posterior Air Sacs (Rear) -->
+            <ellipse id="sac-post" cx="440" cy="115" rx="45" ry="32" fill="#FED7AA" stroke="#EA580C" stroke-width="2.5"/>
+            <text x="440" y="118" font-size="10.5" font-weight="bold" fill="#9A3412" text-anchor="middle">Posterior Sacs</text>
+
+            <!-- Rigid Lung with Parabronchi (Middle) -->
+            <rect id="lung-rigid" x="250" y="55" width="90" height="70" rx="8" fill="#FEE2E2" stroke="#DC2626" stroke-width="2.5"/>
+            <text x="295" y="75" font-size="10.5" font-weight="bold" fill="#991B1B" text-anchor="middle">Rigid Lung</text>
+            <line x1="260" y1="90" x2="330" y2="90" stroke="#991B1B" stroke-width="3"/>
+            <line x1="260" y1="102" x2="330" y2="102" stroke="#991B1B" stroke-width="3"/>
+            <text x="295" y="118" font-size="9" font-weight="bold" fill="#991B1B" text-anchor="middle">Parabronchi</text>
+
+            <!-- Anterior Air Sacs (Front) -->
+            <ellipse id="sac-ant" cx="160" cy="115" rx="45" ry="32" fill="#BAE6FD" stroke="#0284C7" stroke-width="2.5"/>
+            <text x="160" y="118" font-size="10.5" font-weight="bold" fill="#0369A1" text-anchor="middle">Anterior Sacs</text>
+
+            <!-- Packet of Air (Animated via Step) -->
+            <circle id="air-packet-a" cx="440" cy="115" r="16" fill="#F59E0B" stroke="#B45309" stroke-width="3"/>
+            <text id="air-packet-label" x="440" y="119" font-size="10" font-weight="bold" fill="white" text-anchor="middle">Air 1</text>
+          </svg>
+        </div>
+
+        <div class="sim-alert optimal" id="bird-cycle-alert" style="margin-top:12px;">
+          <span>💡 <b>Why Geese Fly Over Everest:</b> Notice that fresh oxygen moves across the parabronchi during BOTH inhalation and exhalation. The lungs never hold stale dead air!</span>
+        </div>
+      </div>
+
+      <!-- ===================== BIRD EXAM DIAGRAM TRAINER (Q7-Q11) ===================== -->
+      <div class="exam-trainer-card" id="bird-exam-trainer">
+        <div class="sim-header" style="border-bottom-color:var(--bird-light);">
+          <div>
+            <span class="sim-badge" style="background:var(--bird-light); color:var(--bird);">📝 Official Exam Trainer · Questions 7 to 11</span>
+            <h3 class="sim-title" style="margin-top:4px;">Bird Anatomical Diagram Identification Challenge</h3>
+          </div>
+          <button class="clil-btn" onclick="checkBirdExamDiagram()">✅ Check Diagram Answers</button>
+        </div>
+        <p style="font-size:13.5px; color:var(--ink-soft); margin-bottom:14px;">
+          Match each label <b>[ Q7 ]</b> through <b>[ Q11 ]</b> on the official exam illustration below using the Word Bank. Watch out: there are <b>3 extra distractors</b> that do not belong to birds!
+        </p>
+
+        <div class="exam-diagram-wrap">
+          <img src="assets/bird-exam-diagram.png" alt="Official CLIL Exam Diagram of Bird Respiratory System with labels Q7, Q8, Q9, Q10, Q11" />
+        </div>
+
+        <div class="exam-q-grid">
+          <div class="exam-q-row">
+            <span class="exam-q-tag">[ Q7 ] Cartilage windpipe:</span>
+            <select class="exam-q-select" id="exam-q7" data-correct="A">
+              <option value="">Select structure...</option>
+              <option value="A">A. Trachea (Windpipe)</option>
+              <option value="B">B. Anterior Air Sacs</option>
+              <option value="C">C. Rigid Lung</option>
+              <option value="D">D. Posterior Air Sacs</option>
+              <option value="E">E. Parabronchi (Parallel Tubes)</option>
+              <option value="F">F. Diaphragm Muscle (Distractor)</option>
+              <option value="G">G. Gill Lamellae (Distractor)</option>
+              <option value="H">H. Insect Spiracles (Distractor)</option>
+            </select>
+          </div>
+
+          <div class="exam-q-row">
+            <span class="exam-q-tag">[ Q8 ] Front sacs (chest):</span>
+            <select class="exam-q-select" id="exam-q8" data-correct="B">
+              <option value="">Select structure...</option>
+              <option value="A">A. Trachea (Windpipe)</option>
+              <option value="B">B. Anterior Air Sacs</option>
+              <option value="C">C. Rigid Lung</option>
+              <option value="D">D. Posterior Air Sacs</option>
+              <option value="E">E. Parabronchi (Parallel Tubes)</option>
+              <option value="F">F. Diaphragm Muscle (Distractor)</option>
+              <option value="G">G. Gill Lamellae (Distractor)</option>
+              <option value="H">H. Insect Spiracles (Distractor)</option>
+            </select>
+          </div>
+
+          <div class="exam-q-row">
+            <span class="exam-q-tag">[ Q9 ] Non-expanding lung:</span>
+            <select class="exam-q-select" id="exam-q9" data-correct="C">
+              <option value="">Select structure...</option>
+              <option value="A">A. Trachea (Windpipe)</option>
+              <option value="B">B. Anterior Air Sacs</option>
+              <option value="C">C. Rigid Lung</option>
+              <option value="D">D. Posterior Air Sacs</option>
+              <option value="E">E. Parabronchi (Parallel Tubes)</option>
+              <option value="F">F. Diaphragm Muscle (Distractor)</option>
+              <option value="G">G. Gill Lamellae (Distractor)</option>
+              <option value="H">H. Insect Spiracles (Distractor)</option>
+            </select>
+          </div>
+
+          <div class="exam-q-row">
+            <span class="exam-q-tag">[ Q10 ] Rear sacs (fresh air):</span>
+            <select class="exam-q-select" id="exam-q10" data-correct="D">
+              <option value="">Select structure...</option>
+              <option value="A">A. Trachea (Windpipe)</option>
+              <option value="B">B. Anterior Air Sacs</option>
+              <option value="C">C. Rigid Lung</option>
+              <option value="D">D. Posterior Air Sacs</option>
+              <option value="E">E. Parabronchi (Parallel Tubes)</option>
+              <option value="F">F. Diaphragm Muscle (Distractor)</option>
+              <option value="G">G. Gill Lamellae (Distractor)</option>
+              <option value="H">H. Insect Spiracles (Distractor)</option>
+            </select>
+          </div>
+
+          <div class="exam-q-row">
+            <span class="exam-q-tag">[ Q11 ] Microscopic tubes:</span>
+            <select class="exam-q-select" id="exam-q11" data-correct="E">
+              <option value="">Select structure...</option>
+              <option value="A">A. Trachea (Windpipe)</option>
+              <option value="B">B. Anterior Air Sacs</option>
+              <option value="C">C. Rigid Lung</option>
+              <option value="D">D. Posterior Air Sacs</option>
+              <option value="E">E. Parabronchi (Parallel Tubes)</option>
+              <option value="F">F. Diaphragm Muscle (Distractor)</option>
+              <option value="G">G. Gill Lamellae (Distractor)</option>
+              <option value="H">H. Insect Spiracles (Distractor)</option>
+            </select>
+          </div>
+        </div>
+        <div class="activity-result" id="result-bird-exam" style="margin-top:0;">
+          <div class="result-score"></div>
+          <div class="result-msg"></div>
+        </div>
+      </div>
+
+</section>
 
     <!-- ===================== INSECT ===================== -->
     <section class="chapter" id="insect">
@@ -1327,11 +1853,12 @@
         <div class="diagram-frame img-diagram-frame">
           <div class="img-hotspot-wrap" id="insect-imgwrap">
             <img src="assets/insect-atlas.jpg" alt="Antique-style anatomical atlas illustration of an insect's tracheal respiratory system, showing spiracles, trachea, tracheoles, and body cells" />
-            <button class="img-hotspot" data-part="spiracle" style="left:27.4%; top:33.9%;" aria-label="Spiracle"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="spiracle" style="left:24.9%; top:75.2%;" aria-label="Spiracle"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="trachea-insect" style="left:41.8%; top:56.9%;" aria-label="Trachea"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="tracheoles" style="left:61.9%; top:40.7%;" aria-label="Tracheoles"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="body-cells" style="left:92.5%; top:20.3%;" aria-label="Body Cells"><span class="pulse-ring"></span></button>
+            <button class="img-hotspot" data-part="spiracle-thoracic" data-num="1" style="left:27.4%; top:33.9%;" aria-label="1. Thoracic Spiracle Valve"><span class="pulse-ring"></span>1</button>
+            <button class="img-hotspot" data-part="spiracle-abdominal" data-num="2" style="left:24.9%; top:75.2%;" aria-label="2. Abdominal Spiracle Valve"><span class="pulse-ring"></span>2</button>
+            <button class="img-hotspot" data-part="trachea-insect" data-num="3" style="left:41.8%; top:56.9%;" aria-label="3. Branching Trachea"><span class="pulse-ring"></span>3</button>
+            <button class="img-hotspot" data-part="tracheoles" data-num="4" style="left:61.9%; top:40.7%;" aria-label="4. Microscopic Tracheoles"><span class="pulse-ring"></span>4</button>
+            <button class="img-hotspot" data-part="tracheoles-inset" data-num="5" style="left:87.0%; top:17.5%;" aria-label="5. Tracheoles on Cells (Inset)"><span class="pulse-ring"></span>5</button>
+            <button class="img-hotspot" data-part="body-cells" data-num="6" style="left:92.5%; top:21.0%;" aria-label="6. Body Cells (No Blood Used)"><span class="pulse-ring"></span>6</button>
           </div>
           <div class="diagram-hint">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
@@ -1374,9 +1901,9 @@
         <div class="diagram-frame img-diagram-frame">
           <div class="img-hotspot-wrap" id="mammal-imgwrap">
             <img src="assets/mammal-atlas.jpg" alt="Antique-style anatomical atlas plate comparing three mammal respiratory adaptations: a diving seal, a high-altitude mouse, and a small fast-breathing shrew" />
-            <button class="img-hotspot" data-part="diving" style="left:22%; top:48%;" aria-label="Diving Mammal"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="altitude" style="left:50%; top:25%;" aria-label="High-Altitude Mammal"><span class="pulse-ring"></span></button>
-            <button class="img-hotspot" data-part="small-mammal" style="left:82%; top:37%;" aria-label="Small Mammal"><span class="pulse-ring"></span></button>
+            <button class="img-hotspot" data-part="diving" data-num="1" style="left:22%; top:48%;" aria-label="1. Diving Seal (Myoglobin)"><span class="pulse-ring"></span>1</button>
+            <button class="img-hotspot" data-part="altitude" data-num="2" style="left:50%; top:25%;" aria-label="2. High-Altitude Mouse"><span class="pulse-ring"></span>2</button>
+            <button class="img-hotspot" data-part="small-mammal" data-num="3" style="left:82%; top:37%;" aria-label="3. Rapid Shrew Metabolism"><span class="pulse-ring"></span>3</button>
           </div>
           <div class="diagram-hint">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
@@ -1392,18 +1919,33 @@
       <span class="kicker" style="--accent:#2A7F72;">Put it all together</span>
       <h2>Seven Systems, Side by Side</h2>
       <p class="dek">Same problem — getting oxygen to cells and removing carbon dioxide — seven very different engineering solutions.</p>
+      <div class="compare-filter-bar">
+        <span style="font-size:12px; font-weight:700; text-transform:uppercase; color:var(--ink-soft); align-self:center; margin-right:4px;">Filter Systems:</span>
+        <button class="clil-btn active" onclick="filterCompareTable('all', this)">All 7 Systems</button>
+        <button class="clil-btn" onclick="filterCompareTable('one-way', this)">🔄 One-Way Airflow</button>
+        <button class="clil-btn" onclick="filterCompareTable('two-way', this)">↔️ Two-Way Tidal Flow</button>
+        <button class="clil-btn" onclick="filterCompareTable('no-blood', this)">🚫 No Blood Used for O₂</button>
+        <button class="clil-btn" onclick="filterCompareTable('water', this)">🌊 Water Breathing</button>
+      </div>
       <div style="overflow-x:auto;">
-        <table class="compare-table">
+        <table class="compare-table" id="compare-table-el">
           <thead>
-            <tr><th>Group</th><th>Main organ</th><th>Airflow pattern</th><th>Key adaptation</th></tr>
+            <tr>
+              <th>Group</th>
+              <th>Main organ</th>
+              <th>Airflow pattern</th>
+              <th>Key adaptation</th>
+              <th style="min-width:140px;">O₂ Extraction Efficiency</th>
+            </tr>
           </thead>
           <tbody>
-            <tr><td class="tag"><span class="tag-dot" style="background:var(--teal);"></span>Human / Mammal</td><td>Lungs (alveoli)</td><td>Two-way (in &amp; out)</td><td>Diaphragm-driven pump; huge alveolar surface area</td></tr>
-            <tr><td class="tag"><span class="tag-dot" style="background:var(--fish);"></span>Fish</td><td>Gills</td><td>One-way (water flow)</td><td>Countercurrent exchange extracts up to 80% of dissolved O₂</td></tr>
-            <tr><td class="tag"><span class="tag-dot" style="background:var(--amphibian);"></span>Amphibian</td><td>Lungs + skin + mouth lining</td><td>Two-way + constant skin diffusion</td><td>Three respiratory surfaces used across one lifetime</td></tr>
-            <tr><td class="tag"><span class="tag-dot" style="background:var(--reptile);"></span>Reptile</td><td>Lungs</td><td>Two-way (in &amp; out)</td><td>Rib/muscle-driven pump; no diaphragm; waterproof skin</td></tr>
-            <tr><td class="tag"><span class="tag-dot" style="background:var(--bird);"></span>Bird</td><td>Lungs + 9 air sacs</td><td>One-way, continuous</td><td>Most efficient vertebrate system; fuels high-altitude flight</td></tr>
-            <tr><td class="tag"><span class="tag-dot" style="background:var(--insect);"></span>Insect</td><td>Tracheal tubes</td><td>Direct diffusion, no pump</td><td>Delivers O₂ straight to cells — no blood involvement</td></tr>
+            <tr data-cat="two-way"><td class="tag"><span class="tag-dot" style="background:var(--teal);"></span>1. Human (Terrestrial Mammal)</td><td>Lungs (300M alveoli)</td><td>Two-way (in &amp; out)</td><td>Dome diaphragm muscle creates negative pressure; 70 m² gas-exchange surface</td><td><div style="font-weight:700; font-size:12px; color:var(--teal);">~25% per breath</div><div class="compare-eff-bar"><div class="compare-eff-fill" style="width:25%; background:var(--teal);"></div></div></td></tr>
+            <tr data-cat="one-way water"><td class="tag"><span class="tag-dot" style="background:var(--fish);"></span>2. Fish</td><td>Gills (with lamellae)</td><td>One-way (continuous water flow)</td><td>Countercurrent exchange maintains gradient along entire gill; protective bony operculum pump</td><td><div style="font-weight:700; font-size:12px; color:var(--fish);">Up to 80% (Highest extraction)</div><div class="compare-eff-bar"><div class="compare-eff-fill" style="width:80%; background:var(--fish);"></div></div></td></tr>
+            <tr data-cat="two-way"><td class="tag"><span class="tag-dot" style="background:var(--amphibian);"></span>3. Amphibian (Frog / Salamander)</td><td>Lungs + moist skin + mouth</td><td>Two-way lungs + continuous skin diffusion</td><td>Three respiratory surfaces across lifetime; larval tadpole gills; adult cutaneous respiration requires wet skin</td><td><div style="font-weight:700; font-size:12px; color:var(--amphibian);">Variable (~30-50%)</div><div class="compare-eff-bar"><div class="compare-eff-fill" style="width:40%; background:var(--amphibian);"></div></div></td></tr>
+            <tr data-cat="two-way"><td class="tag"><span class="tag-dot" style="background:var(--reptile);"></span>4. Reptile (Snake / Turtle / Lizard)</td><td>Lungs (septate chambers)</td><td>Two-way (in &amp; out)</td><td>Rib/body-wall muscles (no diaphragm); scaly waterproof skin prevents water loss but stops skin diffusion</td><td><div style="font-weight:700; font-size:12px; color:var(--reptile);">~30%</div><div class="compare-eff-bar"><div class="compare-eff-fill" style="width:30%; background:var(--reptile);"></div></div></td></tr>
+            <tr data-cat="one-way"><td class="tag"><span class="tag-dot" style="background:var(--bird);"></span>5. Bird</td><td>Rigid lungs + 9 air sacs</td><td>One-way, continuous loop</td><td>Most efficient vertebrate system; fresh air flows across parabronchi during BOTH inhale and exhale</td><td><div style="font-weight:700; font-size:12px; color:var(--bird);">Continuous Fresh Air (Fuels Flight)</div><div class="compare-eff-bar"><div class="compare-eff-fill" style="width:95%; background:var(--bird);"></div></div></td></tr>
+            <tr data-cat="no-blood"><td class="tag"><span class="tag-dot" style="background:var(--insect);"></span>6. Insect</td><td>Tracheal tubes &amp; tracheoles</td><td>Direct diffusion through spiracles</td><td>Delivers oxygen directly to individual body cells without bloodstream or hemoglobin; limits max body size</td><td><div style="font-weight:700; font-size:12px; color:var(--insect);">Ultra-rapid over short distances</div><div class="compare-eff-bar"><div class="compare-eff-fill" style="width:70%; background:var(--insect);"></div></div></td></tr>
+            <tr data-cat="two-way"><td class="tag"><span class="tag-dot" style="background:var(--mammal);"></span>7. Marine &amp; Extreme Mammal</td><td>Collapsible lungs + myoglobin</td><td>Two-way tidal</td><td>Whales collapse lungs before deep dives to prevent bends, storing O₂ in muscle myoglobin (90 min dive!)</td><td><div style="font-weight:700; font-size:12px; color:var(--mammal);">Massive myoglobin tissue store</div><div class="compare-eff-bar"><div class="compare-eff-fill" style="width:85%; background:var(--mammal);"></div></div></td></tr>
           </tbody>
         </table>
       </div>
@@ -1886,7 +2428,32 @@
           <div class="short-answer-feedback" id="sa-feedback-4"></div>
         </div>
 
-        <button class="check-answers-btn" onclick="checkShortAnswer()">Check Writing</button>
+        
+        <div class="short-answer-area">
+          <div class="short-answer-prompt">5. [Official Exam Q24 · Human vs. Bird + Psalm 150:6 Synthesis] Compare how human lungs and bird air sacs work. How do both systems fulfill Psalm 150:6 ("Let everything that has breath praise the LORD")?</div>
+          <button class="sa-scaffold-toggle" onclick="toggleScaffold(5)">💡 Need an English Sentence Starter?</button>
+          <div class="sa-scaffold-box" id="sa-scaffold-5">
+            <b>Academic Synthesis Frame:</b> "<b>Whereas</b> humans breathe in and out using an involuntary diaphragm, birds use nine _________ to push air in a _________ _________ flow. Both our daily breaths and high-altitude flight declare that life is a _________ from the _________."
+            <button class="frame-insert-btn" onclick="insertFrame(4, 'Whereas humans breathe in and out using a diaphragm, birds use ')">Insert Starter</button>
+          </div>
+          <div class="kw-pills" id="kw-pills-4"></div>
+          <textarea class="short-answer-textarea" data-keywords="whereas,diaphragm,air sacs,one-way,creator,praise,god,gift,breath" oninput="updateLiveKeywords(4, this.value)" placeholder="Write your synthesis in complete academic English..."></textarea>
+          <div class="short-answer-feedback" id="sa-feedback-5"></div>
+        </div>
+
+        <div class="short-answer-area">
+          <div class="short-answer-prompt">6. [Official Exam Q25 · Fish vs. Insect + Creator's Wisdom] Compare how fish and insects solve breathing without using human-style lungs. How do both designs demonstrate purposeful engineering for their habitats?</div>
+          <button class="sa-scaffold-toggle" onclick="toggleScaffold(6)">💡 Need an English Sentence Starter?</button>
+          <div class="sa-scaffold-box" id="sa-scaffold-6">
+            <b>Academic Synthesis Frame:</b> "<b>While</b> fish extract 80% of oxygen underwater using _________ _________ across gill lamellae, insects deliver oxygen directly through _________ and tracheoles without using _________. Both systems demonstrate divine _________ for each habitat."
+            <button class="frame-insert-btn" onclick="insertFrame(5, 'While fish extract oxygen underwater using countercurrent exchange, insects ')">Insert Starter</button>
+          </div>
+          <div class="kw-pills" id="kw-pills-5"></div>
+          <textarea class="short-answer-textarea" data-keywords="countercurrent,gills,spiracles,tracheoles,blood,wisdom,habitat,design" oninput="updateLiveKeywords(5, this.value)" placeholder="Write your synthesis in complete academic English..."></textarea>
+          <div class="short-answer-feedback" id="sa-feedback-6"></div>
+        </div>
+
+<button class="check-answers-btn" onclick="checkShortAnswer()">Check Writing</button>
         <button class="reset-activity-btn" onclick="resetShortAnswer()">Reset</button>
         <div class="activity-result" id="result-short-answer">
           <div class="result-score"></div>
@@ -2668,33 +3235,128 @@ const INFO = {
   }
 };
 
-function wireImageHotspots(sectionId){
+
+/* ---------------- A2 Simplified Info Content for Hotspots ---------------- */
+const INFO_A2 = {
+  human: {
+    trachea: "The trachea (windpipe) is a strong tube with cartilage rings so it stays open when you breathe.",
+    bronchi: "The trachea branches into two bronchi, carrying air left and right into each lung.",
+    lungs: "The two lungs sit in your chest. They take in oxygen and release carbon dioxide.",
+    alveoli: "Alveoli are millions of tiny air sacs. Oxygen moves through their very thin walls into your blood.",
+    diaphragm: "The diaphragm is a large muscle. It pulls down to suck air in, and pushes up to blow air out."
+  },
+  fish: {
+    mouth: "Water with dissolved oxygen enters through the open mouth as the fish swims.",
+    "gill-arch": "The gill arch is a curved bone that supports the delicate gill filaments.",
+    filaments: "Gill filaments are feathery red folds full of blood vessels that absorb oxygen from water.",
+    operculum: "The operculum is a hard bony flap. It protects the gills and pumps water over them.",
+    lamellae: "Lamellae are tiny microscopic flaps on each filament where oxygen enters the fish's blood.",
+    "blood-flow": "Blood flows in the opposite direction to water (countercurrent) to catch almost all oxygen.",
+    "water-flow": "Water flows smoothly across the gills from front to back, opposite to the blood."
+  },
+  amphibian: {
+    skin: "Amphibian skin is very thin and wet. Oxygen diffuses straight through the skin into the blood.",
+    "lungs-amph": "Adult frog lungs are simple balloon-like sacs, with fewer folds than human lungs.",
+    "mouth-lining": "The wet inside of the mouth and throat also takes in oxygen directly.",
+    "gills-tadpole": "Before growing legs, young tadpoles live underwater and breathe with feathery gills."
+  },
+  reptile: {
+    "single-nostril": "Air enters through the nostrils and travels down the windpipe.",
+    "elongated-lung": "Snakes have one long main lung that fits inside their long, thin body.",
+    "reduced-lung": "In snakes, the second lung is tiny or missing because there is no space for two lungs.",
+    "rib-muscles": "Reptiles have no diaphragm. They use muscles along their ribs to pump air in and out.",
+    windpipe: "The windpipe carries air from the mouth to the lungs, protected with cartilage rings."
+  },
+  bird: {
+    "trachea-bird": "The trachea carries air from the beak into the air sac system.",
+    cervical: "The cervical air sacs near the neck store air on its way out of the body.",
+    "ant-air-sac": "Front air sacs collect used air from the lungs before exhaling it.",
+    "lung-bird": "Bird lungs are rigid and do not expand. Fresh air is pumped through them continuously.",
+    "post-air-sac": "Rear air sacs store fresh incoming air and push it forward into the lungs.",
+    parabronchi: "Parabronchi are tiny open tubes inside bird lungs where fresh air flows in one direction."
+  },
+  insect: {
+    "spiracle-thoracic": "Spiracles are valve openings on the chest that open and close to let air enter.",
+    "spiracle-abdominal": "Spiracles along the belly take in air without using a mouth or nose.",
+    "trachea-insect": "Trachea are branching air pipes that carry oxygen deep inside the insect's body.",
+    tracheoles: "Tracheoles are microscopic tube tips that touch body cells directly to deliver oxygen.",
+    "tracheoles-inset": "Close-up: Tracheoles press right against cells so oxygen moves in without blood.",
+    "body-cells": "Body cells receive oxygen directly from tracheoles. Insect blood does not carry oxygen!"
+  },
+  mammal: {
+    diving: "Diving seals collapse their lungs in deep water and store oxygen in their muscles using myoglobin.",
+    altitude: "High-altitude mice have larger lungs and blood that captures oxygen easily in thin air.",
+    "small-mammal": "Tiny shrews breathe hundreds of times per minute to keep their small warm bodies energized."
+  }
+};
+
+function updateHotspotProgressBadge(sectionId) {
   const wrap = document.getElementById(sectionId + "-imgwrap");
-  if(!wrap) return;
+  if (!wrap) return;
+  const total = wrap.querySelectorAll(".img-hotspot").length;
+  const visited = sectionVisited[sectionId].size;
+  const badge = document.getElementById(sectionId + "-prog-badge");
+  if (badge) {
+    badge.textContent = `Explored: ${visited} / ${total} (${Math.round((visited/total)*100)}%)`;
+  }
+}
+
+function wireImageHotspots(sectionId) {
+  const wrap = document.getElementById(sectionId + "-imgwrap");
+  if (!wrap) return;
   const infoBox = document.getElementById(sectionId + "-info");
-  wrap.querySelectorAll(".img-hotspot").forEach(hs=>{
-    hs.addEventListener("click", ()=>{
+  const hotspots = Array.from(wrap.querySelectorAll(".img-hotspot"));
+
+  // Add progress badge if missing
+  const frame = wrap.closest(".diagram-frame");
+  if (frame && !document.getElementById(sectionId + "-prog-badge")) {
+    const progDiv = document.createElement("div");
+    progDiv.className = "diagram-progress";
+    progDiv.innerHTML = `<span>Explore each numbered structure:</span><span class="diagram-progress-badge" id="${sectionId}-prog-badge">Explored: 0 / ${hotspots.length} (0%)</span>`;
+    frame.appendChild(progDiv);
+  }
+
+  hotspots.forEach((hs, idx) => {
+    hs.addEventListener("click", () => {
+      hotspots.forEach(h => h.classList.remove("active"));
+      hs.classList.add("active", "visited");
+
       const part = hs.getAttribute("data-part");
-      const text = INFO[sectionId] && INFO[sectionId][part];
-      if(!text) return;
-      const label = part.replace(/-/g," ").replace(/\b\w/g, c=>c.toUpperCase());
+      sectionVisited[sectionId].add(part);
+      updateHotspotProgressBadge(sectionId);
+
+      const textSource = currentReadingLevel === 'a2' ? (INFO_A2[sectionId] || INFO[sectionId]) : INFO[sectionId];
+      const text = (textSource && textSource[part]) || (INFO[sectionId] && INFO[sectionId][part]) || "";
+      if (!text) return;
+
+      const label = part.replace(/-/g, " ").replace(/\w/g, c => c.toUpperCase());
       const ipa = HOTSPOT_IPA[part] || "";
-      const safeSpeech = `${label}. ${text}`.replace(/'/g, "\\'");
+      const safeSpeech = `${label}. ${text}`.replace(/'/g, "\'");
+
+      const prevPart = idx > 0 ? hotspots[idx - 1].getAttribute("data-part") : null;
+      const nextPart = idx < hotspots.length - 1 ? hotspots[idx + 1].getAttribute("data-part") : null;
+
       infoBox.innerHTML = `
         <div class="info-card-header">
           <div>
-            <span class="label">${label}</span>
+            <span class="label">${hs.getAttribute("data-num") || (idx+1)}. ${label}</span>
             ${ipa ? `<span class="ipa-badge">${ipa}</span>` : ''}
           </div>
           <button class="mini-tts-btn" onclick="speakText('${safeSpeech}')">🔊 Pronounce</button>
         </div>
         <p>${text}</p>
+        <div class="info-nav-row">
+          <button class="info-nav-btn" ${prevPart ? `onclick="selectHotspotByPart('${sectionId}', '${prevPart}')"` : 'disabled style="opacity:0.4;"'}>← Prev Part</button>
+          <span style="font-size:11.5px; color:var(--ink-soft);">Part ${idx + 1} of ${hotspots.length}</span>
+          <button class="info-nav-btn" ${nextPart ? `onclick="selectHotspotByPart('${sectionId}', '${nextPart}')"` : 'disabled style="opacity:0.4;"'}>Next Part →</button>
+        </div>
       `;
       infoBox.classList.add("filled");
     });
   });
 }
 ["fish","human","insect","reptile","bird","amphibian","mammal"].forEach(wireImageHotspots);
+
 
 /* ---------------- Side nav active state (Fixed to include #language-lab & #biblical) ---------------- */
 const navlinks = document.querySelectorAll(".navlink");
@@ -3161,49 +3823,64 @@ function insertFrame(idx, starterText) {
   updateLiveKeywords(idx, ta.value);
 }
 
+
 function checkShortAnswer() {
   let correct = 0;
   const sampleAnswers = [
     "Insects deliver oxygen directly to cells through tracheal tubes. Air can only diffuse a short distance down a tube, which limits how large insects can grow.",
     "Because blood and water flow in opposite directions, countercurrent exchange maintains a continuous oxygen gradient and extracts up to 80% of dissolved oxygen.",
     "Whereas mammals breathe in and out with two-way airflow, birds use air sacs to push air in a continuous one-way flow through parabronchi, making their lungs more efficient.",
-    "Diving mammals collapse their lungs in order to avoid decompression sickness, and instead store oxygen in their blood and muscle tissue using myoglobin."
+    "Diving mammals collapse their lungs in order to avoid decompression sickness, and instead store oxygen in their blood and muscle tissue using myoglobin.",
+    "Whereas humans breathe in and out using an involuntary diaphragm, birds use nine air sacs to create continuous one-way airflow. Both systems remind us that breath is a purposeful gift from the Creator (Psalm 150:6).",
+    "While fish extract 80% of dissolved oxygen using countercurrent exchange in their gills, insects deliver oxygen directly to cells through spiracles and tracheoles without blood, showing God's wisdom for diverse habitats."
   ];
 
-  document.querySelectorAll('.short-answer-textarea').forEach((textarea, i) => {
+  const academicConnectors = ["because", "since", "whereas", "while", "unlike", "in order to", "so that", "which means", "therefore"];
+
+  const textareas = document.querySelectorAll('.short-answer-textarea');
+  textareas.forEach((textarea, i) => {
     const keywords = textarea.dataset.keywords.split(',').map(k => k.trim().toLowerCase());
     const userText = textarea.value.trim().toLowerCase();
     const wordCount = userText ? userText.split(/\s+/).length : 0;
     const feedback = document.getElementById('sa-feedback-' + (i + 1));
+    if (!feedback) return;
 
     const matched = keywords.filter(kw => userText.includes(kw));
     const missing = keywords.filter(kw => !userText.includes(kw));
+    const usedConnectors = academicConnectors.filter(conn => userText.includes(conn));
 
     textarea.classList.remove('correct', 'wrong');
     feedback.classList.remove('correct', 'wrong');
     feedback.classList.add('show');
 
-    // Requires at least 7 real words AND at least 2 domain keywords
-    if (wordCount >= 7 && matched.length >= 2) {
+    // Dual requirement: At least 7 words, at least 2 biology keywords, and 1 academic connector
+    if (wordCount >= 7 && matched.length >= 2 && usedConnectors.length >= 1) {
       textarea.classList.add('correct');
       feedback.classList.add('correct');
-      feedback.innerHTML = `<strong>✓ Strong scientific writing!</strong> You used ${matched.length} key terms (${matched.join(', ')}). <br><em>Model academic sentence:</em> "${sampleAnswers[i]}"`;
+      feedback.innerHTML = `<strong>✓ Excellent Academic Science Sentence!</strong><br>
+        • Science Terms: <b>${matched.join(', ')}</b><br>
+        • Academic Connector: <b>${usedConnectors.join(', ')}</b><br>
+        <em>Model Answer:</em> "${sampleAnswers[i] || ''}"`;
       correct++;
     } else {
       textarea.classList.add('wrong');
       feedback.classList.add('wrong');
-      const reason = wordCount < 7
-        ? "Write a complete sentence (at least 7 words)."
-        : `Include at least 2 target science words (try adding: <b>${missing.slice(0, 3).join(', ')}</b>).`;
-      feedback.innerHTML = `<strong>✗ Keep improving your English sentence:</strong> ${reason}<br><em>Model answer:</em> "${sampleAnswers[i]}"`;
+      let tips = [];
+      if (wordCount < 7) tips.push("Write a full sentence (at least 7 words)");
+      if (matched.length < 2) tips.push(`Include at least 2 science words (try: <b>${missing.slice(0, 3).join(', ')}</b>)`);
+      if (usedConnectors.length < 1) tips.push("Include an academic connector (e.g. <b>because, whereas, while, in order to, which means</b>)");
+      feedback.innerHTML = `<strong>✗ Keep Refining:</strong> ${tips.join(' · ')}.<br><em>Model Sentence:</em> "${sampleAnswers[i] || ''}"`;
     }
   });
 
+  const totalPrompts = textareas.length;
+  activityState['short-answer'].total = totalPrompts;
   activityState['short-answer'].correct = correct;
   activityState['short-answer'].completed = true;
   updateDashboard();
-  showActivityResult('short-answer', correct, 4);
+  showActivityResult('short-answer', correct, totalPrompts);
 }
+
 
 function resetShortAnswer() {
   document.querySelectorAll('.short-answer-textarea').forEach((textarea, i) => {
@@ -4059,37 +4736,58 @@ function revealCrosswordHint() {
 /* ---------------- GAME 4: PATHWAY & ENGLISH SYNTAX BUILDER ---------------- */
 const BUILDER_MISSIONS = [
   {
-    title: "Mission 1 (Human Pathway): Order the path of inhaled oxygen in humans from outside to the blood.",
+    title: "Mission 1 (Human Pathway): Order the path of inhaled oxygen from outside air to the bloodstream.",
     concept: "alveoli",
-    blocks: ["Nose & Mouth", "Trachea (Windpipe)", "Bronchi", "Bronchioles", "Alveoli", "Blood Capillaries"]
+    blocks: ["Nose & Mouth", "Trachea (Windpipe)", "Bronchi", "Bronchioles", "Alveoli", "Capillary Blood"]
   },
   {
-    title: "Mission 2 (Avian Two-Cycle Pathway): Order the one-way path of air inside a flying bird.",
+    title: "Mission 2 (Avian One-Way Loop): Order the two-cycle path of an air packet through a bird.",
     concept: "parabronchi",
-    blocks: ["Trachea", "Posterior Air Sacs", "Rigid Lungs (Parabronchi)", "Anterior Air Sacs", "Exhaled Out Trachea"]
+    blocks: ["Trachea", "Posterior Air Sacs", "Rigid Lung Parabronchi", "Anterior Air Sacs", "Exhaled Out Trachea"]
   },
   {
-    title: "Mission 3 (Insect Direct Pathway): Order how oxygen reaches an insect's body cells without blood.",
+    title: "Mission 3 (Insect Direct Diffusion): Order how oxygen reaches an insect cell without blood transport.",
     concept: "spiracles",
     blocks: ["Outside Air", "Spiracle Valves", "Tracheal Tubes", "Microscopic Tracheoles", "Individual Body Cells"]
   },
   {
-    title: "Mission 4 (Academic English — Fish): Build a scientific cause-and-effect sentence about countercurrent exchange.",
+    title: "Mission 4 (Academic Cause & Effect): Explain why fish gills maintain continuous diffusion.",
     concept: "countercurrent",
     blocks: ["Because blood flows", "opposite to water", "across the gill lamellae,", "fish can extract", "up to 80% of", "dissolved oxygen."]
   },
   {
-    title: "Mission 5 (Academic English — Contrast): Build a comparative sentence contrasting mammals and birds.",
+    title: "Mission 5 (Academic Contrast): Contrast the airflow patterns of mammals and birds.",
     concept: "parabronchi",
     blocks: ["Whereas mammals breathe", "with two-way airflow,", "birds use nine air sacs", "to push fresh air", "in one direction", "through parabronchi."]
   },
   {
-    title: "Mission 6 (Biblical Integration — Psalm 150:6): Build the synthesis statement of the entire unit.",
+    title: "Mission 6 (Amphibian Condition): Explain why cutaneous respiration requires damp skin.",
+    concept: "cutaneous",
+    blocks: ["If amphibian skin", "becomes dry,", "gases cannot diffuse", "across the surface,", "which stops respiration."]
+  },
+  {
+    title: "Mission 7 (Marine Mammal Purpose): Explain why whales collapse their lungs during deep dives.",
+    concept: "myoglobin",
+    blocks: ["Diving mammals collapse", "their lungs before diving", "in order to avoid", "decompression sickness,", "storing oxygen in myoglobin."]
+  },
+  {
+    title: "Mission 8 (Reptile Mechanics): Explain how reptiles breathe without a diaphragm.",
+    concept: "alveoli",
+    blocks: ["Because reptiles lack", "a diaphragm muscle,", "they expand their ribs", "using body-wall muscles", "to ventilate lungs."]
+  },
+  {
+    title: "Mission 9 (Fick's Physical Law): State the universal requirements of all gas-exchange surfaces.",
     concept: "diffusion",
-    blocks: ["Whether through lungs,", "feathery gills, or tracheoles,", "every living creature", "relies on diffusion", "and praises the Creator", "(Psalm 150:6)."]
+    blocks: ["Every respiratory surface", "must be thin,", "remain moist,", "and provide a huge", "surface area for diffusion."]
+  },
+  {
+    title: "Mission 10 (Creation Synthesis): Build the unit synthesis connecting science to Psalm 150:6.",
+    concept: "diffusion",
+    blocks: ["Whether through lungs,", "gills, or tracheoles,", "every living creature", "relies on breath", "to declare God's glory", "(Psalm 150:6)."]
   }
 ];
 
+const solvedBuilderMissions = new Set();
 let currentBuilderIdx = 0;
 let builderSelected = [];
 let builderPoolItems = [];
@@ -4153,12 +4851,16 @@ function checkBuilderMission() {
     resEl.querySelector('.result-msg').textContent = `"${targetSentence}"`;
     updateDiscoveryCard(m.concept);
     speakText(targetSentence);
-    addArcadeXP(40);
-    builderCompletedCount++;
-    if (builderCompletedCount >= 3) unlockBadge('pathway');
+
+    if (!solvedBuilderMissions.has(currentBuilderIdx)) {
+      solvedBuilderMissions.add(currentBuilderIdx);
+      addArcadeXP(40);
+      builderCompletedCount++;
+      if (builderCompletedCount >= 5) unlockBadge('pathway');
+    }
   } else {
     resEl.querySelector('.result-score').textContent = '✗ Keep Adjusting the Order';
-    resEl.querySelector('.result-msg').textContent = `Check the biological flow or English grammar connectors and try again!`;
+    resEl.querySelector('.result-msg').textContent = `Check the biological order or English connectors and try again!`;
   }
 }
 
@@ -4325,7 +5027,18 @@ function selectQShowAnswer(i, btn) {
   } else {
     btn.classList.add('wrong');
     allBtns[item.correct].classList.add('correct');
-    expEl.innerHTML = `<strong>✗ Championship Run Ended at Level ${qshowState.idx + 1}.</strong> ${item.explain} <br><button class="clil-btn" style="margin-top:8px;" onclick="initQuizShow()">🔄 Try Championship Again</button>`;
+    
+    // Safe Checkpoint calculation (Checkpoints at Level 4 = 300 XP and Level 8 = 700 XP)
+    let fallbackLevel = 0;
+    if (qshowState.idx >= 7) fallbackLevel = 7;
+    else if (qshowState.idx >= 3) fallbackLevel = 3;
+
+    expEl.innerHTML = `<strong>✗ Incorrect Answer!</strong> ${item.explain}<br>
+      <div style="margin-top:8px;">
+        ${fallbackLevel > 0 ? `🛡️ <b>Safe Checkpoint Active!</b> Resume at Level ${fallbackLevel + 1}.` : 'Restart Championship from Level 1.'}
+        <button class="clil-btn" style="margin-left:8px;" onclick="resumeQuizShowCheckpoint(${fallbackLevel})">🔄 Continue from Checkpoint</button>
+      </div>`;
+
   }
 }
 
@@ -4451,6 +5164,271 @@ loadBuilderMission(0);
 initBlitzGame();
 initQuizShow();
 loadProgress();
+
+/* ==================== 1. FICK'S LAW OF DIFFUSION SIMULATOR ENGINE ==================== */
+function updateFickSim() {
+  const thick = parseInt(document.getElementById('slider-fick-thick')?.value || 1);
+  const moist = parseInt(document.getElementById('slider-fick-moist')?.value || 100);
+  const area = parseInt(document.getElementById('slider-fick-area')?.value || 70);
+
+  // Labels
+  document.getElementById('val-fick-thick').textContent = thick === 1 ? '1 cell (0.2 µm · Alveoli)' : `${thick} cells (${(thick*0.5).toFixed(1)} µm · Scaly Skin)`;
+  document.getElementById('val-fick-moist').textContent = moist === 0 ? '0% (Completely Dry)' : `${moist}% (${moist > 70 ? 'Moist Mucus' : 'Partially Dehydrated'})`;
+  document.getElementById('val-fick-area').textContent = `${area} m² (${area >= 50 ? 'Extensively Folded' : 'Simple Sac'})`;
+
+  // Visual Membrane Sizing & Moisture Layer
+  const memEl = document.getElementById('fick-membrane');
+  const moistEl = document.getElementById('fick-moisture');
+  const labelEl = document.getElementById('fick-mem-label');
+  if (memEl && moistEl) {
+    const memWidth = 8 + (thick * 4);
+    const xPos = 180 - (memWidth / 2);
+    memEl.setAttribute('x', xPos);
+    memEl.setAttribute('width', memWidth);
+    moistEl.setAttribute('x', xPos - 4);
+    moistEl.setAttribute('width', memWidth + 8);
+    moistEl.setAttribute('opacity', (moist / 100) * 0.45);
+    if (labelEl) labelEl.textContent = `${thick} cell${thick > 1 ? 's' : ''}`;
+  }
+
+  // Fick's Law Formula Rate: Rate = (Area * MoistureFactor) / ThicknessFactor
+  let rate = 0;
+  if (moist > 5) {
+    const moistureFactor = moist / 100;
+    const areaFactor = area / 70;
+    const thicknessPenalty = 1 / Math.pow(thick, 0.7);
+    rate = Math.round(moistureFactor * areaFactor * thicknessPenalty * 100);
+  }
+  rate = Math.max(0, Math.min(100, rate));
+
+  const atp = Math.max(0, Math.min(100, Math.round(Math.pow(rate / 100, 1.2) * 100)));
+
+  document.getElementById('fick-rate-val').textContent = `${rate}%`;
+  document.getElementById('fick-atp-val').textContent = `${atp}%`;
+
+  // Dynamic Particles Animation in SVG
+  const particlesG = document.getElementById('fick-particles');
+  if (particlesG) {
+    let pSvg = '';
+    const particleCount = Math.round(rate / 12);
+    for (let i = 0; i < particleCount; i++) {
+      const cy = 55 + (i * 14) % 100;
+      pSvg += `<circle cx="${60 + (i*28)%100}" cy="${cy}" r="3.5" fill="#0284C7" opacity="0.85"><animate attributeName="cx" from="50" to="310" dur="${Math.max(0.6, 2.5 - (rate/50))}s" repeatCount="indefinite" begin="${i * 0.2}s"/></circle>`;
+      pSvg += `<circle cx="${300 - (i*28)%100}" cy="${cy + 5}" r="3" fill="#DC2626" opacity="0.75"><animate attributeName="cx" from="310" to="50" dur="${Math.max(0.7, 2.8 - (rate/50))}s" repeatCount="indefinite" begin="${i * 0.25}s"/></circle>`;
+    }
+    particlesG.innerHTML = pSvg;
+  }
+
+  // Status Alerts
+  const alertEl = document.getElementById('fick-alert');
+  if (alertEl) {
+    alertEl.className = 'sim-alert';
+    if (moist <= 15) {
+      alertEl.classList.add('danger');
+      alertEl.innerHTML = '<span>⚠️ <b>Desiccation Hazard:</b> Without moisture, oxygen cannot dissolve to cross the membrane. Respiration drops to 0%! (Why frog skin must stay damp).</span>';
+    } else if (thick >= 6) {
+      alertEl.classList.add('warning');
+      alertEl.innerHTML = '<span>⚠️ <b>Diffusion Distance Too Great:</b> When membranes are thick (like reptile skin), oxygen cannot diffuse in time to power high-metabolism cells.</span>';
+    } else if (rate >= 80) {
+      alertEl.classList.add('optimal');
+      alertEl.innerHTML = '<span>✅ <b>Optimal Gas Exchange:</b> Thin 1-cell barrier, 100% moisture, and huge surface area maximize ATP output!</span>';
+    } else {
+      alertEl.classList.add('warning');
+      alertEl.innerHTML = '<span>⚡ <b>Moderate Diffusion:</b> Suboptimal gas exchange rate. Notice how increasing area or thinning the barrier raises ATP yield.</span>';
+    }
+  }
+}
+
+function resetFickSim() {
+  const t = document.getElementById('slider-fick-thick');
+  const m = document.getElementById('slider-fick-moist');
+  const a = document.getElementById('slider-fick-area');
+  if (t) t.value = 1;
+  if (m) m.value = 100;
+  if (a) a.value = 70;
+  updateFickSim();
+}
+
+/* ==================== 2. COUNTERCURRENT VS CONCURRENT FLOW SIMULATOR ==================== */
+let currentFlowMode = 'counter';
+function setFlowMode(mode) {
+  currentFlowMode = mode;
+  document.getElementById('btn-flow-counter')?.classList.toggle('active', mode === 'counter');
+  document.getElementById('btn-flow-concur')?.classList.toggle('active', mode === 'concur');
+
+  const bloodDir = document.getElementById('blood-dir-label');
+  const p1 = document.getElementById('blood-p1');
+  const p2 = document.getElementById('blood-p2');
+  const p3 = document.getElementById('blood-p3');
+  const p4 = document.getElementById('blood-p4');
+  const extVal = document.getElementById('fish-extract-val');
+  const gradVal = document.getElementById('fish-gradient-val');
+  const alertEl = document.getElementById('fish-sim-alert');
+
+  if (mode === 'counter') {
+    if (bloodDir) bloodDir.textContent = '🩸 ← Blood Flow (Opposite)';
+    if (p1) { p1.textContent = '85%'; p1.parentElement.setAttribute('fill', '#BE123C'); }
+    if (p2) { p2.textContent = '55%'; p2.parentElement.setAttribute('fill', '#E11D48'); }
+    if (p3) { p3.textContent = '25%'; p3.parentElement.setAttribute('fill', '#FB7185'); }
+    if (p4) { p4.textContent = '5%';  p4.parentElement.setAttribute('fill', '#FDA4AF'); }
+    if (extVal) { extVal.textContent = '80%'; extVal.style.color = 'var(--fish)'; }
+    if (gradVal) gradVal.textContent = 'Constant 15%';
+    if (alertEl) {
+      alertEl.className = 'sim-alert optimal';
+      alertEl.innerHTML = '<span>✅ <b>Countercurrent Superiority:</b> Because blood and water flow in opposite directions, blood constantly meets water with a higher oxygen level. Diffusion never stalls!</span>';
+    }
+  } else {
+    if (bloodDir) bloodDir.textContent = '🩸 Blood Flow → (Same Direction)';
+    if (p1) { p1.textContent = '5%';  p1.parentElement.setAttribute('fill', '#FDA4AF'); }
+    if (p2) { p2.textContent = '28%'; p2.parentElement.setAttribute('fill', '#FB7185'); }
+    if (p3) { p3.textContent = '50%'; p3.parentElement.setAttribute('fill', '#BE123C'); }
+    if (p4) { p4.textContent = '50%'; p4.parentElement.setAttribute('fill', '#BE123C'); }
+    if (extVal) { extVal.textContent = 'Max 50%'; extVal.style.color = '#B33A32'; }
+    if (gradVal) gradVal.textContent = '0% at Midpoint (Stalled)';
+    if (alertEl) {
+      alertEl.className = 'sim-alert danger';
+      alertEl.innerHTML = '<span>⚠️ <b>Concurrent Limitation:</b> When blood flows in the SAME direction as water, concentrations equalize at 50%. Diffusion completely stops halfway across the gill!</span>';
+    }
+  }
+}
+
+/* ==================== 3. AVIAN 2-BREATH CYCLE ANIMATOR ==================== */
+let birdCycleStep = 1;
+let birdCycleTimer = null;
+
+const BIRD_CYCLE_DATA = {
+  1: {
+    desc: "<b>Step 1 (Inhalation 1):</b> Fresh air enters trachea and bypasses the lungs directly into the <b>Posterior (Rear) Air Sacs</b>.",
+    aPos: { x: 440, y: 115, label: "Air 1 (Fresh)" },
+    postColor: "#F59E0B",
+    lungColor: "#FEE2E2",
+    antColor: "#BAE6FD"
+  },
+  2: {
+    desc: "<b>Step 2 (Exhalation 1):</b> Posterior air sacs squeeze! Fresh air is pushed forward into the <b>Rigid Lung Parabronchi</b> where oxygen diffuses into the blood.",
+    aPos: { x: 295, y: 90, label: "Air 1 (In Lung!)" },
+    postColor: "#FED7AA",
+    lungColor: "#F87171",
+    antColor: "#BAE6FD"
+  },
+  3: {
+    desc: "<b>Step 3 (Inhalation 2):</b> Used air moves into the <b>Anterior (Front) Air Sacs</b> while a BRAND NEW packet of fresh air fills the posterior air sacs!",
+    aPos: { x: 160, y: 115, label: "Air 1 (Used)" },
+    postColor: "#F59E0B",
+    lungColor: "#FEE2E2",
+    antColor: "#38BDF8"
+  },
+  4: {
+    desc: "<b>Step 4 (Exhalation 2):</b> Anterior air sacs squeeze used Air 1 OUT through the trachea, while fresh Air 2 sweeps across the lung parabronchi!",
+    aPos: { x: 60, y: 90, label: "Air 1 (Out)" },
+    postColor: "#FED7AA",
+    lungColor: "#F87171",
+    antColor: "#BAE6FD"
+  }
+};
+
+function setBirdCycleStep(step) {
+  birdCycleStep = step;
+  [1, 2, 3, 4].forEach(s => {
+    document.getElementById(`btn-cycle-${s}`)?.classList.toggle('active', s === step);
+  });
+  const data = BIRD_CYCLE_DATA[step];
+  const descEl = document.getElementById('bird-cycle-desc');
+  if (descEl) descEl.innerHTML = data.desc;
+
+  const packet = document.getElementById('air-packet-a');
+  const label = document.getElementById('air-packet-label');
+  if (packet && label) {
+    packet.setAttribute('cx', data.aPos.x);
+    packet.setAttribute('cy', data.aPos.y);
+    label.setAttribute('x', data.aPos.x);
+    label.setAttribute('y', data.aPos.y + 4);
+    label.textContent = data.aPos.label;
+  }
+}
+
+function toggleBirdCycleAuto() {
+  const btn = document.getElementById('btn-cycle-auto');
+  if (birdCycleTimer) {
+    clearInterval(birdCycleTimer);
+    birdCycleTimer = null;
+    if (btn) btn.textContent = '▶️ Auto-Play';
+  } else {
+    if (btn) btn.textContent = '⏸️ Pause';
+    birdCycleTimer = setInterval(() => {
+      birdCycleStep = (birdCycleStep % 4) + 1;
+      setBirdCycleStep(birdCycleStep);
+    }, 2200);
+  }
+}
+
+/* ==================== 4. BIRD EXAM DIAGRAM TRAINER CHECKER ==================== */
+function checkBirdExamDiagram() {
+  const answers = {
+    'exam-q7': 'A',  // Trachea
+    'exam-q8': 'B',  // Anterior Air Sacs
+    'exam-q9': 'C',  // Rigid Lung
+    'exam-q10': 'D', // Posterior Air Sacs
+    'exam-q11': 'E'  // Parabronchi
+  };
+  let correct = 0;
+  Object.keys(answers).forEach(id => {
+    const sel = document.getElementById(id);
+    if (!sel) return;
+    sel.classList.remove('correct', 'wrong');
+    if (sel.value === answers[id]) {
+      sel.classList.add('correct');
+      correct++;
+    } else {
+      sel.classList.add('wrong');
+    }
+  });
+
+  const res = document.getElementById('result-bird-exam');
+  if (res) {
+    res.classList.add('show');
+    res.querySelector('.result-score').textContent = `${correct} / 5 Correct (${correct * 20}%)`;
+    res.querySelector('.result-msg').innerHTML = correct === 5
+      ? '🎉 <b>100% Mastery on Part 2 of the Official Exam!</b> Excellent work identifying the bird respiratory anatomy.'
+      : 'Review the rigid lung and air sac positions above and try again.';
+  }
+  if (correct >= 4) addArcadeXP(45);
+}
+
+/* ==================== 5. COMPARE TABLE FILTERING ==================== */
+function filterCompareTable(cat, btn) {
+  document.querySelectorAll('.compare-filter-bar .clil-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+
+  const rows = document.querySelectorAll('#compare-table-el tbody tr');
+  rows.forEach(r => {
+    const c = r.getAttribute('data-cat') || '';
+    if (cat === 'all' || c.includes(cat)) {
+      r.style.display = '';
+    } else {
+      r.style.display = 'none';
+    }
+  });
+}
+
+/* ==================== 6. HOTSPOTS TOUR & VISITED STATE TRACKER ==================== */
+const sectionVisited = {
+  human: new Set(),
+  fish: new Set(),
+  amphibian: new Set(),
+  reptile: new Set(),
+  bird: new Set(),
+  insect: new Set(),
+  mammal: new Set()
+};
+
+function selectHotspotByPart(sectionId, partName) {
+  const wrap = document.getElementById(sectionId + "-imgwrap");
+  if (!wrap) return;
+  const target = wrap.querySelector(`.img-hotspot[data-part="${partName}"]`);
+  if (target) target.click();
+}
+
 </script>
 </body>
 </html>
